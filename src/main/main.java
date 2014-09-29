@@ -1,6 +1,8 @@
 package main;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
@@ -20,14 +22,18 @@ public class main {
 		
 		
 		Twitter twitter = TwitterFactory.getSingleton();
-//	    Status status = twitter.updateStatus(latestStatus);
-//	    System.out.println("Successfully updated the status to [" + status.getText() + "].");
-	    Query query = new Query("lol obama");
+	    Query query = new Query("#obama");
 	    QueryResult result = twitter.search(query);
+	    
+	    List<String> tweets = new ArrayList<String>();
+	    
 	    for (Status status : result.getTweets()) {
-	        System.out.println(status.getText());
+	        tweets.add(status.getText());
 	    }
 		
+	    for(String ele : tweets){
+	    	System.out.println(ele);
+	    }
 	}
 		
 //public static void main(String[] args) {

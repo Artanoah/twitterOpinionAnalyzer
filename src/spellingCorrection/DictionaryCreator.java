@@ -16,6 +16,10 @@ public class DictionaryCreator {
 	String dictionary;
 	Map<String, Integer> numberOfWords = new HashMap<String, Integer>();
 	
+	/**
+	 * Erzeugt einen DictionaryCreator.
+	 * @param dictionary Zu erzeugenes Lexikon.
+	 */
 	public DictionaryCreator(String dictionary) {
 		this.dictionary = dictionary;
 		BufferedReader br;
@@ -41,7 +45,12 @@ public class DictionaryCreator {
 		}
 	}
 	
-	public void addFile(File text) {
+	/**
+	 * Füge eine Textdatei hinzu. Diese sollte ausschließlich korrekte 
+	 * Wörter englischer Sprache enthalten.
+	 * @param text Hinzuzufügende Textdatei
+	 */
+	public void addTextFile(File text) {
 		BufferedReader in;
 		PrintWriter pw;
 		
@@ -56,6 +65,42 @@ public class DictionaryCreator {
 				
 				while(m.find()) {
 					String word = m.group();
+					if(numberOfWords.containsKey(word)) {
+						numberOfWords.put(word
+								, numberOfWords.get(word) + 1);
+					} else {
+						numberOfWords.put(word, 1);
+					}
+				}
+			}
+			
+			for(Map.Entry<String, Integer> entry : numberOfWords.entrySet()) {
+				pw.println(entry.getKey() + " " + entry.getValue());
+			}
+
+			in.close();
+			pw.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void addSmileyFile(File text) {
+		BufferedReader in;
+		PrintWriter pw;
+		
+		try {
+			pw = new PrintWriter(dictionary);
+			in = new BufferedReader(new FileReader(text));
+
+			while(in.ready()) {
+				String line = in.readLine();
+				
+				for(String word : line.split(" ")){
 					if(numberOfWords.containsKey(word)) {
 						numberOfWords.put(word
 								, numberOfWords.get(word) + 1);

@@ -16,11 +16,28 @@ public class SpellingCorrector {
 	private static Map<String, Integer> numberOfWords = new HashMap<String, Integer>();
 	private static String dictionary;
 	
+	/**
+	 * Erstellt einen SpellingCorrector. Das dictionary muss zu diesem 
+	 * Zeitpunkt nicht zwangsweise existieren, aber der Pfad muss angegeben 
+	 * werden.
+	 * @param dictionary Zu verwendenes Lexikon
+	 */
 	public SpellingCorrector(String dictionary) {
 		this.dictionary = dictionary;
 		refresh();
 	}
 	
+	/**
+	 * Versucht den String inputWord zu korrigieren. Wenn das Wort zur 
+	 * Englischen Sprache gehört, dann wird es unverändert zurückgegeben. 
+	 * Wenn das Wort nicht zur Englischen Sprache gehört wird in zwei 
+	 * Schritten versucht es zu korrigieren. Dabei wird das am 
+	 * wahrscheinlichsten korrekte Wort zurückgeliefert. Die 
+	 * Wahrscheinlichkeit berechnet sich anhand der Menge der Nutzungen 
+	 * dieses Wortes in der Englischen Sprache.
+	 * @param inputWord Zu korrigierendes Wort
+	 * @return Korrigertes Wort
+	 */
 	public static String correctWord(String inputWord) {
 		String word = inputWord.toLowerCase();
 		
@@ -56,6 +73,25 @@ public class SpellingCorrector {
 		}
 	}
 	
+	public static String correctSentence(String inputSentence) {
+		String akku = "";
+		
+		for(String word : inputSentence.split(" ")) {
+			if(word.indexOf('#') == 0) {
+				akku += " " + word;
+			} else {
+				akku += " " + correctWord(word);
+			}
+		}
+		
+		return akku;
+	}
+	
+	/**
+	 * Liest das dictionary neu ein. Diese Methode muss nach jedem 
+	 * "DictionaryCreator#addTextFile" oder "DictionaryCreator#addSmileyFile" 
+	 * ausgeführt werden um die Veränderungen zu nutzen.
+	 */
 	public static void refresh() {
 		BufferedReader br;
 		numberOfWords = new HashMap<String, Integer>();
@@ -79,6 +115,11 @@ public class SpellingCorrector {
 		}
 	}
 	
+	/**
+	 * Prüft ob das wort inputWort zur englischen Sprache gehört.
+	 * @param inputWord Zu überprüfendes Wort
+	 * @return True wenn das Wort zur englischen Sprache gehört, False wenn nicht.
+	 */
 	public static boolean isValid(String inputWord) {
 		String word = inputWord.toLowerCase();
 		return numberOfWords.containsKey(word);

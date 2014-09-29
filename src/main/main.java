@@ -37,12 +37,16 @@ public class main {
 		
 		//Erstelle Twitter-Anbindung
 		Twitter twitter = TwitterFactory.getSingleton();
-	    Query query = new Query("#swag");
+	    Query query = new Query();
 	    QueryResult result = null;
 	    
 	    //Setze Twitter-Query-Eigenschaften
+	    
+	    query.setQuery("#obama");
 	    query.setCount(20);
-	    query.setLocale("EN");
+	    query.setSince("2012-11-05");
+	    //query.setUntil("2012-11-06");
+	    query.setLang("en");
 	    
 	    result = twitter.search(query);
 	    

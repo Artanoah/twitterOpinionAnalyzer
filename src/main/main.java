@@ -19,11 +19,32 @@ public class main {
 
 	public static void main(String[] args) throws TwitterException {
 	
+		//Erstelle StringCorrectors und Lexika
+		String dictionary = "dictionary.txt";
+		DictionaryCreator dc;
+		SpellingCorrector sc;
 		
+		dc = new DictionaryCreator(dictionary);
+		sc = new SpellingCorrector(dictionary);
 		
+		dc.addTextFile(new File("texts/sherlockHolmes_theValleyOfFear.txt"));
+		dc.addTextFile(new File("texts/edgarWallace_theAngelOfTerror.txt"));
+		dc.addTextFile(new File("texts/history_theProudRebel.txt"));
+		dc.addTextFile(new File("texts/listOfAllWords.txt"));
+		dc.addTextFile(new File("texts/henryReeve_democracyInAmerica.txt"));
+		dc.addTextFile(new File("texts/smileys.txt"));
+		sc.refresh();
+		
+		//Erstelle Twitter-Anbindung
 		Twitter twitter = TwitterFactory.getSingleton();
-	    Query query = new Query("#obama");
-	    QueryResult result = twitter.search(query);
+	    Query query = new Query("#swag");
+	    QueryResult result = null;
+	    
+	    //Setze Twitter-Query-Eigenschaften
+	    query.setCount(20);
+	    query.setLocale("EN");
+	    
+	    result = twitter.search(query);
 	    
 	    List<String> tweets = new ArrayList<String>();
 	    
@@ -32,8 +53,10 @@ public class main {
 	    }
 		
 	    for(String ele : tweets){
-	    	System.out.println(ele);
+	    	System.out.println("### TWEET ###\n" + ele);
+	    	System.out.println("### KORRIGIERTER TWEET\n" + sc.correctTweet(ele) + "\n");
 	    }
+	    
 	}
 		
 //public static void main(String[] args) {

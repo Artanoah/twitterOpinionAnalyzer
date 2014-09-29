@@ -73,11 +73,12 @@ public class SpellingCorrector {
 		}
 	}
 	
-	public static String correctSentence(String inputSentence) {
+	public static String correctTweet(String inputSentence) {
 		String akku = "";
 		
 		for(String word : inputSentence.split(" ")) {
-			if(word.indexOf('#') == 0) {
+			if(word.indexOf('#') == 0 ||
+					word.indexOf('@') == 0) {
 				akku += " " + word;
 			} else {
 				akku += " " + correctWord(word);

@@ -24,6 +24,7 @@ public class main {
 		DictionaryCreator dc;
 		SpellingCorrector sc;
 		
+		new File(dictionary).delete();
 		dc = new DictionaryCreator(dictionary);
 		sc = new SpellingCorrector(dictionary);
 		
@@ -32,7 +33,8 @@ public class main {
 		dc.addTextFile(new File("texts/history_theProudRebel.txt"));
 		dc.addTextFile(new File("texts/listOfAllWords.txt"));
 		dc.addTextFile(new File("texts/henryReeve_democracyInAmerica.txt"));
-		dc.addTextFile(new File("texts/smileys.txt"));
+		dc.addTextFile(new File("texts/big.txt"));
+		dc.addSmileyFile(new File("texts/smileys.txt"));
 		sc.refresh();
 		
 		//Erstelle Twitter-Anbindung
@@ -44,7 +46,7 @@ public class main {
 	    
 	    query.setQuery("#obama");
 	    query.setCount(20);
-	    query.setSince("2012-11-05");
+	    //query.setSince("2012-11-05");
 	    //query.setUntil("2012-11-06");
 	    query.setLang("en");
 	    

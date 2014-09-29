@@ -49,7 +49,7 @@ public class SpellingCorrector {
 		Map<Integer, String> candidates = new HashMap<Integer, String>();
 		
 		for(String s : permutations) {
-			if(numberOfWords.containsKey(s)) {
+			if(isValid(s)) {
 				candidates.put(numberOfWords.get(s), s);
 			}
 		}
@@ -60,7 +60,7 @@ public class SpellingCorrector {
 		
 		for(String s : permutations) {
 			for(String w : getPermutations(s)) {
-				if(numberOfWords.containsKey(w)) {
+				if(isValid(s)) {
 					candidates.put(numberOfWords.get(w), w);
 				}
 			}
@@ -75,8 +75,11 @@ public class SpellingCorrector {
 	
 	public static String correctTweet(String inputSentence) {
 		String akku = "";
+		String temp = new String(inputSentence);
 		
-		for(String word : inputSentence.split(" ")) {
+		temp = temp.replaceAll("[[^A-z]|[^\\s]]+", "");
+		
+		for(String word : temp.split(" ")) {
 			if(word.indexOf('#') == 0 ||
 					word.indexOf('@') == 0) {
 				akku += " " + word;

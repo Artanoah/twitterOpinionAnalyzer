@@ -77,7 +77,21 @@ public class SpellingCorrector {
 		String akku = "";
 		String temp = new String(inputSentence);
 		
-		temp = temp.replaceAll("[[^A-z]|[^\\s]]+", "");
+		for(int i = 0; i < temp.length() - 1; i++) {
+			if(!twitterIsChar(temp.charAt(i)) && twitterIsChar(temp.charAt(i+1))) {
+				temp = temp.substring(0, i) + ' ' + temp.substring(i+1);
+				i++;
+			}
+		}
+		
+		for(int i = 1; i < temp.length(); i++) {
+			if(!twitterIsChar(temp.charAt(i-1)) && twitterIsChar(temp.charAt(i))) {
+				temp = temp.substring(0, i-1) + ' ' + temp.substring(i);
+				i++;
+			}
+		}
+		
+		temp = temp.replaceAll("[\\.]\\1+", "");
 		
 		for(String word : temp.split(" ")) {
 			if(word.indexOf('#') == 0 ||
@@ -153,5 +167,9 @@ public class SpellingCorrector {
 		}
 		
 		return akku;
+	}
+	
+	private static boolean twitterIsChar(char c) {
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == ' ' || c == '@' || c == '#' || c == '`';
 	}
 }

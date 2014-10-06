@@ -77,25 +77,48 @@ public class SpellingCorrector {
 		String akku = "";
 		String temp = new String(inputSentence);
 		
+		//Lösche Links
+		while(temp.indexOf("http") != -1) {
+			int i = temp.indexOf("http");
+			int j = temp.indexOf(' ', i);
+			
+			temp = temp.subSequence(0, i-1) + temp.substring(j < 0 ? temp.length() - 1 : j);
+		}
+		
+		//Isoliere Sonderzeichen
 		for(int i = 0; i < temp.length() - 1; i++) {
-			if(!twitterIsChar(temp.charAt(i)) && twitterIsChar(temp.charAt(i+1))) {
-				temp = temp.substring(0, i) + ' ' + temp.substring(i+1);
-				i++;
+			if((!twitterIsChar(temp.charAt(i))) && twitterIsChar(temp.charAt(i+1))) {
+				if(temp.charAt(i+1) != ' ') {
+					temp = temp.substring(0, i) + " " + temp.substring(i);
+					i++;
+				}
 			}
 		}
 		
 		for(int i = 1; i < temp.length(); i++) {
-			if(!twitterIsChar(temp.charAt(i-1)) && twitterIsChar(temp.charAt(i))) {
-				temp = temp.substring(0, i-1) + ' ' + temp.substring(i);
-				i++;
+			if(twitterIsChar(temp.charAt(i-1)) && !twitterIsChar(temp.charAt(i))) {
+				if(temp.charAt(i-1) != ' ') {
+					temp = temp.substring(0, i) + " " + temp.substring(i);
+					i++;
+				}
 			}
 		}
 		
+		System.out.println("### Zwischenstufe 1 ###");
+		System.out.println(temp);
+		
+		//Lösche überflüssige Punkte
 		temp = temp.replaceAll("[\\.]\\1+", "");
 		
+		System.out.println("### Zwischenstufe 2 ###");
+		System.out.println(temp);
+		
 		for(String word : temp.split(" ")) {
-			if(word.indexOf('#') == 0 ||
-					word.indexOf('@') == 0) {
+			if(word.equals("")){
+				akku += "";
+			}else if(word.indexOf('#') == 0 		||
+					word.indexOf('@') == 0 	||
+					!twitterIsChar(word.charAt(0))) {
 				akku += " " + word;
 			} else {
 				akku += " " + correctWord(word);
@@ -170,6 +193,6 @@ public class SpellingCorrector {
 	}
 	
 	private static boolean twitterIsChar(char c) {
-		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == ' ' || c == '@' || c == '#' || c == '`';
+		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == ' ' || c == '@' || c == '#';
 	}
 }

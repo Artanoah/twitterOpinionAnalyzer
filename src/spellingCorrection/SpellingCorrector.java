@@ -104,14 +104,8 @@ public class SpellingCorrector {
 			}
 		}
 		
-		System.out.println("### Zwischenstufe 1 ###");
-		System.out.println(temp);
-		
 		//Lösche überflüssige Punkte
 		temp = temp.replaceAll("[\\.]\\1+", "");
-		
-		System.out.println("### Zwischenstufe 2 ###");
-		System.out.println(temp);
 		
 		for(String word : temp.split(" ")) {
 			if(word.equals("")){

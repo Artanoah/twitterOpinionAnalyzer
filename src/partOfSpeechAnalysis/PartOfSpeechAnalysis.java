@@ -42,7 +42,7 @@ public class PartOfSpeechAnalysis {
         //Concat words with their tags
         for (Tree leaf : leaves) { 
             Tree parent = leaf.parent(tree);
-            result.concat(leaf.label().value() + "-" + parent.label().value() + " ");
+            result = result.concat((leaf.label().value() + "-" + parent.label().value() + " "));
         }
         return result;             
     }

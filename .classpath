@@ -3,5 +3,9 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/twitter4j-core-4.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/stanford-parser-3.4.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/stanford-parser-3.4.1-models.jar"/>
+	<classpathentry kind="lib" path="lib/stanford-parser-3.4.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/stanford-parser.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -16,10 +16,9 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TweetStream {
 	private TweetStream(){
 	}
-	/**Start python-script "twitterstream.py" which get tweets from Twitter and stores them
-	 *  as JSON-objects in a text-file in the same directory where that script lies.
-	 * @return 
-	 * @throws IOException if there's any problem while running the script
+	/**Starts listening on the TwitterStream. And filter it by some parameters.
+	 * @param maxTweets amount of Tweets which shall be saved. They'll be returned.
+	 * @return List with TextContent of the streamed Tweets
 	 */
 	public static ArrayList<String> saveTweetsToFile(final int maxTweets){
 		

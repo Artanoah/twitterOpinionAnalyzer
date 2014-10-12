@@ -56,9 +56,15 @@ def fetchsamples():
   url = "https://stream.twitter.com/1.1/statuses/sample.json"
   parameters = {'language':'en'}
   response = twitterreq(url, "GET", parameters)
+  i=0
+  output_file = open("./out1","w")
   for line in response:
-    unicode_string = line.decode('utf-8')
-    print unicode_string.strip()
+	if i<2:
+		unicode_string = line.decode('utf-8')
+		print(unicode_string.strip() + '\n')
+		i = i+1
+	else:
+		sys.exit(0)
 
 if __name__ == '__main__':
   fetchsamples()

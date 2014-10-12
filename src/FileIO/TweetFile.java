@@ -35,7 +35,9 @@ public class TweetFile {
 		// #### UMWANDELN DER LINES IN JSON #####
 		ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
 		for(String line : allLines){
-			jsonObjects.add(new JSONObject(line));
+			if(!line.isEmpty()){
+				jsonObjects.add(new JSONObject(line));
+			}
 		}
 		
 		// #### AUSLESEN DES CONTENTS AUS DEN JSON-OBJECTS

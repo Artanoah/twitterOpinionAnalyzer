@@ -3,7 +3,11 @@ package main;
 import java.io.File;
 import java.util.List;
 
-import FileIO.TweetStream;
+import partOfSpeechAnalysis.PartOfSpeechAnalysis;
+import net.dean.jraw.http.NetworkException;
+import net.dean.jraw.models.Comment;
+import net.dean.jraw.models.Submission;
+import ContentSource.TweetStream;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
 
@@ -11,7 +15,7 @@ import spellingCorrection.SpellingCorrector;
 public class main {
 
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws NetworkException{
 
 	
 		//Erstelle StringCorrectors und Lexika
@@ -32,11 +36,13 @@ public class main {
 		dc.addSmileyFile(new File("texts/smileys.txt"));
 		sc.refresh();
 	    
-	    List<String> tweets = TweetStream.saveTweetsToFile(5);
+	    Submission comments = ContentSource.RedditPosts.getPost("2j28og");
+	    String temp = "";
 		
-	    for(String ele : tweets){
-	    	System.out.println("### TWEET ###\n" + ele);
-	    	System.out.println("### KORRIGIERTER TWEET\n" + sc.correctTweet(ele) + "\n");
+	    for(Comment ele : comments.getComments()) {
+	    	System.out.println("### TWEET ###\n" + ele.getBody().toString() + "\n");
+	    	System.out.println("### KORRIGIERTER TWEET ###\n" + (temp = sc.correctTweet(ele.getBody().toString())) + "\n");
+	    	System.out.println("### GESTEMMTER TWEET ###\n" + PartOfSpeechAnalysis.partOfSpeechWithStaming(temp) + "\n\n");
 	    }
 	    
 	}

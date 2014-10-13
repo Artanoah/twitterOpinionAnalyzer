@@ -1,4 +1,4 @@
-package FileIO;
+package ContentSource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class TweetStream {
 	 * @param maxTweets amount of Tweets which shall be saved. They'll be returned.
 	 * @return List with TextContent of the streamed Tweets
 	 */
-	public static ArrayList<String> saveTweetsToFile(final int maxTweets){
+	public static ArrayList<String> getTweetsFromStream(final int maxTweets){
 		
 		final Object lock = new Object();
 		final ArrayList<String> tweetContents = new ArrayList<String>();

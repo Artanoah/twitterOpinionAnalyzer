@@ -14,13 +14,18 @@ public class RedditPosts {
 	
 	private RedditPosts(){}
 	
-	static public List<List> getRedditPosts(String subreddit,int amount){
+	/**Laedt die ersten amountPosts vom Subreddit subreddit
+	 * @param subreddit subreddit von dem geladen werden soll
+	 * @param amountPosts Anzahl der zu ladenden Posts
+	 * @return Liste bei dem ein Element die folgenden Dinge enthaelt: (String) Titel des Posts, (String) Beschreibung des Posts, (Listing<Comment>) Alle Kommentare zu diesem Post
+	 */
+	static public List<List> getRedditPosts(String subreddit,int amountPosts){
 		RedditClient reddit = new RedditClient("bot/1.0 by name");
 		List<List> result = new ArrayList<List>();
 		
 		SubredditPaginator frontPage = new SubredditPaginator(reddit,subreddit); // Second parameter could be a subreddit
 		Listing<Submission> listing = frontPage.next();
-	    for (int i = 0 ; i < amount ; i++) {
+	    for (int i = 0 ; i < amountPosts ; i++) {
 	    	Submission submission = listing.get(i);
 	        result.add(new ArrayList<Object>(Arrays.asList(submission.getTitle(),submission.getSelftext().md(),submission.getComments())));
 	    }

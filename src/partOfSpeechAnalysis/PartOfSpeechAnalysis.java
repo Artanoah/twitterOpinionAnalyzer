@@ -65,7 +65,7 @@ public class PartOfSpeechAnalysis {
         for (Tree leaf : leaves) { 
             Tree parent = leaf.parent(tree);
             if(remainingTags.contains(parent.label().value())){
-            	result.concat(leaf.label().value() + "-" + parent.label().value() + " ");
+            	result = result.concat(leaf.label().value() + "-" + parent.label().value() + " ");
             }
         }
         return result;             

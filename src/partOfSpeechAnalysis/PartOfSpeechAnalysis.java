@@ -1,7 +1,10 @@
 package partOfSpeechAnalysis;
 
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.TokenizerFactory;
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
@@ -18,6 +21,8 @@ public class PartOfSpeechAnalysis {
     //Initialisierung der Stanford-Parser-Komponenten
     private final TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "invertible=true");
     private final LexicalizedParser parser = LexicalizedParser.loadModel(PCG_MODEL);
+    private final static PartOfSpeechAnalysis analysis = new PartOfSpeechAnalysis();
+    private final static List<String>remainingTags = new ArrayList<String>(Arrays.asList("NN", "VBP", "VBZ", "NN", "NNP"));
 
     
     public Tree parse(String str) {                
@@ -35,7 +40,6 @@ public class PartOfSpeechAnalysis {
 
     public static String partOfSpeech(String str) { 
     	String result = "";
-    	PartOfSpeechAnalysis analysis = new PartOfSpeechAnalysis();
         Tree tree = analysis.parse(str);  
 
         List<Tree> leaves = tree.getLeaves();
@@ -48,18 +52,9 @@ public class PartOfSpeechAnalysis {
     }
     
     
-    /**
-     * Fuehrt ein Part-of-Speech-Tagging des gegebenen Strings durch
-     * und loescht alle Wortarten aus dem String, die nicht in remainingTags enthalten sind
-     * @param str gegebener String
-     * @param remainingTags Gibt anhand von Tags die Wortarten an, die im resultierenden String enthalten sein sollen
-     * @return	Part-of-Speech-annotierter-String mit gewuenschten Wortarten
-     */
-    public static String partOfSpeechWithStaming(String str, List<String>remainingTags) { 
+    public static String partOfSpeechWithStaming(String str) { 
     	String result = "";
-    	PartOfSpeechAnalysis analysis = new PartOfSpeechAnalysis();
-        Tree tree = analysis.parse(str);  
-
+        Tree tree = analysis.parse(str); 
         List<Tree> leaves = tree.getLeaves();
         //Concat words with their tags
         for (Tree leaf : leaves) { 

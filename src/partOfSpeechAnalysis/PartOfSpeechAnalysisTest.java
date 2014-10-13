@@ -16,7 +16,7 @@ public class PartOfSpeechAnalysisTest {
 		stamming.add("VBZ");
 		stamming.add("NN");
 		stamming.add("NNP");
-		System.out.println(PartOfSpeechAnalysis.partOfSpeechWithStaming("I fucking hate the stupid pig Obama", stamming));
+		System.out.println(PartOfSpeechAnalysis.partOfSpeech("I fucking hate the stupid pig Obama"));
 	}
 
 }

@@ -1423,7 +1423,6 @@ seent 1
 dammar 1
 martyr 6
 stowage 1
-:Þ 1
 stephen 6
 dracocephalum 1
 moroccan 2
@@ -1440,7 +1439,6 @@ cronartium 1
 temporary 55
 _trunk 1
 hardheaded 1
-:þ 1
 buphthalmum 1
 hollowness 1
 unwarned 1
@@ -36828,7 +36826,6 @@ reputations 1
 greenmail 1
 surgeon 52
 antitypic 1
-:-Þ 1
 bearable 3
 mflops 1
 oligodendroglia 1
@@ -36845,7 +36842,6 @@ overrate 1
 disinfectant 4
 carnival 2
 _staphylococcus 3
-:-þ 1
 backwards 19
 endorsed 11
 cooperative 10
@@ -43082,6 +43078,7 @@ foreshadowing 2
 impedimenta 1
 swabbing 4
 dourly 1
+:ï¿½ 2
 distrain 1
 maux 1
 versatility 1
@@ -78827,6 +78824,7 @@ chronique 1
 keener 5
 musaceae 1
 jadeite 1
+:-ï¿½ 2
 banker 17
 joys 19
 frizzly 1

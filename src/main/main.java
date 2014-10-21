@@ -2,6 +2,8 @@ package main;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import partOfSpeechAnalysis.PartOfSpeechAnalysis;
 import net.dean.jraw.http.NetworkException;
@@ -36,14 +38,27 @@ public class main {
 		dc.addSmileyFile(new File("texts/smileys.txt"));
 		sc.refresh();
 	    
+		//Hole Daten von Quelle
 	    Submission comments = ContentSource.RedditPosts.getPost("2j28og");
-	    String temp = "";
 		
+	    //Erstellen des Thread-Pools
+	    ExecutorService executor = Executors.newFixedThreadPool(100);
+	    
+	    //Jedes Comment durch einen eigenen Thread abarbeiten
 	    for(Comment ele : comments.getComments()) {
-	    	System.out.println("### TWEET ###\n" + ele.getBody().toString() + "\n");
-	    	System.out.println("### KORRIGIERTER TWEET ###\n" + (temp = sc.correctTweet(ele.getBody().toString())) + "\n");
-	    	System.out.println("### GESTEMMTER TWEET ###\n" + PartOfSpeechAnalysis.partOfSpeechWithStaming(temp) + "\n\n");
+	    	executor.submit(new ProcessDataThread(ele.getBody().toString(),sc));
 	    }
+	    
+	    //Auf Abarbeiten jedes Threads warten, und dann erst beenden
+	    System.out.println("Warte auf die Beendigung aller Threads");
+	    while(!(executor.isTerminated())){
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	    
 	}
 		

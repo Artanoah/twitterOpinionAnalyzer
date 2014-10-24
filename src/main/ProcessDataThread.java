@@ -31,15 +31,16 @@ public class ProcessDataThread implements Runnable{
     	System.out.println("### KORRIGIERTER TWEET ###\n" + (clean) + "\n");
     	System.out.println("### GESTEMMTER TWEET ###\n" + stemmed + "\n\n");
 	}
-
+	
+	//habe ich jemals erwaehnt dass java scheisse ist? falls nicht habe ich es hiermit getan
 	public static HashMap<String, Integer> getBagOfWords(String stemmed_strings){
 		HashMap<String, Integer> bagOfWords = new HashMap<String, Integer>();
-		String[] l = stemmed_strings.split(" "); 
-		for(String i : l ){
-			if(bagOfWords.containsKey(i)){
-				Integer q = bagOfWords.get(i);
-				bagOfWords.put(i, q+1);
-			} else bagOfWords.put(i, 1);
+		String[] splitted_string = stemmed_strings.split(" "); 
+		for(String ele : splitted_string ){
+			if(bagOfWords.containsKey(ele)){
+				Integer count = bagOfWords.get(ele);
+				bagOfWords.put(ele, count+1);
+			} else bagOfWords.put(ele, 1);
 		}
 		return bagOfWords;
 	

@@ -16,10 +16,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/slf4j-simple-1.7.7.jar"/>
-	<classpathentry kind="lib" path="E:/GitDaten/twitterOpinionAnalyzer/lib/neuroph-2.9/neuroph-core-2.9.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://neuroph.sourceforge.net/javadoc/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="lib/neuroph-2.9/neuroph-core-2.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

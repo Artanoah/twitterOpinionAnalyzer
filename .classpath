@@ -16,5 +16,15 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/slf4j-simple-1.7.7.jar"/>
+	<classpathentry kind="lib" path="lib/neuroph-2.9/neuroph-core-2.9.jar" sourcepath="lib/neuroph-2.9/sources">
+		<attributes>
+			<attribute name="javadoc_location" value="http://neuroph.sourceforge.net/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/weka.jar" sourcepath="lib/weka-src.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://weka.sourceforge.net/doc.stable/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

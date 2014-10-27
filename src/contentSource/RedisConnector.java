@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.json.*;
 
-import main.Vector;
+import main.FeatureVector;
 import redis.clients.jedis.*;
 
 public class RedisConnector {
@@ -21,7 +21,7 @@ public class RedisConnector {
 	/**Schreibt einen Feature-Vektor in die Redis-Datenbank
 	 * @param data zu schreibender Vektor
 	 */
-	public static void writeVectorToRedis(Vector data){
+	public static void writeVectorToRedis(FeatureVector data){
 		if(redisServer == null){
 			connectToServer();
 		}
@@ -63,7 +63,7 @@ public class RedisConnector {
 	 * @param key Key von einem bestimmten Vektor
 	 * @return Vektor, der hinter dem Key steckt
 	 */
-	public static Vector getVectorFromRedis(String key){
+	public static FeatureVector getVectorFromRedis(String key){
 		if(redisServer == null){
 			connectToServer();
 		}
@@ -75,7 +75,7 @@ public class RedisConnector {
 		}
 		
 		
-		return new Vector(accu , (int)jsonObject.get("class"));
+		return new FeatureVector(accu , (int)jsonObject.get("class"));
 	}
 	
 	/**Holt einen Post von Redis, inkl. dessen Bewertung.

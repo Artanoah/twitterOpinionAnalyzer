@@ -26,7 +26,7 @@ public class ProcessDataThread implements Runnable{
 //		System.out.println(bagOfWords.toString());
 		int bewertung = bewertePost(clean);
 //		printResult(contentData, clean, stemmed);
-		RedisConnector.writeVectorToRedis(new Vector(bagOfWords,bewertung));
+		RedisConnector.writeVectorToRedis(new FeatureVector(bagOfWords,bewertung));
 	}
 	
 	public synchronized void printResult(String raw, String clean, String stemmed){

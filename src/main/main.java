@@ -15,7 +15,7 @@ import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
 import java.util.HashMap;
 import java.util.Map;
-import main.Vector;
+import main.FeatureVector;
 
 
 public class main {

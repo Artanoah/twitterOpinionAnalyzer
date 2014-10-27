@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import main.ListOfAllWords;
-import main.Vector;
+import main.FeatureVector;
 
 import org.neuroph.core.data.DataSet;
 import org.neuroph.nnet.MultiLayerPerceptron;
@@ -34,8 +34,8 @@ public class MLP {
 	 * Fuege eine Liste Input-Vectoren zum Trainingsset hinzu.
 	 * @param data Liste der Input-Vectoren
 	 */
-	public static void addVector(List<Vector> data) {
-		for(Vector vector : data) {
+	public static void addVector(List<FeatureVector> data) {
+		for(FeatureVector vector : data) {
 			addVector(vector);
 		}
 	}
@@ -44,7 +44,7 @@ public class MLP {
 	 * Fuege einen einzelnen Input-Vectoren zum Trainingsset hinzu.
 	 * @param data Input-Vector
 	 */
-	public static void addVector(Vector data) {
+	public static void addVector(FeatureVector data) {
 		double[] inputAkku = new double[wordList.length()];
 		double[] outputAkku = new double[1];
 		
@@ -76,7 +76,7 @@ public class MLP {
 	 * Setze die aktuellen input-Parameter.
 	 * @param vector Input-Vector. Der zugehoerige Value wird ignoriert
 	 */
-	public static void setInput(Vector vector) {
+	public static void setInput(FeatureVector vector) {
 		double[] inputAkku = new double[wordList.length()];
 		
 		for(String w : wordList.getList()) {

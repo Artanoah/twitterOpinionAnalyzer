@@ -7,14 +7,14 @@ public class ClassifyPostsMain {
 	 * zuerst von Fehlern bereinigt (Spelling Correction), mit Part-of-Speech-Tagging 
 	 * bearbeitet und dann mit Stemming heruntergebrochen. </br>
 	 * Aus diesen "korrigierten" Texten werden "Bag-Of-Words" (Hash-Maps) erstellt
-	 * die zusammen mit der dazugehoerigen Bewertung in ein Vector-Objekt geschoben werden.</br>
-	 * Mit diesen Vector-Objekten werden dann die jeweiligen Lernverfahren angestossen. 
+	 * die zusammen mit der dazugehoerigen Bewertung in ein FeatureVector-Objekt geschoben werden.</br>
+	 * Mit diesen FeatureVector-Objekten werden dann die jeweiligen Lernverfahren angestossen. 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		//###### INITIALISIERUNGEN ######
 		
-		//###### OBJEKTE AUS DER DATENBANK HOLEN (Kai) ######
+		//###### OBJEKTE AUS DER DATENBANK HOLEN (Birger) ######
 		//input: ()
 		//output: Map<String, Value> -> Map an Text zu Bewertung
 		
@@ -33,11 +33,15 @@ public class ClassifyPostsMain {
 		
 		//###### BAG-OF-WORDS ERSTELLEN (Kai) ######
 		//input: Map<String, Value>
-		//output: List<Map<String, Value>> -> Liste an Bags of Words
+		//output: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)
 		
 		//###### VOLLSTAENDIGE LISTE ALLER WOERTER ERZEUGEN (Steffen) ######
+		//input: List<String>
+		//output: ListOfAllWords
 		
 		//###### VECTOR OBJEKTE ERSTELLEN (Steffen) ######
+		//input: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)
+		//output: List<FeatureVector> -> Hier sind nun auch nicht vorkommende Woerter in der Map enthalten
 	}
 
 }

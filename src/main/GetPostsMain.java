@@ -13,10 +13,9 @@ public class GetPostsMain {
 	public static void main(String[] args) throws NetworkException, IOException {
 		/**###### INITIALISIERUNGEN ######*/
 		
-		//###### POSTS VON REDDIT ABHOLEN (Birger) ######
+		//###### POSTS VON REDDIT ABHOLEN + POSTS IN EINE DATEI SCHREIBEN(Birger) ######
 		RedditPosts.getTrainingsSetToFile("./reddit.txt", "2kdpuj");
-		//###### POSTS IN EINE DATEI SCHREIBEN (Birger) ######
-		RedditPosts.pushTrainingsSetToRedis("./reddit.txt");
+		
 	}
 
 }

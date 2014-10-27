@@ -41,10 +41,6 @@ public class main {
 		dc.addTextFile(new File("texts/big.txt"));
 		dc.addSmileyFile(new File("texts/smileys.txt"));
 		sc.refresh();
-		Map fuc = new HashMap<String,Integer>();
-		fuc.put("ding", 2);
-		
-		Vector ding = new Vector(fuc,1);
 		
 //		RedisConnector.writeVectorToRedis(ding);
 //		System.out.println(RedisConnector.getVectorFromRedis("0").getMap());
@@ -72,26 +68,5 @@ public class main {
 		}
 	    
 	}
-		
-//public static void main(String[] args) {
-//		String dictionary = "dictionary.txt";
-//		DictionaryCreator dc;
-//		SpellingCorrector sc;
-//		String dummy = "fck";
-//		
-//		dc = new DictionaryCreator(dictionary);
-//		sc = new SpellingCorrector(dictionary);
-//		
-//		dc.addFile(new File("texts/sherlockHolmes_theValleyOfFear.txt"));
-//		dc.addFile(new File("texts/edgarWallace_theAngelOfTerror.txt"));
-//		dc.addFile(new File("texts/history_theProudRebel.txt"));
-//		dc.addFile(new File("texts/listOfAllWords.txt"));
-//		dc.addFile(new File("texts/henryReeve_democracyInAmerica.txt"));
-//		dc.addFile(new File("texts/smileys.txt"));
-//		sc.refresh();
-//		
-//		System.out.println("Checking " + dummy + ": " + sc.isValid(dummy));
-//		System.out.println("Corrected " + dummy + ": " + sc.correctWord(dummy));
-//	
 
 }

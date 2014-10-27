@@ -1,6 +1,10 @@
 package contentSource;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.json.*;
+
+import main.Vector;
 import redis.clients.jedis.*;
 
 public class RedisConnector {
@@ -14,19 +18,36 @@ public class RedisConnector {
 		uniqueKey = Integer.valueOf(redisServer.get("maxKey"));
 	}
 	
-	public static void writeVectorToRedis(String data){
+	public static void writeVectorToRedis(Vector data){
 		if(redisServer == null){
 			connectToServer();
 		}
-		redisServer.set(String.valueOf(uniqueKey), data);
+		//JSON-Object zusammenstecken
+		JSONObject json = new JSONObject();
+		json.put("data", data.getMap());
+		json.put("class", data.getValue());
+		
+		//JSON-Object zu Redis schicken
+		redisServer.set(String.valueOf(uniqueKey), json.toString());
+		
+		//Wert von maxKey persistent erhoehen
 		redisServer.set("maxKey", String.valueOf(uniqueKey));
 		uniqueKey +=1;
 	}
-	public static String getVectorFromRedis(String key){
+
+	public static Vector getVectorFromRedis(String key){
 		if(redisServer == null){
 			connectToServer();
 		}
-		return redisServer.get(key);
+		String jsonString = redisServer.get(key);
+		JSONObject jsonObject = new JSONObject(jsonString);
+		HashMap<String,Integer> accu  = new HashMap<String,Integer>();
+		for(Object jo : jsonObject.getJSONObject("data").keySet()){
+			accu.put(jo.toString(), jsonObject.getJSONObject("data").getInt(jo.toString()));
+		}
+		
+		
+		return new Vector(accu , (int)jsonObject.get("class"));
 	}
 	
 }

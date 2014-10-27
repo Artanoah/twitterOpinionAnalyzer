@@ -13,6 +13,9 @@ import net.dean.jraw.models.Submission;
 import contentSource.TweetStream;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
+import java.util.HashMap;
+import java.util.Map;
+import main.Vector;
 
 
 public class main {
@@ -38,6 +41,13 @@ public class main {
 		dc.addTextFile(new File("texts/big.txt"));
 		dc.addSmileyFile(new File("texts/smileys.txt"));
 		sc.refresh();
+		Map fuc = new HashMap<String,Integer>();
+		fuc.put("ding", 2);
+		
+		Vector ding = new Vector(fuc,1);
+		
+//		RedisConnector.writeVectorToRedis(ding);
+//		System.out.println(RedisConnector.getVectorFromRedis("0").getMap());
 		
 		//Hole Daten von Quelle
 	    Submission comments = contentSource.RedditPosts.getPost("2j28og");

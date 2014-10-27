@@ -1,9 +1,11 @@
 package main;
 
+import java.io.Console;
 import java.util.HashMap;
 
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
+import contentSource.RedisConnector;
 import partOfSpeechAnalysis.PartOfSpeechAnalysis;
 import spellingCorrection.SpellingCorrector;
 
@@ -22,14 +24,21 @@ public class ProcessDataThread implements Runnable{
 		String stemmed = PartOfSpeechAnalysis.partOfSpeechWithStaming(clean);
 		HashMap<String, Integer> bagOfWords = getBagOfWords(stemmed);
 		System.out.println(bagOfWords.toString());
-		
+		int bewertung = bewertePost(clean);
 		printResult(contentData, clean, stemmed);
+		RedisConnector.writeVectorToRedis(new Vector(bagOfWords,bewertung));
 	}
 	
 	public static synchronized void printResult(String raw, String clean, String stemmed){
 		System.out.println("### Post ###\n" + raw + "\n");
     	System.out.println("### KORRIGIERTER TWEET ###\n" + (clean) + "\n");
     	System.out.println("### GESTEMMTER TWEET ###\n" + stemmed + "\n\n");
+	}
+	public static synchronized int bewertePost(String clean){
+		Console console = System.console();
+		System.out.println("Bitte bewerte jetzt folgenden Post:");
+		System.out.println(clean);
+		return Integer.valueOf(console.readLine("Bewertung:"));
 	}
 	
 	//habe ich jemals erwaehnt dass java scheisse ist? falls nicht habe ich es hiermit getan

@@ -45,27 +45,27 @@ public class main {
 //		RedisConnector.writeVectorToRedis(ding);
 //		System.out.println(RedisConnector.getVectorFromRedis("0").getMap());
 		
-		//Hole Daten von Quelle
-	    Submission comments = contentSource.RedditPosts.getPost("2j28og");
-		
-	    //Erstellen des Thread-Pools
-	    ExecutorService executor = Executors.newFixedThreadPool(100);
-	    
-	    //Jedes Comment durch einen eigenen Thread abarbeiten
-	    for(Comment ele : comments.getComments()) {
-	    	executor.submit(new ProcessDataThread(ele.getBody().toString(),sc));
-	    }
-	    
-	    //Auf Abarbeiten jedes Threads warten, und dann erst beenden
-	    System.out.println("Warte auf die Beendigung aller Threads");
-	    while(!(executor.isTerminated())){
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		//Hole Daten von Quelle
+//	    Submission comments = contentSource.RedditPosts.getPost("2j28og");
+//		
+//	    //Erstellen des Thread-Pools
+//	    ExecutorService executor = Executors.newFixedThreadPool(1);
+//	    
+//	    //Jedes Comment durch einen eigenen Thread abarbeiten
+//	    for(Comment ele : comments.getComments()) {
+//	    	executor.submit(new ProcessDataThread(ele.getBody().toString(),sc));
+//	    }
+//	    
+//	    //Auf Abarbeiten jedes Threads warten, und dann erst beenden
+//	    System.out.println("Warte auf die Beendigung aller Threads");
+//	    while(!(executor.isTerminated())){
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 	    
 	}
 

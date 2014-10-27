@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import contentSource.RedisConnector;
 import partOfSpeechAnalysis.PartOfSpeechAnalysis;
 import net.dean.jraw.http.NetworkException;
 import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.Submission;
-import ContentSource.TweetStream;
+import contentSource.TweetStream;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
 
@@ -37,9 +38,9 @@ public class main {
 		dc.addTextFile(new File("texts/big.txt"));
 		dc.addSmileyFile(new File("texts/smileys.txt"));
 		sc.refresh();
-	    
+		
 		//Hole Daten von Quelle
-	    Submission comments = ContentSource.RedditPosts.getPost("2j28og");
+	    Submission comments = contentSource.RedditPosts.getPost("2j28og");
 		
 	    //Erstellen des Thread-Pools
 	    ExecutorService executor = Executors.newFixedThreadPool(100);

@@ -1,4 +1,4 @@
-package ContentSource;
+package contentSource;
 
 import java.io.IOException;
 import java.util.ArrayList;

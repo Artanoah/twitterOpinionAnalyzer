@@ -112,4 +112,8 @@ public class ListOfAllWords {
 	public List<String> getList() {
 		return listOfWords;
 	}
+	
+	public int length() {
+		return listOfWords.size();
+	}
 }

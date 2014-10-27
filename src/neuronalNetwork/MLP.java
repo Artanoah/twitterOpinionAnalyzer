@@ -26,11 +26,7 @@ public class MLP {
 		dataSet = new DataSet(nInputLayer, nOutputLayer);
 		
 		for(HashMap<String, Integer> set : data) {
-			dataSet.addRow(new DataSetRow(input, desiredOutput));
-			
-			for(String key : keys) {
-				
-			}
+			double[]
 		}
 	}
 }

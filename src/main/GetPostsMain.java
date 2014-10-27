@@ -1,5 +1,8 @@
 package main;
 
+import net.dean.jraw.http.NetworkException;
+import contentSource.RedditPosts;
+
 public class GetPostsMain {
 
 	/**
@@ -12,6 +15,7 @@ public class GetPostsMain {
 		//###### POSTS VON REDDIT ABHOLEN (Birger) ######
 		
 		//###### POSTS IN EINE DATEI SCHREIBEN (Birger) ######
+
 	}
 
 }

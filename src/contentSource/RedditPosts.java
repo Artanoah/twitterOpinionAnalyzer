@@ -1,11 +1,17 @@
 package contentSource;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import main.ProcessDataThread;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkException;
+import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.pagination.SubredditPaginator;
@@ -43,5 +49,34 @@ public class RedditPosts {
 		RedditClient reddit = new RedditClient("bot/1.0 by name");
 		
 		return reddit.getSubmission(postId);
+	}
+	
+	static public void getTrainingsSet(String filePath,String subreddit) throws NetworkException{
+		//Posts von Reddit holen
+		Submission comments = contentSource.RedditPosts.getPost(subreddit);
+		
+		//Jedes Kommentar Zeile fuer Zeile in Datei schreiben
+		File redditFile = new File(filePath);
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new FileWriter(redditFile));
+		} catch (IOException e1) {
+			System.out.println("ERROR: Fehler beim Oeffnen der TrainingsSet-Datei.");
+		}
+		String line = "";
+		for(Comment ele : comments.getComments()) {
+	    	line = "{";
+	    	line = line.concat("text:\"" + ele.getBody().toString() + "\", bewertung:\" \"}");
+	    	try {
+				writer.write(line + "\n");
+			} catch (IOException e) {
+				System.out.println("ERROR: Fehler beim Schreiben in TrainingsSet-Datei.");
+			}
+	    }
+		try {
+			writer.close();
+		} catch (IOException e) {
+			System.out.println("ERROR: Fehler beim Schliessen der TrainingsSet-Datei.");
+		}
 	}
 }

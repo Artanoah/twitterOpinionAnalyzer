@@ -23,18 +23,18 @@ public class ProcessDataThread implements Runnable{
 		String clean = sc.correctTweet(contentData);
 		String stemmed = PartOfSpeechAnalysis.partOfSpeechWithStaming(clean);
 		HashMap<String, Integer> bagOfWords = getBagOfWords(stemmed);
-		System.out.println(bagOfWords.toString());
+//		System.out.println(bagOfWords.toString());
 		int bewertung = bewertePost(clean);
-		printResult(contentData, clean, stemmed);
+//		printResult(contentData, clean, stemmed);
 		RedisConnector.writeVectorToRedis(new Vector(bagOfWords,bewertung));
 	}
 	
-	public static synchronized void printResult(String raw, String clean, String stemmed){
+	public synchronized void printResult(String raw, String clean, String stemmed){
 		System.out.println("### Post ###\n" + raw + "\n");
     	System.out.println("### KORRIGIERTER TWEET ###\n" + (clean) + "\n");
     	System.out.println("### GESTEMMTER TWEET ###\n" + stemmed + "\n\n");
 	}
-	public static synchronized int bewertePost(String clean){
+	public synchronized int bewertePost(String clean){
 		Console console = System.console();
 		System.out.println("Bitte bewerte jetzt folgenden Post:");
 		System.out.println(clean);

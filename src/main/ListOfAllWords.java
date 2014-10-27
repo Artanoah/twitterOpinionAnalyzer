@@ -58,7 +58,7 @@ public class ListOfAllWords {
 		
 		while(br.ready()) {
 			String word = br.readLine().trim();
-			if(!listOfWords.contains(word)) {
+			if(!word.isEmpty() && !listOfWords.contains(word)) {
 				listOfWords.add(word);
 			}
 		}

@@ -1,5 +1,10 @@
 package partOfSpeechAnalysis;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +27,8 @@ public class PartOfSpeechAnalysis {
     private final TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "invertible=true");
     private final LexicalizedParser parser = LexicalizedParser.loadModel(PCG_MODEL);
     private final static PartOfSpeechAnalysis analysis = new PartOfSpeechAnalysis();
-    private final static List<String>remainingTags = new ArrayList<String>(Arrays.asList("NN", "VBP", "VBZ", "NN", "NNP"));
+    private final static List<String>stringRemainingTags = new ArrayList<String>(Arrays.asList("NN", "VBP", "VBZ", "NN", "NNP"));
+    private final static List<String>textFileRemainingTags = new ArrayList<String>(Arrays.asList("JJ", "JJR", "JJS", "NN", "NNP", "NNPS", "NNS", "RB", "RBR", "RBS", "RP", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ"));
 
     
     public Tree parse(String str) {                
@@ -59,11 +65,37 @@ public class PartOfSpeechAnalysis {
         //Concat words with their tags
         for (Tree leaf : leaves) { 
             Tree parent = leaf.parent(tree);
-            if(remainingTags.contains(parent.label().value())){
+            if(stringRemainingTags.contains(parent.label().value())){
             	result = result.concat(leaf.label().value() + "-" + parent.label().value() + " ");
             }
         }
         return result;             
+    }
+    
+    public static void stamTextFile() throws IOException{
+    	FileReader fr = new FileReader("new_dictionary.txt");
+        BufferedReader br = new BufferedReader(fr);
+        
+        FileWriter fw = new FileWriter("stammed_dictionary.txt");
+        BufferedWriter bw = new BufferedWriter(fw);
+        
+        String temp ="";
+        while(br.ready()){
+        	temp = br.readLine();
+        	Tree tree = analysis.parse(temp);
+        	List<Tree> leaves = tree.getLeaves();
+        	for(Tree leaf : leaves) {
+        		Tree parent = leaf.parent(tree);
+        		System.out.println(leaf.label().value());
+        		if(parent.label().value() != null){
+        			if(textFileRemainingTags.contains(parent.label().value())){
+            			bw.write(leaf.label().value() + "-" + parent.label().value() + "\n");
+            		}
+            	}
+        	}	
+        }
+        br.close();
+        bw.close();
     }
     
     

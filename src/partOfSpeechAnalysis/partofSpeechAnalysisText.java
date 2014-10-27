@@ -10,7 +10,7 @@ public class partofSpeechAnalysisText {
 
 	@Test
 	public void test() throws IOException {
-		PartOfSpeechAnalysis.stamTextFile();
+		PartOfSpeechAnalysis.filterTextFile(true);
 	}
 
 }

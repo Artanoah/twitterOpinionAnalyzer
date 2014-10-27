@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.tartarus.snowball.ext.PorterStemmer;
+
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.TokenizerFactory;
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
@@ -44,40 +46,58 @@ public class PartOfSpeechAnalysis {
         return tokenizer.tokenize();
     }
 
-    public static String partOfSpeech(String str) { 
+    public static String partOfSpeech(String str, Boolean stamming) { 
     	String result = "";
+    	Stemmer stemmer = new Stemmer();
         Tree tree = analysis.parse(str);  
-
         List<Tree> leaves = tree.getLeaves();
         //Concat words with their tags
         for (Tree leaf : leaves) { 
             Tree parent = leaf.parent(tree);
-            result = result.concat((leaf.label().value() + "-" + parent.label().value() + " "));
+            if(stamming){
+            	stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
+            	stemmer.stem();
+            	result = result.concat((stemmer.toString() + "-" + parent.label().value() + " "));
+            }
+            else{
+            	result = result.concat((leaf.label().value() + "-" + parent.label().value() + " "));
+            }
+            
         }
         return result;             
     }
     
     
-    public static String partOfSpeechWithStaming(String str) { 
+    public static String partOfSpeechWithFilter(String str, Boolean stamming) { 
     	String result = "";
+    	Stemmer stemmer = new Stemmer();
         Tree tree = analysis.parse(str); 
         List<Tree> leaves = tree.getLeaves();
         //Concat words with their tags
         for (Tree leaf : leaves) { 
             Tree parent = leaf.parent(tree);
             if(stringRemainingTags.contains(parent.label().value())){
-            	result = result.concat(leaf.label().value() + "-" + parent.label().value() + " ");
+            	if(stamming){
+                	stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
+                	stemmer.stem();
+                	result = result.concat((stemmer.toString() + "-" + parent.label().value() + " "));
+                }
+                else{
+                	result = result.concat((leaf.label().value() + "-" + parent.label().value() + " "));
+                }
             }
         }
         return result;             
     }
     
-    public static void stamTextFile() throws IOException{
+    public static void filterTextFile(Boolean stamming) throws IOException{
     	FileReader fr = new FileReader("new_dictionary.txt");
         BufferedReader br = new BufferedReader(fr);
         
         FileWriter fw = new FileWriter("stammed_dictionary.txt");
         BufferedWriter bw = new BufferedWriter(fw);
+        
+        Stemmer stemmer = new Stemmer();
         
         String temp ="";
         while(br.ready()){
@@ -86,10 +106,18 @@ public class PartOfSpeechAnalysis {
         	List<Tree> leaves = tree.getLeaves();
         	for(Tree leaf : leaves) {
         		Tree parent = leaf.parent(tree);
-        		System.out.println(leaf.label().value());
         		if(parent.label().value() != null){
         			if(textFileRemainingTags.contains(parent.label().value())){
-            			bw.write(leaf.label().value() + "-" + parent.label().value() + "\n");
+        				if(stamming){
+        					stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
+        					stemmer.stem();
+        					System.out.println(stemmer.getResultBuffer().toString() + " - "  + stemmer.toString());
+        					bw.write(stemmer.toString() + "-" + parent.label().value() + "\n");
+        				}
+        				else{
+        					bw.write(leaf.label().value() + "-" + parent.label().value() + "\n");
+        				}
+            		
             		}
             	}
         	}	

@@ -1,12 +1,17 @@
 package contentSource;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.json.JSONObject;
 
 import main.ProcessDataThread;
 import net.dean.jraw.RedditClient;
@@ -51,7 +56,12 @@ public class RedditPosts {
 		return reddit.getSubmission(postId);
 	}
 	
-	static public void getTrainingsSet(String filePath,String subreddit) throws NetworkException{
+	/**Holt Posts von Reddit und schreibt sie als JSON-Objekte in eine Datei. Es wird bereits ein Feld fuer die Bewertung erzeugt, sodass der Bewerter nur noch einen Wert dort eintragen braucht.
+	 * @param filePath Pfad zur Datei
+	 * @param subreddit eindeutige Reddit-ID des zu holenden Posts
+	 * @throws NetworkException
+	 */
+	static public void getTrainingsSetToFile(String filePath,String subreddit) throws NetworkException{
 		//Posts von Reddit holen
 		Submission comments = contentSource.RedditPosts.getPost(subreddit);
 		
@@ -77,6 +87,32 @@ public class RedditPosts {
 			writer.close();
 		} catch (IOException e) {
 			System.out.println("ERROR: Fehler beim Schliessen der TrainingsSet-Datei.");
+		}
+	}
+	
+	/**Schreibt die Datei, die durch getTrainingsSetToFile() erstellt wurde, in die Redis-Datenbank.
+	 * @param filePath Pfad zur Datei. (Der gleiche der auch beim Erstellen der Datei verwendet wurde)
+	 * @throws IOException
+	 */
+	static public void pushTrainingsSetToRedis(String filePath) throws IOException{
+		// #### ALLE LINES AUS DEM FILE AUSLESEN #####
+		ArrayList<String> allLines = new ArrayList<String>();
+		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		for(String line; (line = br.readLine()) != null; ) {
+	        allLines.add(line);
+	    }
+		br.close();
+		
+		// #### UMWANDELN DER LINES IN JSON #####
+		ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
+		for(String line : allLines){
+			if(!line.isEmpty()){
+				jsonObjects.add(new JSONObject(line));
+			}
+		}
+		
+		for(JSONObject thing:jsonObjects){
+			RedisConnector.writePostToRedis(thing.getString("text"), thing.getInt("bewertung"));
 		}
 	}
 }

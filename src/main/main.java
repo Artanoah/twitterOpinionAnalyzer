@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import contentSource.RedisConnector;
 import partOfSpeechAnalysis.PartOfSpeechAnalysis;
 import net.dean.jraw.http.NetworkException;
 import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.Submission;
-import ContentSource.TweetStream;
+import contentSource.TweetStream;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
+import java.util.HashMap;
+import java.util.Map;
+import main.Vector;
 
 
 public class main {
@@ -37,9 +41,12 @@ public class main {
 		dc.addTextFile(new File("texts/big.txt"));
 		dc.addSmileyFile(new File("texts/smileys.txt"));
 		sc.refresh();
-	    
+		
+//		RedisConnector.writeVectorToRedis(ding);
+//		System.out.println(RedisConnector.getVectorFromRedis("0").getMap());
+		
 		//Hole Daten von Quelle
-	    Submission comments = ContentSource.RedditPosts.getPost("2j28og");
+	    Submission comments = contentSource.RedditPosts.getPost("2j28og");
 		
 	    //Erstellen des Thread-Pools
 	    ExecutorService executor = Executors.newFixedThreadPool(100);
@@ -61,26 +68,5 @@ public class main {
 		}
 	    
 	}
-		
-//public static void main(String[] args) {
-//		String dictionary = "dictionary.txt";
-//		DictionaryCreator dc;
-//		SpellingCorrector sc;
-//		String dummy = "fck";
-//		
-//		dc = new DictionaryCreator(dictionary);
-//		sc = new SpellingCorrector(dictionary);
-//		
-//		dc.addFile(new File("texts/sherlockHolmes_theValleyOfFear.txt"));
-//		dc.addFile(new File("texts/edgarWallace_theAngelOfTerror.txt"));
-//		dc.addFile(new File("texts/history_theProudRebel.txt"));
-//		dc.addFile(new File("texts/listOfAllWords.txt"));
-//		dc.addFile(new File("texts/henryReeve_democracyInAmerica.txt"));
-//		dc.addFile(new File("texts/smileys.txt"));
-//		sc.refresh();
-//		
-//		System.out.println("Checking " + dummy + ": " + sc.isValid(dummy));
-//		System.out.println("Corrected " + dummy + ": " + sc.correctWord(dummy));
-//	
 
 }

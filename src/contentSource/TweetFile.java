@@ -1,4 +1,4 @@
-package ContentSource;
+package contentSource;
 
 import java.io.BufferedReader;
 import java.io.File;

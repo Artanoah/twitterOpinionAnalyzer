@@ -1,4 +1,4 @@
-package ContentSource;
+package contentSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;

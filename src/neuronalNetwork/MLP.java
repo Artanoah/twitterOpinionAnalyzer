@@ -15,6 +15,10 @@ public class MLP {
 	static ListOfAllWords wordList;
 	static Comparator<String> stringComp = (o1, o2) -> o1.compareTo(o2);
 	
+	/**
+	 * Erzeugt ein Multi-Layer-Percepronen Netzwerk mit einem Lexikon list.
+	 * @param list Vollstaendiges Lexikon aller zu verwendenen Woerter
+	 */
 	public MLP(ListOfAllWords list) {
 		wordList = list;
 		
@@ -26,13 +30,21 @@ public class MLP {
 		dataSet = new DataSet(nInputLayer, nOutputLayer);
 	}
 	
-	public static void addInput(List<Vector> data) {
+	/**
+	 * Fuege eine Liste Input-Vectoren zum Trainingsset hinzu.
+	 * @param data Liste der Input-Vectoren
+	 */
+	public static void addVector(List<Vector> data) {
 		for(Vector vector : data) {
-			addInput(vector);
+			addVector(vector);
 		}
 	}
 	
-	public static void addInput(Vector data) {
+	/**
+	 * Fuege einen einzelnen Input-Vectoren zum Trainingsset hinzu.
+	 * @param data Input-Vector
+	 */
+	public static void addVector(Vector data) {
 		double[] inputAkku = new double[wordList.length()];
 		double[] outputAkku = new double[1];
 		
@@ -43,5 +55,43 @@ public class MLP {
 		}
 		
 		dataSet.addRow(inputAkku, outputAkku);
+	}
+	
+	/**
+	 * Laesst das Multi-Layer-Perceptron mit dem aktuellen Trainingsset lernen
+	 */
+	public static void learn() {
+		mlp.learn(dataSet);
+	}
+	
+	/**
+	 * Speichert die errechneten Ergebnisse in einer Datei zwischen
+	 * @param file Dateipfad zum Speicherort
+	 */
+	public static void save(String file) {
+		mlp.save(file);
+	}
+	
+	/**
+	 * Setze die aktuellen input-Parameter.
+	 * @param vector Input-Vector. Der zugehoerige Value wird ignoriert
+	 */
+	public static void setInput(Vector vector) {
+		double[] inputAkku = new double[wordList.length()];
+		
+		for(String w : wordList.getList()) {
+			inputAkku[wordList.getWordID(w)] = vector.getMap().get(w);
+		}
+		
+		mlp.setInput(inputAkku);
+	}
+	
+	/**
+	 * Berechne den Output mit dem aktuellen Input und gibt den erzeugten output zurueck.
+	 * @return Output der Berechnung
+	 */
+	public static double[] calculate() {
+		mlp.calculate();
+		return mlp.getOutput();
 	}
 }

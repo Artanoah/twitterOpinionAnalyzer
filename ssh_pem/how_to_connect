@@ -1,1 +1,2 @@
+54.93.170.209
 ssh -i lol-coaster.pem ec2-user@ec2-54-93-170-209.eu-central-1.compute.amazonaws.com

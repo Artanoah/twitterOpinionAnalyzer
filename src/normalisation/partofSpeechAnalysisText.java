@@ -1,6 +1,5 @@
-package partOfSpeechAnalysis;
+package normalisation;
 
-import static org.junit.Assert.*;
 
 import java.io.IOException;
 
@@ -10,7 +9,7 @@ public class partofSpeechAnalysisText {
 
 	@Test
 	public void test() throws IOException {
-		PartOfSpeechAnalysis.filterTextFile(true);
+		PartOfSpeechAnalysis.normaliseAndFilterTextFile("new_dictionary.txt", true);
 	}
 
 }

@@ -1,4 +1,4 @@
-package partOfSpeechAnalysis;
+package normalisation;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-
-import org.tartarus.snowball.ext.PorterStemmer;
+import java.util.Set;
 
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.TokenizerFactory;
@@ -22,31 +22,27 @@ import edu.stanford.nlp.trees.Tree;
 
 public class PartOfSpeechAnalysis {
 	
-	//Den Parser binden - in diesem Fall ein Part-of-Speech-Parser fuer englischen Text
+	//Bind the part-of-speech-parser for english language
     private final static String PCG_MODEL = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";        
     
-    //Initialisierung der Stanford-Parser-Komponenten
+    //Initialise the Stanford-Parser-Components
     private final TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "invertible=true");
     private final LexicalizedParser parser = LexicalizedParser.loadModel(PCG_MODEL);
     private final static PartOfSpeechAnalysis analysis = new PartOfSpeechAnalysis();
+    //Kind of Words to remain filtering a String
     private final static List<String>stringRemainingTags = new ArrayList<String>(Arrays.asList("NN", "VBP", "VBZ", "NN", "NNP"));
+    //Kind of Words to remain filtering a .txt-file
     private final static List<String>textFileRemainingTags = new ArrayList<String>(Arrays.asList("JJ", "JJR", "JJS", "NN", "NNP", "NNPS", "NNS", "RB", "RBR", "RBS", "RP", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ"));
 
     
-    public Tree parse(String str) {                
-        List<CoreLabel> tokens = tokenize(str);
-        Tree tree = parser.apply(tokens);
-        return tree;
-    }
-
-    private List<CoreLabel> tokenize(String str) {
-        Tokenizer<CoreLabel> tokenizer =
-            tokenizerFactory.getTokenizer(
-                new StringReader(str));    
-        return tokenizer.tokenize();
-    }
-
-    public static String partOfSpeech(String str, Boolean stamming) { 
+    /**
+     * Annotates the part-of-speech attribute to every word of the given String str
+     * If Boolean stamming is true, the words are also transformed into the stem
+     * @param str the String to normalise
+     * @param stamming whether the words in the String str should be stemmed
+     * @return the normalised String
+     */
+    public static String normaliseString(String str, Boolean stamming) { 
     	String result = "";
     	Stemmer stemmer = new Stemmer();
         Tree tree = analysis.parse(str);  
@@ -68,7 +64,15 @@ public class PartOfSpeechAnalysis {
     }
     
     
-    public static String partOfSpeechWithFilter(String str, Boolean stamming) { 
+    /**
+    * Annotates the part-of-speech attribute to every word of the given String str
+    * whereas just the part-of-speech types in normalisation.PartOfSpeechAnalysis.stringRemainingTags will remain
+    * If Boolean stamming is true, the words are also transformed into the stem
+    * @param str the String to normalise
+    * @param stamming whether the words in the String str should be stemmed
+    * @return the normalised String
+    */
+    public static String normaliseAndFilterString(String str, Boolean stamming) { 
     	String result = "";
     	Stemmer stemmer = new Stemmer();
         Tree tree = analysis.parse(str); 
@@ -90,12 +94,22 @@ public class PartOfSpeechAnalysis {
         return result;             
     }
     
-    public static void filterTextFile(Boolean stamming) throws IOException{
-    	FileReader fr = new FileReader("new_dictionary.txt");
+    /**
+     * Annotates the part-of-speech attribute to every Word of the given String str
+     * whereas just the part-of-speech types in normalisation.PartOfSpeechAnalysis.textFileRemainingTags will remain
+     * the results are saved in stammed_dictionary.txt whereas identical words aren't listed
+     * If Boolean stamming is true, the words are also transformed into the stem
+     * @param textfile the textfile to normalise
+     * @param stamming whether the words in the textfile should be stemmed
+     */
+    public static void normaliseAndFilterTextFile(String textfile, Boolean stamming) throws IOException{
+    	FileReader fr = new FileReader(textfile);
         BufferedReader br = new BufferedReader(fr);
         
         FileWriter fw = new FileWriter("stammed_dictionary.txt");
         BufferedWriter bw = new BufferedWriter(fw);
+        
+        Set<String> result = new HashSet<String>();
         
         Stemmer stemmer = new Stemmer();
         
@@ -112,18 +126,35 @@ public class PartOfSpeechAnalysis {
         					stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
         					stemmer.stem();
         					System.out.println(stemmer.getResultBuffer().toString() + " - "  + stemmer.toString());
-        					bw.write(stemmer.toString() + "-" + parent.label().value() + "\n");
+        					result.add(stemmer.toString());
         				}
         				else{
-        					bw.write(leaf.label().value() + "-" + parent.label().value() + "\n");
+        					result.add(leaf.label().value());
         				}
             		
             		}
             	}
-        	}	
+        	}
         }
+        for(String s : result){
+    		bw.write(s + "\n");
+    	}
         br.close();
         bw.close();
+    }
+    
+    
+
+    private Tree parse(String str) {                
+        List<CoreLabel> tokens = tokenize(str);
+        Tree tree = parser.apply(tokens);
+        return tree;
+    }
+
+    
+    private List<CoreLabel> tokenize(String str) {
+        Tokenizer<CoreLabel> tokenizer = tokenizerFactory.getTokenizer(new StringReader(str));    
+        return tokenizer.tokenize();
     }
     
     

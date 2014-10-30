@@ -1,4 +1,4 @@
-package partOfSpeechAnalysis;
+package normalisation;
 
 /*
 
@@ -35,8 +35,6 @@ package partOfSpeechAnalysis;
 */
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
   * Stemmer, implementing the Porter Stemming Algorithm
@@ -375,7 +373,8 @@ class Stemmer
       for (int i = 0; i < args.length; i++)
       try
       {
-         FileInputStream in = new FileInputStream(args[i]);
+         @SuppressWarnings("resource")
+		FileInputStream in = new FileInputStream(args[i]);
 
          try
          { while(true)

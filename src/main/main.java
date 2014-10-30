@@ -6,15 +6,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import contentSource.RedisConnector;
-import partOfSpeechAnalysis.PartOfSpeechAnalysis;
 import net.dean.jraw.http.NetworkException;
 import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.Submission;
+import normalisation.PartOfSpeechAnalysis;
 import contentSource.TweetStream;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import main.FeatureVector;
 
 

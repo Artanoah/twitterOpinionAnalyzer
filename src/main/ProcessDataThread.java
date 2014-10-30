@@ -3,10 +3,11 @@ package main;
 import java.io.Console;
 import java.util.HashMap;
 
+import normalisation.PartOfSpeechAnalysis;
+
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import contentSource.RedisConnector;
-import partOfSpeechAnalysis.PartOfSpeechAnalysis;
 import spellingCorrection.SpellingCorrector;
 
 public class ProcessDataThread implements Runnable{
@@ -41,7 +42,8 @@ public class ProcessDataThread implements Runnable{
 		return Integer.valueOf(console.readLine("Bewertung:"));
 	}
 	
-	//habe ich jemals erwaehnt dass java scheisse ist? falls nicht habe ich es hiermit getan
+	//habe ich jemals erwaehnt dass java scheisse ist? falls nicht habe ich es hiermit getan 
+	// #signed - Batman
 	public static HashMap<String, Integer> getBagOfWords(String stemmed_strings){
 		HashMap<String, Integer> bagOfWords = new HashMap<String, Integer>();
 		String[] splitted_string = stemmed_strings.split(" "); 

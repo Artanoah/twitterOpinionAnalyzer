@@ -22,14 +22,15 @@ public class ClassifyPostsMain {
 		//input: Map<String, Value>
 		//output: Map<String, Value> -> Korrigierter Text zu Bewertung
 		
-		//###### PART OF SPEECH TAGGING (Fabian) ######
+		//###### PART OF SPEECH TAGGING + STEMMING (Fabian) ######
 		//input: Map<String, Value>
+		//for(String s : input.keyset){
+		//	input.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(s, true), input.get(s));
+		//}
+		//return input;
 		//output: Map<String, Value> -> Getagter Text zu Bewertung
-		
-		//###### STEMMING (Fabian) ######
-		//input: Map<String, Value>
-		//output: Map<String, Value> -> Gestemmter Text zu Bewertung
 		//output: List<String> -> Liste aller zu benutzenden Woerter
+		
 		
 		//###### BAG-OF-WORDS ERSTELLEN (Kai) ######
 		//input: Map<String, Value>

@@ -31,6 +31,10 @@ public class ClassifyPostsMain {
 		List<String> wortliste = new ArrayList<String>();
 		ListOfAllWords listOfAllWords = new ListOfAllWords();
 		
+		//###### Bag Of Words ######
+		Map<Map<String, Integer>, Integer> bagsOfWords = new HashMap<Map<String, Integer>, Integer>();
+		List<FeatureVector> listOfFeatureVectors = new ArrayList<FeatureVector>();
+		
 		//###### Initialisiere Dictionary ######
 		String dictionary = "dictionary.txt";
 		DictionaryCreator dc;
@@ -83,6 +87,9 @@ public class ClassifyPostsMain {
 		//###### VECTOR OBJEKTE ERSTELLEN (Steffen) ######
 		//input: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)
 		//output: List<FeatureVector> -> Hier sind nun auch nicht vorkommende Woerter in der Map enthalten
-	}
 
+		bagsOfWords.forEach((key, value) -> 
+			listOfFeatureVectors.add(new FeatureVector(listOfAllWords.createCompleteHash(key), value))
+		);
+	}
 }

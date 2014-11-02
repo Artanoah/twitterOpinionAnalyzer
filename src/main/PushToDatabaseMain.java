@@ -13,8 +13,6 @@ public class PushToDatabaseMain {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		
 		//###### INITIALISIERUNGEN ######
 
 		//###### TUPEL AUSLESEN + TUPEL IN DIE DATENBANK SCHIEBEN(Birger) ######

@@ -25,8 +25,8 @@ public class ProcessDataThread implements Runnable{
 		String stemmed = PartOfSpeechAnalysis.partOfSpeechWithStaming(clean);
 		HashMap<String, Integer> bagOfWords = getBagOfWords(stemmed);
 //		System.out.println(bagOfWords.toString());
-		int bewertung = bewertePost(clean);
-//		printResult(contentData, clean, stemmed);
+//		int bewertung = bewertePost(clean);
+		printResult(contentData, clean, stemmed);
 		RedisConnector.writeVectorToRedis(new FeatureVector(bagOfWords,bewertung));
 	}
 	

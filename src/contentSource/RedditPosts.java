@@ -76,7 +76,7 @@ public class RedditPosts {
 		String line = "";
 		for(Comment ele : comments.getComments()) {
 	    	line = "{";
-	    	line = line.concat("text:\"" + ele.getBody().toString() + "\", bewertung:\" \"}");
+	    	line = line.concat("text:\"" + ele.getBody().toString().replace("\"", "*").replace("\'", "*").replace("\n", "").replace("\r", "") + "\", bewertung:\"\"}");
 	    	try {
 				writer.write(line + "\n");
 			} catch (IOException e) {
@@ -102,7 +102,8 @@ public class RedditPosts {
 	        allLines.add(line);
 	    }
 		br.close();
-		
+		System.out.println(allLines);
+		System.out.println();
 		// #### UMWANDELN DER LINES IN JSON #####
 		ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
 		for(String line : allLines){
@@ -110,6 +111,7 @@ public class RedditPosts {
 				jsonObjects.add(new JSONObject(line));
 			}
 		}
+		
 		
 		for(JSONObject thing:jsonObjects){
 			RedisConnector.writePostToRedis(thing.getString("text"), thing.getInt("bewertung"));

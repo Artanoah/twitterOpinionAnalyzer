@@ -1,5 +1,12 @@
 package main;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import spellingCorrection.DictionaryCreator;
+import spellingCorrection.SpellingCorrector;
+
 public class ClassifyPostsMain {
 
 	/**
@@ -13,6 +20,28 @@ public class ClassifyPostsMain {
 	 */
 	public static void main(String[] args) {
 		//###### INITIALISIERUNGEN ######
+		//###### Text zu Bewertung ######
+		Map<String, Integer> postToValue = new HashMap<String, Integer>();
+		Map<String, Integer> correctedPostToValue = new HashMap<String, Integer>();
+		Map<String, Integer> stemmedPostTovalue = new HashMap<String, Integer>();
+		
+		//###### Initialisiere Dictionary ######
+		String dictionary = "dictionary.txt";
+		DictionaryCreator dc;
+		SpellingCorrector sc;
+		
+		new File(dictionary).delete();
+		dc = new DictionaryCreator(dictionary);
+		sc = new SpellingCorrector(dictionary);
+		
+		dc.addTextFile(new File("texts/sherlockHolmes_theValleyOfFear.txt"));
+		dc.addTextFile(new File("texts/edgarWallace_theAngelOfTerror.txt"));
+		dc.addTextFile(new File("texts/history_theProudRebel.txt"));
+		dc.addTextFile(new File("texts/listOfAllWords.txt"));
+		dc.addTextFile(new File("texts/henryReeve_democracyInAmerica.txt"));
+		dc.addTextFile(new File("texts/big.txt"));
+		dc.addSmileyFile(new File("texts/smileys.txt"));
+		sc.refresh();
 		
 		//###### OBJEKTE AUS DER DATENBANK HOLEN (Birger) ######
 		//input: ()
@@ -21,15 +50,18 @@ public class ClassifyPostsMain {
 		//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######
 		//input: Map<String, Value>
 		//output: Map<String, Value> -> Korrigierter Text zu Bewertung
+		postToValue.forEach((key, value) -> 
+			correctedPostToValue.put(sc.correctTweet(key), value)
+		);
 		
 		//###### PART OF SPEECH TAGGING + STEMMING (Fabian) ######
 		//input: Map<String, Value>
-		//for(String s : input.keyset){
-		//	input.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(s, true), input.get(s));
-		//}
-		//return input;
 		//output: Map<String, Value> -> Getagter Text zu Bewertung
 		//output: List<String> -> Liste aller zu benutzenden Woerter
+		
+		correctedPostToValue.forEach((key, value) ->
+			stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true), value)
+		);
 		
 		
 		//###### BAG-OF-WORDS ERSTELLEN (Kai) ######

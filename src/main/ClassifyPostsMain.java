@@ -1,7 +1,9 @@
 package main;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import spellingCorrection.DictionaryCreator;
@@ -24,6 +26,10 @@ public class ClassifyPostsMain {
 		Map<String, Integer> postToValue = new HashMap<String, Integer>();
 		Map<String, Integer> correctedPostToValue = new HashMap<String, Integer>();
 		Map<String, Integer> stemmedPostTovalue = new HashMap<String, Integer>();
+		
+		//###### Wortlisten ######
+		List<String> wortliste = new ArrayList<String>();
+		ListOfAllWords listOfAllWords = new ListOfAllWords();
 		
 		//###### Initialisiere Dictionary ######
 		String dictionary = "dictionary.txt";
@@ -50,6 +56,7 @@ public class ClassifyPostsMain {
 		//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######
 		//input: Map<String, Value>
 		//output: Map<String, Value> -> Korrigierter Text zu Bewertung
+		
 		postToValue.forEach((key, value) -> 
 			correctedPostToValue.put(sc.correctTweet(key), value)
 		);
@@ -63,7 +70,6 @@ public class ClassifyPostsMain {
 			stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true), value)
 		);
 		
-		
 		//###### BAG-OF-WORDS ERSTELLEN (Kai) ######
 		//input: Map<String, Value>
 		//output: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)
@@ -71,6 +77,8 @@ public class ClassifyPostsMain {
 		//###### VOLLSTAENDIGE LISTE ALLER WOERTER ERZEUGEN (Steffen) ######
 		//input: List<String>
 		//output: ListOfAllWords
+		
+		listOfAllWords.addWords(wortliste);
 		
 		//###### VECTOR OBJEKTE ERSTELLEN (Steffen) ######
 		//input: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)

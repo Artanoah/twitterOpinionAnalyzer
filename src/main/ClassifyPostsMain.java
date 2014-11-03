@@ -79,8 +79,10 @@ public class ClassifyPostsMain {
 		//output: Map<String, Value> -> Getagter Text zu Bewertung
 		//output: List<String> -> Liste aller zu benutzenden Woerter
 		
-		correctedPostToValue.forEach((key, value) ->
-			stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true), value)
+		correctedPostToValue.forEach((key, value) -> {
+				System.out.println(key);
+				stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false), value);
+			}
 		);
 		
 		BufferedReader stammed_dictionary = new BufferedReader(new FileReader("stammed_dictionary.txt"));

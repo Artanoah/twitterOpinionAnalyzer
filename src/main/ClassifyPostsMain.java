@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import neuronalNetwork.EncogMLP;
 import neuronalNetwork.NeurophMLP;
 import contentSource.RedditPosts;
 import spellingCorrection.DictionaryCreator;
@@ -62,7 +63,8 @@ public class ClassifyPostsMain {
 		sc.refresh();
 		
 		//###### Initialisiere neurales Netzwerk ######
-		NeurophMLP mlp = null;
+		NeurophMLP nmlp = null;
+		EncogMLP emlp = null;
 		
 		//###### OBJEKTE AUS DER DATENBANK HOLEN (Birger) ######
 		//input: ()
@@ -128,11 +130,15 @@ public class ClassifyPostsMain {
 		
 		//###### MLP STEFFEN ######
 		System.out.println("###### MLP LERNEN ######");
-		mlp = new NeurophMLP(listOfAllWords);
+		/*mlp = new NeurophMLP(listOfAllWords);
 		mlp.addVector(listOfFeatureVectors);
 		
 		mlp.learn();
-		mlp.save("mlp.nnet");
+		mlp.save("mlp.nnet");*/
+		
+		emlp = new EncogMLP(listOfAllWords);
+		emlp.addVector(listOfFeatureVectors);
+		emlp.learn();
 		
 		//###### SVM FABIAN ######
 		

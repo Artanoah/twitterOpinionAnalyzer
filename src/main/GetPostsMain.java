@@ -14,8 +14,8 @@ public class GetPostsMain {
 		/**###### INITIALISIERUNGEN ######*/
 		
 		//###### POSTS VON REDDIT ABHOLEN + POSTS IN EINE DATEI SCHREIBEN(Birger) ######
-		RedditPosts.writeTrainingsSetToFile("./reddit.txt", "2kdpuj");
-		
+		//RedditPosts.writeTrainingsSetToFile("./reddit.txt", "2kdpuj");2ko3do
+		RedditPosts.writeTrainingsSetToFile("./reddit.txt", "2ko3do");
 	}
 
 }

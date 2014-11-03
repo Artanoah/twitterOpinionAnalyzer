@@ -1,8 +1,12 @@
 package neuronalNetwork;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+import main.Constants;
 import main.FeatureVector;
 import main.ListOfAllWords;
 
@@ -11,19 +15,21 @@ import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
-import org.neuroph.core.data.DataSet;
-import org.neuroph.nnet.MultiLayerPerceptron;
-import org.neuroph.nnet.comp.layer.InputLayer;
+import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 
 public class EncogMLP {
-	static MLDataSet trainingSet = new BasicMLDataSet();
 	static BasicNetwork network;
-	static ListOfAllWords wordList;
-	static Comparator<String> stringComp = (o1, o2) -> o1.compareTo(o2);
-	
 	static int nInputLayer;
 	static int nHiddenLayer;
 	static int nOutputLayer;
+	
+	static MLDataSet trainingSet = new BasicMLDataSet();
+	static List<List<Double>> INPUT = new ArrayList<List<Double>>();
+	static List<List<Double>> OUTPUT = new ArrayList<List<Double>>();
+	
+	static ListOfAllWords wordList;
+	static Comparator<String> stringComp = (o1, o2) -> o1.compareTo(o2);
+	
 	
 	/**
 	 * Erzeugt ein Multi-Layer-Percepronen Netzwerk mit einem Lexikon list.
@@ -31,7 +37,7 @@ public class EncogMLP {
 	 */
 	public EncogMLP(ListOfAllWords list) {
 		wordList = list;
-		
+				
 		nInputLayer = list.length();
 		nHiddenLayer = (int) Math.round(nInputLayer * 0.75);
 		nOutputLayer = 1;
@@ -39,6 +45,7 @@ public class EncogMLP {
 		network = new BasicNetwork();
 		network.addLayer(new BasicLayer(null, true, nInputLayer));
 		network.addLayer(new BasicLayer(new ActivationSigmoid(), true, nHiddenLayer));
+		//network.addLayer(new BasicLayer(new ActivationSigmoid(), true, Math.round(nHiddenLayer / 2)));
 		network.addLayer(new BasicLayer(new ActivationSigmoid(), false, nOutputLayer));
 		
 		network.getStructure().finalizeStructure();
@@ -61,16 +68,21 @@ public class EncogMLP {
 	 */
 	public static void addVector(FeatureVector data) {
 		System.out.println("###### MLP: Vector hinzugefuegt #####");
-		double[] inputAkku = new double[wordList.length()];
-		double[] outputAkku = new double[1];
-		
-		outputAkku[0] = data.getValue();
+		double inputAkku[] = new double[wordList.length()];
+		double outputAkku = data.getValue();
 		
 		for(String w : wordList.getList()) {
 			inputAkku[wordList.getWordID(w)] = data.getMap().get(w);
 		}
 		
-		dataSet.addRow(inputAkku, outputAkku);
+		ArrayList<Double> inputTemp = new ArrayList<Double>();
+		
+		for(int i = 0; i < inputAkku.length; i++) {
+			inputTemp.add(inputAkku[i]);
+		}
+
+		INPUT.add(inputTemp);
+		OUTPUT.add(new ArrayList<Double>(Arrays.asList(outputAkku)));
 	}
 	
 	/**
@@ -81,37 +93,45 @@ public class EncogMLP {
 		System.out.println("MLP: " + nInputLayer + " Input-Layer");
 		System.out.println("MLP: " + nHiddenLayer + " Hidden-Layer");
 		System.out.println("MLP: " + nOutputLayer + " Output-Layer");
-		mlp.learn(dataSet);
-	}
-	
-	/**
-	 * Speichert die errechneten Ergebnisse in einer Datei zwischen
-	 * @param file Dateipfad zum Speicherort
-	 */
-	public static void save(String file) {
-		mlp.save(file);
-	}
-	
-	/**
-	 * Setze die aktuellen input-Parameter.
-	 * @param vector Input-Vector. Der zugehoerige Value wird ignoriert
-	 */
-	public static void setInput(FeatureVector vector) {
-		double[] inputAkku = new double[wordList.length()];
 		
-		for(String w : wordList.getList()) {
-			inputAkku[wordList.getWordID(w)] = vector.getMap().get(w);
+		double[][] inputArray = new double[INPUT.size()][];
+		double[][] outputArray = new double[OUTPUT.size()][];
+		
+		for(int i = 0; i < INPUT.size(); i++) {
+			inputArray[i] = toDoubleArray(INPUT.get(i));
 		}
 		
-		mlp.setInput(inputAkku);
+		for(int i = 0; i < OUTPUT.size(); i++) {
+			outputArray[i] = toDoubleArray(OUTPUT.get(i));
+		}
+		
+		trainingSet = new BasicMLDataSet(inputArray, outputArray);
+		ResilientPropagation train = new ResilientPropagation(network, trainingSet);
+		int iteration = 1;
+		
+		do {
+			train.iteration();
+			System.out.println("MLP: Iteration: " + iteration + "\t Error: " + train.getError());
+			iteration++;
+		} while(train.getError() > Constants.ERROR_TOLLERANCE);
+		
+		train.finishTraining();
+		System.out.println("MLP: Training finished");
+	}
+	
+	static double[] toDoubleArray(List<Double> list) {
+		double[] ret = new double[list.size()];
+		for(int i = 0;i < ret.length;i++)
+	    ret[i] = list.get(i);
+		return ret;
 	}
 	
 	/**
 	 * Berechne den Output mit dem aktuellen Input und gibt den erzeugten output zurueck.
 	 * @return Output der Berechnung
 	 */
-	public static double[] calculate() {
-		mlp.calculate();
-		return mlp.getOutput();
-	}
+//	public static double[] calculate() {
+//		mlp.calculate();
+//		return mlp.getOutput();
+//	}
 }

@@ -9,7 +9,7 @@ import main.FeatureVector;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.nnet.MultiLayerPerceptron;
 
-public class MLP {
+public class NeurophMLP {
 	static DataSet dataSet;
 	static MultiLayerPerceptron mlp;
 	static ListOfAllWords wordList;
@@ -23,7 +23,7 @@ public class MLP {
 	 * Erzeugt ein Multi-Layer-Percepronen Netzwerk mit einem Lexikon list.
 	 * @param list Vollstaendiges Lexikon aller zu verwendenen Woerter
 	 */
-	public MLP(ListOfAllWords list) {
+	public NeurophMLP(ListOfAllWords list) {
 		wordList = list;
 		
 		nInputLayer = list.length();

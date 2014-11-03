@@ -15,6 +15,10 @@ public class MLP {
 	static ListOfAllWords wordList;
 	static Comparator<String> stringComp = (o1, o2) -> o1.compareTo(o2);
 	
+	static int nInputLayer;
+	static int nHiddenLayer;
+	static int nOutputLayer;
+	
 	/**
 	 * Erzeugt ein Multi-Layer-Percepronen Netzwerk mit einem Lexikon list.
 	 * @param list Vollstaendiges Lexikon aller zu verwendenen Woerter
@@ -22,9 +26,9 @@ public class MLP {
 	public MLP(ListOfAllWords list) {
 		wordList = list;
 		
-		int nInputLayer = list.length();
-		int nHiddenLayer = (int) Math.round(nInputLayer * 0.75);
-		int nOutputLayer = 1;
+		nInputLayer = list.length();
+		nHiddenLayer = (int) Math.round(nInputLayer * 0.75);
+		nOutputLayer = 1;
 		
 		mlp = new MultiLayerPerceptron(nInputLayer, nHiddenLayer, nOutputLayer);
 		dataSet = new DataSet(nInputLayer, nOutputLayer);
@@ -45,6 +49,7 @@ public class MLP {
 	 * @param data Input-Vector
 	 */
 	public static void addVector(FeatureVector data) {
+		System.out.println("###### MLP: Vector hinzugefuegt #####");
 		double[] inputAkku = new double[wordList.length()];
 		double[] outputAkku = new double[1];
 		
@@ -61,6 +66,10 @@ public class MLP {
 	 * Laesst das Multi-Layer-Perceptron mit dem aktuellen Trainingsset lernen
 	 */
 	public static void learn() {
+		System.out.println("###### MLP: Starte lernen #####");
+		System.out.println("MLP: " + nInputLayer + " Input-Layer");
+		System.out.println("MLP: " + nHiddenLayer + " Hidden-Layer");
+		System.out.println("MLP: " + nOutputLayer + " Output-Layer");
 		mlp.learn(dataSet);
 	}
 	

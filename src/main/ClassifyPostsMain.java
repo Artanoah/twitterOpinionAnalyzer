@@ -67,12 +67,14 @@ public class ClassifyPostsMain {
 		//###### OBJEKTE AUS DER DATENBANK HOLEN (Birger) ######
 		//input: ()
 		//output: Map<String, Value> -> Map an Text zu Bewertung
+		System.out.println("###### OBJEKTE AUS DER DATENBANK HOLEN ######");
 		
 		postToValue = RedditPosts.getTrainingsSetFromFile("./reddit.txt");
 		
 		//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######
 		//input: Map<String, Value>
 		//output: Map<String, Value> -> Korrigierter Text zu Bewertung
+		System.out.println("###### TEXTE VON FEHLERN BEREINIGEN ######");
 		
 		postToValue.forEach((key, value) -> 
 			correctedPostToValue.put(sc.correctTweet(key), value)
@@ -82,6 +84,7 @@ public class ClassifyPostsMain {
 		//input: Map<String, Value>
 		//output: Map<String, Value> -> Getagter Text zu Bewertung
 		//output: List<String> -> Liste aller zu benutzenden Woerter
+		System.out.println("###### PART OF SPEECH TAGGING + STEMMING ######");
 		
 		correctedPostToValue.forEach((key, value) -> {
 				System.out.println(key);
@@ -101,6 +104,7 @@ public class ClassifyPostsMain {
 		//###### BAG-OF-WORDS ERSTELLEN (Kai) ######
 		//input: Map<String, Value>
 		//output: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)
+		System.out.println("###### PART OF SPEECH TAGGING + STEMMING ######");
 		
 		stemmedPostTovalue.forEach((key, value) -> 
 			bagsOfWords.put(ProcessDataThread.getBagOfWords(key), value)
@@ -109,23 +113,31 @@ public class ClassifyPostsMain {
 		//###### VOLLSTAENDIGE LISTE ALLER WOERTER ERZEUGEN (Steffen) ######
 		//input: List<String>
 		//output: ListOfAllWords
+		System.out.println("###### VOLLSTAENDIGE LISTE ALLER WOERTER ERZEUGEN ######");
 		
 		listOfAllWords.addWords(wortliste);
 		
 		//###### VECTOR OBJEKTE ERSTELLEN (Steffen) ######
 		//input: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)
 		//output: List<FeatureVector> -> Hier sind nun auch nicht vorkommende Woerter in der Map enthalten
+		System.out.println("###### VECTOR OBJEKTE ERSTELLEN ######");
 
 		bagsOfWords.forEach((key, value) -> 
 			listOfFeatureVectors.add(new FeatureVector(listOfAllWords.createCompleteHash(key), value))
 		);
 		
-		listOfFeatureVectors.forEach((vector -> System.out.println(vector.toString())));
-		
+		//###### MLP STEFFEN ######
+		System.out.println("###### MLP LERNEN ######");
 		mlp = new MLP(listOfAllWords);
 		mlp.addVector(listOfFeatureVectors);
 		
 		mlp.learn();
 		mlp.save("mlp.nnet");
+		
+		//###### SVM FABIAN ######
+		
+		//###### RANDOM FORRESTER BIRGER ######
+		
+		//###### SIMPLE BASE KAI ######
 	}
 }

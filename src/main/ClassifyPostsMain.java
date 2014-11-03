@@ -92,7 +92,7 @@ public class ClassifyPostsMain {
 		
 		while(stammed_dictionary.ready()){
 			String wordToAdd = stammed_dictionary.readLine().trim();
-			if(!wortliste.contains(wordToAdd)){
+			if((!(wortliste.contains(wordToAdd)) && normalisation.PartOfSpeechAnalysis.seperateWordsOfString(stemmedPostTovalue).contains(wordToAdd))){
 				wortliste.add(wordToAdd);
 			}
 		}

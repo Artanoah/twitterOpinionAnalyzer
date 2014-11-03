@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import main.Constants;
@@ -171,6 +173,19 @@ public class PartOfSpeechAnalysis {
     	}
         br.close();
         bw.close();
+    }
+    
+    public static List<String>seperateWordsOfString(Map<String, Integer> input){
+    	List<String> result = new ArrayList<String>();
+    	input.forEach((key, value) -> {
+			String[] array = key.split(" ");
+			for(int i = 0; i < array.length ; i++){
+				if(!(result.contains(array[i]))){
+					result.add(array[i]);
+				}
+			}
+		});
+    	return result;
     }
     
     

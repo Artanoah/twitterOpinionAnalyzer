@@ -42,7 +42,7 @@ public class PartOfSpeechAnalysis {
      * @param stamming whether the words in the String str should be stemmed
      * @return the normalised String
      */
-    public static String normaliseString(String str, Boolean stamming) { 
+    public static String normaliseString(String str, Boolean stamming, Boolean partOfSpeech) { 
     	String result = "";
     	Stemmer stemmer = new Stemmer();
         Tree tree = analysis.parse(str);  
@@ -50,16 +50,29 @@ public class PartOfSpeechAnalysis {
         //Concat words with their tags
         for (Tree leaf : leaves) { 
             Tree parent = leaf.parent(tree);
-            if(stamming){
-            	stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
-            	stemmer.stem();
-            	result = result.concat((stemmer.toString() + "-" + parent.label().value() + " "));
+            if(partOfSpeech){
+            	if(stamming){
+                    stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
+                    stemmer.stem();
+                    result = result.concat((stemmer.toString() + "-" + parent.label().value() + " "));
+                }
+            	else{
+                	result = result.concat((leaf.label().value() + "-" + parent.label().value() + " "));
+                }
             }
             else{
-            	result = result.concat((leaf.label().value() + "-" + parent.label().value() + " "));
+            	if(stamming){
+                    stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
+                    stemmer.stem();
+                    result = result.concat((stemmer.toString() +  " "));
+            	}
+            	else{
+                	result = result.concat((leaf.label().value() + " "));
+                }
             }
-            
+        
         }
+        System.out.println(result);
         return result;             
     }
     
@@ -72,7 +85,7 @@ public class PartOfSpeechAnalysis {
     * @param stamming whether the words in the String str should be stemmed
     * @return the normalised String
     */
-    public static String normaliseAndFilterString(String str, Boolean stamming) { 
+    public static String normaliseAndFilterString(String str, Boolean stamming, Boolean partOfSpeech) { 
     	String result = "";
     	Stemmer stemmer = new Stemmer();
         Tree tree = analysis.parse(str); 
@@ -80,17 +93,32 @@ public class PartOfSpeechAnalysis {
         //Concat words with their tags
         for (Tree leaf : leaves) { 
             Tree parent = leaf.parent(tree);
-            if(stringRemainingTags.contains(parent.label().value())){
+            if(partOfSpeech){
             	if(stamming){
-                	stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
-                	stemmer.stem();
-                	result = result.concat((stemmer.toString() + "-" + parent.label().value() + " "));
+                	if(stringRemainingTags.contains(parent.label().value())){
+                    	stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
+                    	stemmer.stem();
+                    	result = result.concat((stemmer.toString() + "-" + parent.label().value() + " "));
+                    }
                 }
-                else{
+            	else{
                 	result = result.concat((leaf.label().value() + "-" + parent.label().value() + " "));
                 }
             }
+            else{
+            	if(stamming){
+                	if(stringRemainingTags.contains(parent.label().value())){
+                    	stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
+                    	stemmer.stem();
+                    	result = result.concat((stemmer.toString() + " "));
+                    }
+            	}
+            	else{
+                	result = result.concat((leaf.label().value() + " "));
+                }
+            }
         }
+        System.out.println(result);
         return result;             
     }
     
@@ -121,8 +149,8 @@ public class PartOfSpeechAnalysis {
         	for(Tree leaf : leaves) {
         		Tree parent = leaf.parent(tree);
         		if(parent.label().value() != null){
-        			if(textFileRemainingTags.contains(parent.label().value())){
-        				if(stamming){
+        			if(stamming){
+        				if(textFileRemainingTags.contains(parent.label().value())){
         					stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
         					stemmer.stem();
         					System.out.println(stemmer.getResultBuffer().toString() + " - "  + stemmer.toString());

@@ -9,7 +9,7 @@ public class partofSpeechAnalysisText {
 
 	@Test
 	public void test() throws IOException {
-		PartOfSpeechAnalysis.normaliseAndFilterTextFile("new_dictionary.txt", true);
+		PartOfSpeechAnalysis.normaliseString("I have big cock", true, true);
 	}
 
 }

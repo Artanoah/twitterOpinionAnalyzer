@@ -19,7 +19,7 @@ public class TestMain {
 		
 		mlp.learn(trainingSet);
 		
-		mlp.save("or_mlp.nnet");
+		mlp.save("mlp.nnet");
 		
 		mlp.setInput(1,1);
 		

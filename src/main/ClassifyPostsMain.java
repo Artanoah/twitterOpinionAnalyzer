@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import neuronalNetwork.MLP;
 import contentSource.RedditPosts;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
@@ -60,6 +61,9 @@ public class ClassifyPostsMain {
 		dc.addSmileyFile(new File("texts/smileys.txt"));
 		sc.refresh();
 		
+		//###### Initialisiere neurales Netzwerk ######
+		MLP mlp = null;
+		
 		//###### OBJEKTE AUS DER DATENBANK HOLEN (Birger) ######
 		//input: ()
 		//output: Map<String, Value> -> Map an Text zu Bewertung
@@ -85,9 +89,10 @@ public class ClassifyPostsMain {
 			});
 		
 		BufferedReader stammed_dictionary = new BufferedReader(new FileReader("stammed_dictionary.txt"));
+		
 		while(stammed_dictionary.ready()){
 			String wordToAdd = stammed_dictionary.readLine().trim();
-			if(wortliste.contains(wordToAdd)){
+			if(!wortliste.contains(wordToAdd)){
 				wortliste.add(wordToAdd);
 			}
 		}
@@ -116,5 +121,11 @@ public class ClassifyPostsMain {
 		);
 		
 		listOfFeatureVectors.forEach((vector -> System.out.println(vector.toString())));
+		
+		mlp = new MLP(listOfAllWords);
+		mlp.addVector(listOfFeatureVectors);
+		
+		mlp.learn();
+		mlp.save("mlp.nnet");
 	}
 }

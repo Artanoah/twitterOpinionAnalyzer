@@ -34,7 +34,7 @@ public class PartOfSpeechAnalysis {
     private final static LexicalizedParser parser = LexicalizedParser.loadModel(grammar, options);
     private final static PartOfSpeechAnalysis analysis = new PartOfSpeechAnalysis();
     //Kind of Words to remain filtering a String
-    private final static List<String>stringRemainingTags = new ArrayList<String>(Arrays.asList("NN", "VBP", "VBZ", "NN", "NNP"));
+    private final static List<String>stringRemainingTags = new ArrayList<String>(Constants.REMAININGTAGS);
     //Kind of Words to remain filtering a .txt-file
     private final static List<String>textFileRemainingTags = new ArrayList<String>(Arrays.asList("JJ", "JJR", "JJS", "NN", "NNP", "NNPS", "NNS", "RB", "RBR", "RBS", "RP", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ"));
 

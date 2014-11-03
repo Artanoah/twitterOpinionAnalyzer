@@ -15,6 +15,8 @@ import java.util.Set;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.TokenizerFactory;
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
+import edu.stanford.nlp.parser.lexparser.Options;
+import edu.stanford.nlp.parser.lexparser.Options.LexOptions;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
 import edu.stanford.nlp.process.Tokenizer;
@@ -24,7 +26,7 @@ public class PartOfSpeechAnalysis {
 	
 	//Bind the part-of-speech-parser for english language
     private final static String PCG_MODEL = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";        
-    
+    private static Options lexOptions = new Options();
     //Initialise the Stanford-Parser-Components
     private final TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "invertible=true");
     private final LexicalizedParser parser = LexicalizedParser.loadModel(PCG_MODEL);
@@ -42,7 +44,7 @@ public class PartOfSpeechAnalysis {
      * @param stamming whether the words in the String str should be stemmed
      * @return the normalised String
      */
-    public static String normaliseString(String str, Boolean stamming, Boolean partOfSpeech) { 
+    public static String normaliseString(String str, Boolean stamming, Boolean partOfSpeech) {
     	String result = "";
     	Stemmer stemmer = new Stemmer();
         Tree tree = analysis.parse(str);  
@@ -72,7 +74,6 @@ public class PartOfSpeechAnalysis {
             }
         
         }
-        System.out.println(result);
         return result;             
     }
     
@@ -118,7 +119,6 @@ public class PartOfSpeechAnalysis {
                 }
             }
         }
-        System.out.println(result);
         return result;             
     }
     
@@ -173,7 +173,8 @@ public class PartOfSpeechAnalysis {
     
     
 
-    private Tree parse(String str) {                
+    private Tree parse(String str) {           
+    	parser.setOptionFlags(("-maxLength 100"));
         List<CoreLabel> tokens = tokenize(str);
         Tree tree = parser.apply(tokens);
         return tree;
@@ -184,6 +185,7 @@ public class PartOfSpeechAnalysis {
         Tokenizer<CoreLabel> tokenizer = tokenizerFactory.getTokenizer(new StringReader(str));    
         return tokenizer.tokenize();
     }
+
     
     
     

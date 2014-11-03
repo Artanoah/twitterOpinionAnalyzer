@@ -80,7 +80,7 @@ public class ClassifyPostsMain {
 		//output: List<String> -> Liste aller zu benutzenden Woerter
 		
 		correctedPostToValue.forEach((key, value) ->
-			stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true), value)
+			stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false), value)
 		);
 		
 		BufferedReader stammed_dictionary = new BufferedReader(new FileReader("stammed_dictionary.txt"));

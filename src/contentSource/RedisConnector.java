@@ -85,7 +85,7 @@ public class RedisConnector {
 	 * @param key Key von einem bestimmten Post
 	 * @return HashMap mit zwei Keys "text" und "bewertung"
 	 */
-	public static Map<String,Integer> getPostsFromRedis(){
+	public static Map<String,Integer> getAllPostsFromRedis(){
 		Map<String,Integer> result = new HashMap<String,Integer>();
 		if(redisServer == null){
 			connectToServer();

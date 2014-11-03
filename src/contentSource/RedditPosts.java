@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -116,5 +117,9 @@ public class RedditPosts {
 		for(JSONObject thing:jsonObjects){
 			RedisConnector.writePostToRedis(thing.getString("text"), thing.getInt("bewertung"));
 		}
+	}
+	
+	static public Map<String,Integer> getTrainingsSet(){
+		return RedisConnector.getAllPostsFromRedis();
 	}
 }

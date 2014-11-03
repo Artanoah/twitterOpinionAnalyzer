@@ -3,7 +3,6 @@ package contentSource;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,15 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
-
-import main.ProcessDataThread;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkException;
 import net.dean.jraw.models.Comment;
 import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.pagination.SubredditPaginator;
+
+import org.json.JSONObject;
 
 
 
@@ -124,7 +122,9 @@ public class RedditPosts {
 		return RedisConnector.getAllPostsFromRedis();
 	}
 	static public Map<String,Integer> getTrainingsSetFromFile(String filePath) throws IOException{
+		Map<String,Integer> temp = new HashMap<String,Integer>();
 		Map<String,Integer> result = new HashMap<String,Integer>();
+		int maxPostLengthInWords = 70;
 		
 		// #### ALLE LINES AUS DEM FILE AUSLESEN #####
 		ArrayList<String> allLines = new ArrayList<String>();
@@ -144,8 +144,29 @@ public class RedditPosts {
 		
 		//####### UMWANDELN DER JSONS IN EINE MAP
 		for(JSONObject json : jsonObjects){
-			result.put(json.getString("text"), Integer.valueOf(json.getString("bewertung")));
+			temp.put(json.getString("text"), Integer.valueOf(json.getString("bewertung")));
 		}
+		
+		//##### Kuerzen der Post auf bestimmte Laenge ####
+		result = shortenPostToMaxWordsLength(temp,maxPostLengthInWords);
+		
+		return result;
+	}
+	
+	private static Map<String,Integer> shortenPostToMaxWordsLength(Map<String,Integer> posts,int maxLength){
+		Map<String,Integer> result = new HashMap<String,Integer>();
+		
+		posts.forEach((key, value) -> {
+			String temp = "";
+			String[] array = key.split(" ");
+			if(array.length > maxLength){
+				for(int i = 0; i < maxLength ; i++){
+					temp = temp.concat(array[i] + " ");
+				}
+			}
+			result.put(temp, value);
+		});
+
 		
 		return result;
 	}

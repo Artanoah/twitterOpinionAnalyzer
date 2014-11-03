@@ -2,12 +2,15 @@ package main;
 
 import java.io.Console;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import normalisation.PartOfSpeechAnalysis;
 
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import contentSource.RedisConnector;
+import edu.stanford.nlp.ling.CoreAnnotations.BagOfWordsAnnotation;
 import spellingCorrection.SpellingCorrector;
 
 public class ProcessDataThread implements Runnable{
@@ -25,8 +28,8 @@ public class ProcessDataThread implements Runnable{
 		String stemmed = PartOfSpeechAnalysis.partOfSpeechWithStaming(clean);
 		HashMap<String, Integer> bagOfWords = getBagOfWords(stemmed);
 //		System.out.println(bagOfWords.toString());
-//		int bewertung = bewertePost(clean);
-		printResult(contentData, clean, stemmed);
+		int bewertung = bewertePost(clean);
+//		printResult(contentData, clean, stemmed);
 		RedisConnector.writeVectorToRedis(new FeatureVector(bagOfWords,bewertung));
 	}
 	
@@ -55,6 +58,17 @@ public class ProcessDataThread implements Runnable{
 		}
 		return bagOfWords;
 	
+	
 	}
+	
+	Map<Map<String, Integer>, Integer> resultBag = new HashMap<Map<String, Integer>, Integer>();
+	
+	public void createBagOfWords(Map<String, Integer> map, Integer value,Map<Map<String, Integer>, Integer> resultBag){
+ 
+		resultBag.put(map, value);
+				
+		
+	}
+
 
 }

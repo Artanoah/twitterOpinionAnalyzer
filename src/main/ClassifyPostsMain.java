@@ -82,7 +82,7 @@ public class ClassifyPostsMain {
 		correctedPostToValue.forEach((key, value) -> {
 				System.out.println(key);
 				stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false), value);
-			}
+			});
 		
 		BufferedReader stammed_dictionary = new BufferedReader(new FileReader("stammed_dictionary.txt"));
 		while(stammed_dictionary.ready()){

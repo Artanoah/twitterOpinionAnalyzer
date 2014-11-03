@@ -23,13 +23,14 @@ import edu.stanford.nlp.process.Tokenizer;
 import edu.stanford.nlp.trees.Tree;
 
 public class PartOfSpeechAnalysis {
-	
-	//Bind the part-of-speech-parser for english language
-    private final static String PCG_MODEL = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";        
-    private static Options lexOptions = new Options();
+
     //Initialise the Stanford-Parser-Components
     private final TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "invertible=true");
-    private final LexicalizedParser parser = LexicalizedParser.loadModel(PCG_MODEL);
+    //Bind the part-of-speech-parser for english language
+    private final static String grammar = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";
+    //Options for the Lexparser
+    private final static String[] options = { "-maxLength", "100"};
+    private final static LexicalizedParser parser = LexicalizedParser.loadModel(grammar, options);
     private final static PartOfSpeechAnalysis analysis = new PartOfSpeechAnalysis();
     //Kind of Words to remain filtering a String
     private final static List<String>stringRemainingTags = new ArrayList<String>(Arrays.asList("NN", "VBP", "VBZ", "NN", "NNP"));
@@ -173,8 +174,7 @@ public class PartOfSpeechAnalysis {
     
     
 
-    private Tree parse(String str) {           
-    	parser.setOptionFlags(("-maxLength 100"));
+    private Tree parse(String str) {
         List<CoreLabel> tokens = tokenize(str);
         Tree tree = parser.apply(tokens);
         return tree;

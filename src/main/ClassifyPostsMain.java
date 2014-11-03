@@ -114,5 +114,7 @@ public class ClassifyPostsMain {
 		bagsOfWords.forEach((key, value) -> 
 			listOfFeatureVectors.add(new FeatureVector(listOfAllWords.createCompleteHash(key), value))
 		);
+		
+		listOfFeatureVectors.forEach((vector -> System.out.println(vector.toString())));
 	}
 }

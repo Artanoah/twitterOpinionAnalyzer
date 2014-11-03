@@ -26,4 +26,16 @@ public class FeatureVector {
 	public int getValue() {
 		return value;
 	}
+	
+	public String toString() {
+		String akku = "";
+		
+		for(Map.Entry<String, Integer> entry : map.entrySet()) {
+			if(entry.getValue() != 0) {
+				akku += entry.getKey() + ", ";
+			}
+		}
+		
+		return akku;
+	}
 }

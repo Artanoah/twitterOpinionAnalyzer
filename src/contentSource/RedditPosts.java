@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import main.Constants;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkException;
 import net.dean.jraw.models.Comment;
@@ -124,7 +125,7 @@ public class RedditPosts {
 	static public Map<String,Integer> getTrainingsSetFromFile(String filePath) throws IOException{
 		Map<String,Integer> temp = new HashMap<String,Integer>();
 		Map<String,Integer> result = new HashMap<String,Integer>();
-		int maxPostLengthInWords = 70;
+		int maxPostLengthInWords = Constants.MAX_NUM_OF_WORDS;
 		
 		// #### ALLE LINES AUS DEM FILE AUSLESEN #####
 		ArrayList<String> allLines = new ArrayList<String>();
@@ -163,10 +164,11 @@ public class RedditPosts {
 				for(int i = 0; i < maxLength ; i++){
 					temp = temp.concat(array[i] + " ");
 				}
+			} else {
+				temp = key;
 			}
 			result.put(temp, value);
 		});
-
 		
 		return result;
 	}

@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import main.Constants;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.TokenizerFactory;
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
@@ -29,7 +30,7 @@ public class PartOfSpeechAnalysis {
     //Bind the part-of-speech-parser for english language
     private final static String grammar = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";
     //Options for the Lexparser
-    private final static String[] options = { "-maxLength", "100"};
+    private final static String[] options = { "-maxLength", Integer.toString(Constants.MAX_NUM_OF_WORDS)};
     private final static LexicalizedParser parser = LexicalizedParser.loadModel(grammar, options);
     private final static PartOfSpeechAnalysis analysis = new PartOfSpeechAnalysis();
     //Kind of Words to remain filtering a String

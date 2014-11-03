@@ -1,6 +1,10 @@
 package main;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +23,9 @@ public class ClassifyPostsMain {
 	 * die zusammen mit der dazugehoerigen Bewertung in ein FeatureVector-Objekt geschoben werden.</br>
 	 * Mit diesen FeatureVector-Objekten werden dann die jeweiligen Lernverfahren angestossen. 
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		//###### INITIALISIERUNGEN ######
 		//###### Text zu Bewertung ######
 		Map<String, Integer> postToValue = new HashMap<String, Integer>();
@@ -73,6 +78,15 @@ public class ClassifyPostsMain {
 		correctedPostToValue.forEach((key, value) ->
 			stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true), value)
 		);
+		
+		BufferedReader stammed_dictionary = new BufferedReader(new FileReader("stammed_dictionary.txt"));
+		while(stammed_dictionary.ready()){
+			String wordToAdd = stammed_dictionary.readLine().trim();
+			if(wortliste.contains(wordToAdd)){
+				wortliste.add(wordToAdd);
+			}
+		}
+		stammed_dictionary.close();
 		
 		//###### BAG-OF-WORDS ERSTELLEN (Kai) ######
 		//input: Map<String, Value>

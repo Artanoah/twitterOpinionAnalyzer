@@ -76,7 +76,7 @@ public class RedditPosts {
 		String line = "";
 		for(Comment ele : comments.getComments()) {
 	    	line = "{";
-	    	line = line.concat("text:\"" + ele.getBody().toString().replace("\"", "*").replace("\'", "*").replace("\n", "").replace("\r", "") + "\", bewertung:\"\"}");
+	    	line = line.concat("text:\"" + ele.getBody().toString().replace("\"", "\\\"").replace("\'", "\\\'").replace("\n", "").replace("\r", "") + "\", bewertung:\"\"}");
 	    	try {
 				writer.write(line + "\n");
 			} catch (IOException e) {

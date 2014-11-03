@@ -85,6 +85,13 @@ public class SpellingCorrector {
 			temp = temp.subSequence(0, i-1) + temp.substring(j < 0 ? temp.length() - 1 : j);
 		}
 		
+		//Lösche Zahlen
+		for(int i = 0; i < temp.length() - 2; i++) {
+			if(twitterIsNum(temp.charAt(i + 1))) {
+				temp = temp.substring(0, i) + temp.substring(i + 2);
+			}
+		}
+		
 		//Isoliere Sonderzeichen
 		for(int i = 0; i < temp.length() - 1; i++) {
 			if((!twitterIsChar(temp.charAt(i))) && twitterIsChar(temp.charAt(i+1))) {
@@ -188,5 +195,9 @@ public class SpellingCorrector {
 	
 	private static boolean twitterIsChar(char c) {
 		return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == ' ' || c == '@' || c == '#';
+	}
+	
+	private static boolean twitterIsNum(char c) {
+		return c >= '0' && c <= '9';
 	}
 }

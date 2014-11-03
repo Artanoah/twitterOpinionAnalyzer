@@ -16,6 +16,7 @@ public class PushToDatabaseMain {
 		//###### INITIALISIERUNGEN ######
 
 		//###### TUPEL AUSLESEN + TUPEL IN DIE DATENBANK SCHIEBEN(Birger) ######
-		RedditPosts.pushTrainingsSetToRedis("./reddit.txt");
+//		RedditPosts.pushTrainingsSetToRedis("./reddit.txt");
+		System.out.println(RedditPosts.getTrainingsSetFromFile("./reddit.txt"));
 	}
 }

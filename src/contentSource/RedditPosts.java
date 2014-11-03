@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +63,7 @@ public class RedditPosts {
 	 * @param subreddit eindeutige Reddit-ID des zu holenden Posts
 	 * @throws NetworkException
 	 */
-	static public void getTrainingsSetToFile(String filePath,String subreddit) throws NetworkException{
+	static public void writeTrainingsSetToFile(String filePath,String subreddit) throws NetworkException{
 		//Posts von Reddit holen
 		Submission comments = contentSource.RedditPosts.getPost(subreddit);
 		
@@ -119,7 +120,33 @@ public class RedditPosts {
 		}
 	}
 	
-	static public Map<String,Integer> getTrainingsSet(){
+	static public Map<String,Integer> getTrainingsSetFromRedis(){
 		return RedisConnector.getAllPostsFromRedis();
+	}
+	static public Map<String,Integer> getTrainingsSetFromFile(String filePath) throws IOException{
+		Map<String,Integer> result = new HashMap<String,Integer>();
+		
+		// #### ALLE LINES AUS DEM FILE AUSLESEN #####
+		ArrayList<String> allLines = new ArrayList<String>();
+		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		for(String line; (line = br.readLine()) != null; ) {
+	        allLines.add(line);
+	    }
+		br.close();
+		
+		// #### UMWANDELN DER LINES IN JSON #####
+		ArrayList<JSONObject> jsonObjects = new ArrayList<JSONObject>();
+		for(String line : allLines){
+			if(!line.isEmpty()){
+				jsonObjects.add(new JSONObject(line));
+			}
+		}
+		
+		//####### UMWANDELN DER JSONS IN EINE MAP
+		for(JSONObject json : jsonObjects){
+			result.put(json.getString("text"), Integer.valueOf(json.getString("bewertung")));
+		}
+		
+		return result;
 	}
 }

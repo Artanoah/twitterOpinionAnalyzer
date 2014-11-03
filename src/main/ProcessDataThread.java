@@ -2,13 +2,11 @@ package main;
 
 import java.io.Console;
 import java.util.HashMap;
+import java.util.Map;
 
 import normalisation.PartOfSpeechAnalysis;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
-import contentSource.RedisConnector;
 import spellingCorrection.SpellingCorrector;
+import contentSource.RedisConnector;
 
 public class ProcessDataThread implements Runnable{
 	private String contentData = "";
@@ -22,11 +20,11 @@ public class ProcessDataThread implements Runnable{
 	@Override
 	public void run(){
 		String clean = sc.correctTweet(contentData);
-		String stemmed = PartOfSpeechAnalysis.partOfSpeechWithStaming(clean);
+		String stemmed = PartOfSpeechAnalysis.normaliseAndFilterString(clean,true);
 		HashMap<String, Integer> bagOfWords = getBagOfWords(stemmed);
 //		System.out.println(bagOfWords.toString());
-//		int bewertung = bewertePost(clean);
-		printResult(contentData, clean, stemmed);
+		int bewertung = bewertePost(clean);
+//		printResult(contentData, clean, stemmed);
 		RedisConnector.writeVectorToRedis(new FeatureVector(bagOfWords,bewertung));
 	}
 	
@@ -55,6 +53,17 @@ public class ProcessDataThread implements Runnable{
 		}
 		return bagOfWords;
 	
+	
 	}
+	
+	Map<Map<String, Integer>, Integer> resultBag = new HashMap<Map<String, Integer>, Integer>();
+	
+	public void createBagOfWords(Map<String, Integer> map, Integer value,Map<Map<String, Integer>, Integer> resultBag){
+ 
+		resultBag.put(map, value);
+				
+		
+	}
+
 
 }

@@ -2,16 +2,11 @@ package main;
 
 import java.io.Console;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import normalisation.PartOfSpeechAnalysis;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
-import contentSource.RedisConnector;
-import edu.stanford.nlp.ling.CoreAnnotations.BagOfWordsAnnotation;
 import spellingCorrection.SpellingCorrector;
+import contentSource.RedisConnector;
 
 public class ProcessDataThread implements Runnable{
 	private String contentData = "";
@@ -25,7 +20,7 @@ public class ProcessDataThread implements Runnable{
 	@Override
 	public void run(){
 		String clean = sc.correctTweet(contentData);
-		String stemmed = PartOfSpeechAnalysis.partOfSpeechWithStaming(clean);
+		String stemmed = PartOfSpeechAnalysis.normaliseAndFilterString(clean,true);
 		HashMap<String, Integer> bagOfWords = getBagOfWords(stemmed);
 //		System.out.println(bagOfWords.toString());
 		int bewertung = bewertePost(clean);

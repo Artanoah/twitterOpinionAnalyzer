@@ -13,6 +13,7 @@ import java.util.Map;
 import contentSource.RedditPosts;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
+import weka.classifiers.meta.Bagging;
 
 public class ClassifyPostsMain {
 
@@ -63,7 +64,7 @@ public class ClassifyPostsMain {
 		//input: ()
 		//output: Map<String, Value> -> Map an Text zu Bewertung
 		
-		postToValue = RedditPosts.getTrainingsSet();
+		postToValue = RedditPosts.getTrainingsSetFromFile("./reddit.txt");
 		
 		//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######
 		//input: Map<String, Value>
@@ -94,6 +95,10 @@ public class ClassifyPostsMain {
 		//###### BAG-OF-WORDS ERSTELLEN (Kai) ######
 		//input: Map<String, Value>
 		//output: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)
+		
+		stemmedPostTovalue.forEach((key, value) -> 
+			bagsOfWords.put(ProcessDataThread.getBagOfWords(key), value)
+		);
 		
 		//###### VOLLSTAENDIGE LISTE ALLER WOERTER ERZEUGEN (Steffen) ######
 		//input: List<String>

@@ -7,6 +7,11 @@ public class FeatureVector {
 	Map<String, Integer> map = new HashMap<String, Integer>();
 	int value = 0;
 	
+	/**
+	 * 
+	 * @param map
+	 * @param classifyer
+	 */
 	public FeatureVector(Map<String, Integer> map, int classifyer) {
 		this.map = map;
 		value = classifyer;

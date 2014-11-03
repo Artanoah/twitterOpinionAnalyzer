@@ -1,6 +1,7 @@
 package contentSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.*;
 
@@ -10,6 +11,8 @@ import redis.clients.jedis.*;
 public class RedisConnector {
 	static Jedis redisServer = null;
 	static int uniqueKey = 1;
+	static String keyText = "text";
+	static String keyBewertung = "bewertung";
 	
 	private RedisConnector(){}
 	private static void connectToServer(){
@@ -48,8 +51,8 @@ public class RedisConnector {
 		}
 		//JSON-Object erstellen
 		JSONObject json = new JSONObject();
-		json.put("post",post);
-		json.put("bewertung", bewertung);
+		json.put(keyText,post);
+		json.put(keyBewertung, bewertung);
 		
 		//JSON-Object zu Redis schicken
 		redisServer.set(String.valueOf(uniqueKey), json.toString());
@@ -82,18 +85,18 @@ public class RedisConnector {
 	 * @param key Key von einem bestimmten Post
 	 * @return HashMap mit zwei Keys "text" und "bewertung"
 	 */
-	public static HashMap getPostFromRedis(String key){
+	public static Map<String,Integer> getAllPostsFromRedis(){
+		Map<String,Integer> result = new HashMap<String,Integer>();
 		if(redisServer == null){
 			connectToServer();
 		}
-		String jsonString = redisServer.get(key);
-		JSONObject jsonObject = new JSONObject(jsonString);
-		HashMap<String,Object> accu = new HashMap<String,Object>();
-		accu.put("text", jsonObject.getString("text"));
-		accu.put("bewertung", jsonObject.getInt("bewertung"));
+		Set<String> redisKeys = redisServer.keys("*");
+		for(String key : redisKeys){
+			JSONObject jsonObject = new JSONObject(redisServer.get(key));
+			result.put(jsonObject.getString(keyText), jsonObject.getInt(keyBewertung));
+		}
 		
-		
-		return accu;
+		return result;
 	}
 	
 }

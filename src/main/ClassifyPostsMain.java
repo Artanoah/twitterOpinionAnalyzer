@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import contentSource.RedditPosts;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
 
@@ -61,6 +62,8 @@ public class ClassifyPostsMain {
 		//###### OBJEKTE AUS DER DATENBANK HOLEN (Birger) ######
 		//input: ()
 		//output: Map<String, Value> -> Map an Text zu Bewertung
+		
+		postToValue = RedditPosts.getTrainingsSet();
 		
 		//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######
 		//input: Map<String, Value>

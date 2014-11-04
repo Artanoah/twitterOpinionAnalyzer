@@ -20,7 +20,7 @@ public class ProcessDataThread implements Runnable{
 	@Override
 	public void run(){
 		String clean = sc.correctTweet(contentData);
-		String stemmed = PartOfSpeechAnalysis.normaliseAndFilterString(clean,true);
+		String stemmed = PartOfSpeechAnalysis.normaliseAndFilterString(clean,true,false);
 		HashMap<String, Integer> bagOfWords = getBagOfWords(stemmed);
 //		System.out.println(bagOfWords.toString());
 		int bewertung = bewertePost(clean);

@@ -18,6 +18,7 @@ import neuronalNetwork.NeurophMLP;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
 import contentSource.RedditPosts;
+import static main.Constants.*;
 
 public class ClassifyPostsMain {
 
@@ -145,6 +146,7 @@ public class ClassifyPostsMain {
 		
 		//###### RANDOM FORRESTER BIRGER ######
 		System.out.println("###### RANDOM-FOREST LERNEN ######");
+		long startLearningRF = System.currentTimeMillis();
 		Dataset trainingsSet = new DefaultDataset();
 		Map<String,Integer> keyToIndex = new HashMap<String,Integer>();
 		Map<FeatureVector,Instance> vectorToInstance = new HashMap<FeatureVector,Instance>();
@@ -165,17 +167,19 @@ public class ClassifyPostsMain {
 		}
 		
 		//Klassifizierer bauen
-		RandomForest forest = new RandomForest(15);
+		RandomForest forest = new RandomForest(AMOUNT_RANDOM_TREES);
 		forest.buildClassifier(trainingsSet);
+		System.out.println("Benoetigte Zeit zum RandomForest lernen: " + (System.currentTimeMillis()-startLearningRF) + "ms.");
 		
 		//Klassifizierer testen mit den vorhandenen Trainingsdaten
+		long startClassifyRF = System.currentTimeMillis();
 		int correctClassified = 0;
 		for(FeatureVector key : vectorToInstance.keySet()){
 			if(forest.classify(vectorToInstance.get(key)).equals(key.getValue())){
 				correctClassified++;
 			}
 		}
-		System.out.println("RANDOM-FOREST hat " + correctClassified + " von " + listOfFeatureVectors.size() + " korrekt bewertet.");
+		System.out.println("RANDOM-FOREST hat " + correctClassified + " von " + listOfFeatureVectors.size() + " korrekt bewertet, in " +(System.currentTimeMillis()-startClassifyRF) + "ms.");
 		
 		//###### SIMPLE BASE KAI ######
 	}

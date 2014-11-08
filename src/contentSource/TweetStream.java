@@ -1,6 +1,5 @@
 package contentSource;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import twitter4j.FilterQuery;

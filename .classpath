@@ -21,11 +21,6 @@
 			<attribute name="javadoc_location" value="http://neuroph.sourceforge.net/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/weka.jar" sourcepath="lib/weka-src.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://weka.sourceforge.net/doc.stable/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/jedis-2.4.2.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/Users/Birger/git/twitterOpinionAnalyzer/lib/jedis-2.4.2-javadoc.jar!/"/>
@@ -37,5 +32,11 @@
 			<attribute name="javadoc_location" value="http://www.heatonresearch.com/javadoc/encog-3.3/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/javaml-0.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/ajt-2.9.jar"/>
+	<classpathentry kind="lib" path="lib/commons-math-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/Jama-1.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/libsvm.jar"/>
+	<classpathentry kind="lib" path="lib/weka.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

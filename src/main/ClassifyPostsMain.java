@@ -2,20 +2,22 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.javaml.classification.tree.RandomForest;
+import net.sf.javaml.core.Dataset;
+import net.sf.javaml.core.DefaultDataset;
+import net.sf.javaml.core.Instance;
+import net.sf.javaml.core.SparseInstance;
 import neuronalNetwork.EncogMLP;
 import neuronalNetwork.NeurophMLP;
-import contentSource.RedditPosts;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
-import weka.classifiers.meta.Bagging;
+import contentSource.RedditPosts;
 
 public class ClassifyPostsMain {
 
@@ -27,9 +29,9 @@ public class ClassifyPostsMain {
 	 * die zusammen mit der dazugehoerigen Bewertung in ein FeatureVector-Objekt geschoben werden.</br>
 	 * Mit diesen FeatureVector-Objekten werden dann die jeweiligen Lernverfahren angestossen. 
 	 * @param args
-	 * @throws IOException 
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		//###### INITIALISIERUNGEN ######
 		//###### Text zu Bewertung ######
 		Map<String, Integer> postToValue = new HashMap<String, Integer>();
@@ -89,7 +91,6 @@ public class ClassifyPostsMain {
 		System.out.println("###### PART OF SPEECH TAGGING + STEMMING ######");
 		
 		correctedPostToValue.forEach((key, value) -> {
-				System.out.println(key);
 				stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false), value);
 			});
 		
@@ -136,13 +137,45 @@ public class ClassifyPostsMain {
 		mlp.learn();
 		mlp.save("mlp.nnet");*/
 		
-		emlp = new EncogMLP(listOfAllWords);
-		emlp.addVector(listOfFeatureVectors);
-		emlp.learn();
+//		emlp = new EncogMLP(listOfAllWords);
+//		emlp.addVector(listOfFeatureVectors);
+//		emlp.learn();
 		
 		//###### SVM FABIAN ######
 		
 		//###### RANDOM FORRESTER BIRGER ######
+		System.out.println("###### RANDOM-FOREST LERNEN ######");
+		Dataset trainingsSet = new DefaultDataset();
+		Map<String,Integer> keyToIndex = new HashMap<String,Integer>();
+		Map<FeatureVector,Instance> vectorToInstance = new HashMap<FeatureVector,Instance>();
+		int index = 1;
+		for(String key:listOfFeatureVectors.get(0).getMap().keySet()){
+			keyToIndex.put(key, index++);
+		}
+		
+		//TrainingsSet zusammenbauen
+		for(FeatureVector vector:listOfFeatureVectors){
+			Instance temp = new SparseInstance(vector.getMap().size());
+			for(String key:vector.getMap().keySet()){
+				temp.put(keyToIndex.get(key), (double)vector.getMap().get(key));
+			}
+			temp.setClassValue(vector.getValue());
+			vectorToInstance.put(vector, temp);
+			trainingsSet.add(temp);
+		}
+		
+		//Klassifizierer bauen
+		RandomForest forest = new RandomForest(15);
+		forest.buildClassifier(trainingsSet);
+		
+		//Klassifizierer testen mit den vorhandenen Trainingsdaten
+		int correctClassified = 0;
+		for(FeatureVector key : vectorToInstance.keySet()){
+			if(forest.classify(vectorToInstance.get(key)).equals(key.getValue())){
+				correctClassified++;
+			}
+		}
+		System.out.println("RANDOM-FOREST hat " + correctClassified + " von " + listOfFeatureVectors.size() + " korrekt bewertet.");
 		
 		//###### SIMPLE BASE KAI ######
 	}

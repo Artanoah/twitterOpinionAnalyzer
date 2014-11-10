@@ -7,15 +7,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import naiveBayesClassifier.NaiveBayes;
+import net.sf.classifier4J.ClassifierException;
+import net.sf.classifier4J.IClassifier;
+import net.sf.classifier4J.bayesian.*;
+import net.sf.classifier4J.vector.HashMapTermVectorStorage;
+import net.sf.classifier4J.vector.TermVectorStorage;
+import net.sf.classifier4J.vector.VectorClassifier;
 import neuronalNetwork.EncogMLP;
 import neuronalNetwork.NeurophMLP;
 import contentSource.RedditPosts;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
 import weka.classifiers.meta.Bagging;
+
 
 public class ClassifyPostsMain {
 
@@ -28,8 +37,9 @@ public class ClassifyPostsMain {
 	 * Mit diesen FeatureVector-Objekten werden dann die jeweiligen Lernverfahren angestossen. 
 	 * @param args
 	 * @throws IOException 
+	 * @throws ClassifierException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ClassifierException {
 		//###### INITIALISIERUNGEN ######
 		//###### Text zu Bewertung ######
 		Map<String, Integer> postToValue = new HashMap<String, Integer>();
@@ -130,20 +140,51 @@ public class ClassifyPostsMain {
 		
 		//###### MLP STEFFEN ######
 		System.out.println("###### MLP LERNEN ######");
-		/*mlp = new NeurophMLP(listOfAllWords);
-		mlp.addVector(listOfFeatureVectors);
-		
-		mlp.learn();
-		mlp.save("mlp.nnet");*/
-		
-		emlp = new EncogMLP(listOfAllWords);
-		emlp.addVector(listOfFeatureVectors);
-		emlp.learn();
+//		/*mlp = new NeurophMLP(listOfAllWords);
+//		mlp.addVector(listOfFeatureVectors);
+//		
+//		mlp.learn();
+//		mlp.save("mlp.nnet");*/
+//		
+//		emlp = new EncogMLP(listOfAllWords);
+//		emlp.addVector(listOfFeatureVectors);
+//		emlp.learn();
 		
 		//###### SVM FABIAN ######
 		
 		//###### RANDOM FORRESTER BIRGER ######
 		
-		//###### SIMPLE BASE KAI ######
+		//###### NAIVE BAYES KAI ######
+	
+		NaiveBayes nb = new NaiveBayes();
+		
+		System.out.println(stemmedPostTovalue.toString());
+		Map<String, String[]> bayesTrainer = new HashMap<String, String[]>();
+		 
+		Iterator it = stemmedPostTovalue.entrySet().iterator();
+		    while (it.hasNext()) {
+		       
+		    	Map.Entry pairs = (Map.Entry)it.next();
+		        
+		        if((String) pairs.getKey()!=""){
+		        //System.out.println(pairs.getValue().toString()+"value");
+		        //geht!!!
+		        String key = (String) pairs.getValue().toString();
+		        //System.out.println(pairs.getKey().toString()+"key");
+		        String values = (String) pairs.getValue().toString();
+		        
+		        //System.out.println(key);
+		        System.out.println(values);
+		        //bayesTrainer.put(key, values);
+		        }
+		        it.remove(); // avoids a ConcurrentModificationException
+		    }
+		 
+		
+
+		    //nb.setChisquareCriticalValue(6.63); //0.01 pvalue
+		    //nb.train(bayesTrainer);
+//	
+//		
 	}
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="lib/twitter4j-core-4.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/stanford-parser-3.4.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/stanford-parser-3.4.1-models.jar"/>
+	<classpathentry kind="lib" path="lib/stanford-parser-3.4.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/stanford-parser.jar"/>
+	<classpathentry kind="lib" path="lib/json-20140107.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/twitter4j-stream-4.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/JRAW-0.4.0-fat.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/TwitterOpinionAnalyzer/lib/JRAW-0.4.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/slf4j-simple-1.7.7.jar"/>
+	<classpathentry kind="lib" path="lib/neuroph-2.9/neuroph-core-2.9.jar" sourcepath="lib/neuroph-2.9/sources">
+		<attributes>
+			<attribute name="javadoc_location" value="http://neuroph.sourceforge.net/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jedis-2.4.2.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/Users/Birger/git/twitterOpinionAnalyzer/lib/jedis-2.4.2-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/lucene-analyzers-3.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/encog-core-3.3.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://www.heatonresearch.com/javadoc/encog-3.3/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/javaml-0.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/ajt-2.9.jar"/>
+	<classpathentry kind="lib" path="lib/commons-math-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/Jama-1.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/libsvm.jar"/>
+	<classpathentry kind="lib" path="lib/weka.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

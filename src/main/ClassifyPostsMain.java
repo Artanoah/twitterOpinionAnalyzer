@@ -99,7 +99,9 @@ public class ClassifyPostsMain {
 		System.out.println("###### PART OF SPEECH TAGGING + STEMMING ######");
 		
 		correctedPostToValue.forEach((key, value) -> {
-				stemmedPostTovalue.put(normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false), value);
+				String normalizedString = normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false);
+			if(!(normalizedString.equals("")))
+				stemmedPostTovalue.put(normalizedString, value);
 			});
 		
 		BufferedReader stammed_dictionary = new BufferedReader(new FileReader("stammed_dictionary.txt"));
@@ -152,7 +154,9 @@ public class ClassifyPostsMain {
 		//###### SVM FABIAN ######
         //Set<String> result = new HashSet<String>();
 		
+		System.out.println(listOfFeatureVectors);
         for(FeatureVector fv : listOfFeatureVectors){
+        	System.out.println(fv);
         	if (fv.getValue() > 0){
         		svm_bw.write("+" + Integer.toString(fv.getValue()));
         		
@@ -179,42 +183,42 @@ public class ClassifyPostsMain {
     	svm_bw.close();
 		
 		//###### RANDOM FORRESTER BIRGER ######
-		System.out.println("###### RANDOM-FOREST LERNEN ######");
-		long startLearningRF = System.currentTimeMillis();
-		Dataset trainingsSet = new DefaultDataset();
-		Map<String,Integer> keyToIndex = new HashMap<String,Integer>();
-		Map<FeatureVector,Instance> vectorToInstance = new HashMap<FeatureVector,Instance>();
-		int index = 1;
-		for(String key:listOfFeatureVectors.get(0).getMap().keySet()){
-			keyToIndex.put(key, index++);
-		}
-		
-		//TrainingsSet zusammenbauen
-		for(FeatureVector vector:listOfFeatureVectors){
-			Instance temp = new SparseInstance(vector.getMap().size());
-			for(String key:vector.getMap().keySet()){
-				temp.put(keyToIndex.get(key), (double)vector.getMap().get(key));
-			}
-			temp.setClassValue(vector.getValue());
-			vectorToInstance.put(vector, temp);
-			trainingsSet.add(temp);
-		}
-		
-		//Klassifizierer bauen
-		RandomForest forest = new RandomForest(AMOUNT_RANDOM_TREES);
-		forest.buildClassifier(trainingsSet);
-		System.out.println("Benoetigte Zeit zum RandomForest lernen: " + (System.currentTimeMillis()-startLearningRF) + "ms.");
-		
-		//Klassifizierer testen mit den vorhandenen Trainingsdaten
-		long startClassifyRF = System.currentTimeMillis();
-		int correctClassified = 0;
-		for(FeatureVector key : vectorToInstance.keySet()){
-			if(forest.classify(vectorToInstance.get(key)).equals(key.getValue())){
-				correctClassified++;
-			}
-		}
-		System.out.println("RANDOM-FOREST hat " + correctClassified + " von " + listOfFeatureVectors.size() + " korrekt bewertet, in " +(System.currentTimeMillis()-startClassifyRF) + "ms.");
-		
+//		System.out.println("###### RANDOM-FOREST LERNEN ######");
+//		long startLearningRF = System.currentTimeMillis();
+//		Dataset trainingsSet = new DefaultDataset();
+//		Map<String,Integer> keyToIndex = new HashMap<String,Integer>();
+//		Map<FeatureVector,Instance> vectorToInstance = new HashMap<FeatureVector,Instance>();
+//		int index = 1;
+//		for(String key:listOfFeatureVectors.get(0).getMap().keySet()){
+//			keyToIndex.put(key, index++);
+//		}
+//		
+//		//TrainingsSet zusammenbauen
+//		for(FeatureVector vector:listOfFeatureVectors){
+//			Instance temp = new SparseInstance(vector.getMap().size());
+//			for(String key:vector.getMap().keySet()){
+//				temp.put(keyToIndex.get(key), (double)vector.getMap().get(key));
+//			}
+//			temp.setClassValue(vector.getValue());
+//			vectorToInstance.put(vector, temp);
+//			trainingsSet.add(temp);
+//		}
+//		
+//		//Klassifizierer bauen
+//		RandomForest forest = new RandomForest(AMOUNT_RANDOM_TREES);
+//		forest.buildClassifier(trainingsSet);
+//		System.out.println("Benoetigte Zeit zum RandomForest lernen: " + (System.currentTimeMillis()-startLearningRF) + "ms.");
+//		
+//		//Klassifizierer testen mit den vorhandenen Trainingsdaten
+//		long startClassifyRF = System.currentTimeMillis();
+//		int correctClassified = 0;
+//		for(FeatureVector key : vectorToInstance.keySet()){
+//			if(forest.classify(vectorToInstance.get(key)).equals(key.getValue())){
+//				correctClassified++;
+//			}
+//		}
+//		System.out.println("RANDOM-FOREST hat " + correctClassified + " von " + listOfFeatureVectors.size() + " korrekt bewertet, in " +(System.currentTimeMillis()-startClassifyRF) + "ms.");
+//		
 		//###### SIMPLE BASE KAI ######
 	}
 }

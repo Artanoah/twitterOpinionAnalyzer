@@ -38,7 +38,7 @@ public class PartOfSpeechAnalysis {
     //Kind of Words to remain filtering a String
     private final static List<String>stringRemainingTags = new ArrayList<String>(Constants.REMAININGTAGS);
     //Kind of Words to remain filtering a .txt-file
-    private final static List<String>textFileRemainingTags = new ArrayList<String>(Arrays.asList("JJ", "JJR", "JJS", "NN", "NNP", "NNPS", "NNS", "RB", "RBR", "RBS", "RP", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ"));
+    private final static List<String>textFileRemainingTags = new ArrayList<String>(Constants.REMAININGTAGS);
 
     
     /**
@@ -174,30 +174,6 @@ public class PartOfSpeechAnalysis {
         br.close();
         bw.close();
     }
-    
-    public static List<String>seperateWordsOfString(Map<String, Integer> input){
-    	List<String> result = new ArrayList<String>();
-    	input.forEach((key, value) -> {
-			String[] array = key.split(" ");
-			for(int i = 0; i < array.length ; i++){
-				if(!(result.contains(array[i]))){
-					result.add(array[i]);
-				}
-			}
-		});
-    	return result;
-    }
-    
-    public static Integer countAppearingWordsOfVector(Map<String, Integer> input){
-		Integer result = 0;	
-		for(String s : input.keySet()){
-			if(input.get(s) > 0){
-				result = result +1;
-			}
-		}
-		return result;
-    }
-    
     
 
     private Tree parse(String str) {

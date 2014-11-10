@@ -188,6 +188,16 @@ public class PartOfSpeechAnalysis {
     	return result;
     }
     
+    public static Integer countAppearingWordsOfVector(Map<String, Integer> input){
+		Integer result = 0;	
+		for(String s : input.keySet()){
+			if(input.get(s) > 0){
+				result = result +1;
+			}
+		}
+		return result;
+    }
+    
     
 
     private Tree parse(String str) {

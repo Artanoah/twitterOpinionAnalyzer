@@ -1,14 +1,18 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import neuronalNetwork.EncogMLP;
 import neuronalNetwork.NeurophMLP;
@@ -31,6 +35,8 @@ public class ClassifyPostsMain {
 	 */
 	public static void main(String[] args) throws IOException {
 		//###### INITIALISIERUNGEN ######
+		String svm_input = "svm_input";
+        BufferedWriter svm_bw = new BufferedWriter(new FileWriter("svm_input"));
 		//###### Text zu Bewertung ######
 		Map<String, Integer> postToValue = new HashMap<String, Integer>();
 		Map<String, Integer> correctedPostToValue = new HashMap<String, Integer>();
@@ -97,7 +103,7 @@ public class ClassifyPostsMain {
 		
 		while(stammed_dictionary.ready()){
 			String wordToAdd = stammed_dictionary.readLine().trim();
-			if((!(wortliste.contains(wordToAdd)) && normalisation.PartOfSpeechAnalysis.seperateWordsOfString(stemmedPostTovalue).contains(wordToAdd))){
+			if((!(wortliste.contains(wordToAdd)) && FeatureVector.seperateWordsOfString(stemmedPostTovalue).contains(wordToAdd))){
 				wortliste.add(wordToAdd);
 			}
 		}
@@ -136,11 +142,38 @@ public class ClassifyPostsMain {
 		mlp.learn();
 		mlp.save("mlp.nnet");*/
 		
-		emlp = new EncogMLP(listOfAllWords);
-		emlp.addVector(listOfFeatureVectors);
-		emlp.learn();
+		//emlp = new EncogMLP(listOfAllWords);
+		//emlp.addVector(listOfFeatureVectors);
+		//emlp.learn();
 		
 		//###### SVM FABIAN ######
+        //Set<String> result = new HashSet<String>();
+		
+        for(FeatureVector fv : listOfFeatureVectors){
+        	if (fv.getValue() > 0){
+        		svm_bw.write("+" + Integer.toString(fv.getValue()));
+        		
+        	}
+        	else if (fv.getValue() < 0){
+        		svm_bw.write(Integer.toString(fv.getValue()));
+        	}
+        	else {
+        		continue;
+        	};
+        	int i = 1;
+        	Map<String, Integer>fvMap = fv.getMap();
+        	Integer sLength = FeatureVector.countAppearingWordsOfVector(fvMap);
+        	for(String s : fvMap.keySet()){
+        		svm_bw.write(" ");
+        		System.out.println("Value: " + Integer.toString(fvMap.get(s)));
+        		System.out.println("SizeOfMap " + Integer.toString(sLength));
+        		System.out.println("Ergebnis Division" + Float.toString(fvMap.get(s)/sLength));
+        		svm_bw.write(i + ":" + fvMap.get(s)/sLength);
+        		i = i+1;
+        	}
+        	svm_bw.write("\n");
+        }
+    	svm_bw.close();
 		
 		//###### RANDOM FORRESTER BIRGER ######
 		

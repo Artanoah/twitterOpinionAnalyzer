@@ -190,8 +190,8 @@ public class ClassifyPostsMain {
         		svm_bw.write(" ");
         		System.out.println("Value: " + Integer.toString(fvMap.get(s)));
         		System.out.println("SizeOfMap " + Integer.toString(sLength));
-        		System.out.println("Ergebnis Division" + Float.toString(fvMap.get(s)/sLength));
-        		svm_bw.write(i + ":" + fvMap.get(s)/sLength);
+        		System.out.println("Ergebnis Division" + Float.toString((float)fvMap.get(s)/(float)sLength));
+        		svm_bw.write(i + ":" + (float)fvMap.get(s)/(float)sLength);
         		i = i+1;
         	}
         	svm_bw.write("\n");
@@ -203,30 +203,30 @@ public class ClassifyPostsMain {
 		
 		//###### NAIVE BAYES KAI ######
 	
-		NaiveBayes nb = new NaiveBayes();
-		
-		System.out.println(stemmedPostTovalue.toString());
-		Map<String, String[]> bayesTrainer = new HashMap<String, String[]>();
-		 
-		Iterator it = stemmedPostTovalue.entrySet().iterator();
-		    while (it.hasNext()) {
-		       
-		    	Map.Entry pairs = (Map.Entry)it.next();
-		        
-		        if((String) pairs.getKey()!=""){
-		        //System.out.println(pairs.getValue().toString()+"value");
-		        //geht!!!
-		        String key = (String) pairs.getValue().toString();
-		        //System.out.println(pairs.getKey().toString()+"key");
-		        String values = (String) pairs.getValue().toString();
-		        
-		        //System.out.println(key);
-		        System.out.println(values);
-		        //bayesTrainer.put(key, values);
-		        }
-		        it.remove(); // avoids a ConcurrentModificationException
-		    }
-		 
+//		NaiveBayes nb = new NaiveBayes();
+//		
+//		System.out.println(stemmedPostTovalue.toString());
+//		Map<String, String[]> bayesTrainer = new HashMap<String, String[]>();
+//		 
+//		Iterator it = stemmedPostTovalue.entrySet().iterator();
+//		    while (it.hasNext()) {
+//		       
+//		    	Map.Entry pairs = (Map.Entry)it.next();
+//		        
+//		        if((String) pairs.getKey()!=""){
+//		        //System.out.println(pairs.getValue().toString()+"value");
+//		        //geht!!!
+//		        String key = (String) pairs.getValue().toString();
+//		        //System.out.println(pairs.getKey().toString()+"key");
+//		        String values = (String) pairs.getValue().toString();
+//		        
+//		        //System.out.println(key);
+//		        System.out.println(values);
+//		        //bayesTrainer.put(key, values);
+//		        }
+//		        it.remove(); // avoids a ConcurrentModificationException
+//		    }
+//		 
 		
 
 		    //nb.setChisquareCriticalValue(6.63); //0.01 pvalue

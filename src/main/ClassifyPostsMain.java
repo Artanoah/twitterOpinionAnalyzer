@@ -170,9 +170,9 @@ public class ClassifyPostsMain {
 		//###### SVM FABIAN ######
         //Set<String> result = new HashSet<String>();
 		
-		System.out.println(listOfFeatureVectors);
+		//System.out.println(listOfFeatureVectors);
         for(FeatureVector fv : listOfFeatureVectors){
-        	System.out.println(fv);
+        	//System.out.println(fv);
         	if (fv.getValue() > 0){
         		svm_bw.write("+" + Integer.toString(fv.getValue()));
         		
@@ -188,9 +188,9 @@ public class ClassifyPostsMain {
         	Integer sLength = FeatureVector.countAppearingWordsOfVector(fvMap);
         	for(String s : fvMap.keySet()){
         		svm_bw.write(" ");
-        		System.out.println("Value: " + Integer.toString(fvMap.get(s)));
-        		System.out.println("SizeOfMap " + Integer.toString(sLength));
-        		System.out.println("Ergebnis Division" + Float.toString((float)fvMap.get(s)/(float)sLength));
+        		//System.out.println("Value: " + Integer.toString(fvMap.get(s)));
+        		//System.out.println("SizeOfMap " + Integer.toString(sLength));
+        		//System.out.println("Ergebnis Division" + Float.toString((float)fvMap.get(s)/(float)sLength));
         		svm_bw.write(i + ":" + (float)fvMap.get(s)/(float)sLength);
         		i = i+1;
         	}

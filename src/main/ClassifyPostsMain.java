@@ -95,7 +95,7 @@ public class ClassifyPostsMain {
 		//output: Map<String, Value> -> Map an Text zu Bewertung
 		System.out.println("###### OBJEKTE AUS DER DATENBANK HOLEN ######");
 		
-		postToValue = RedditPosts.getTrainingsSetFromFile("./reddit.txt");
+		postToValue = RedditPosts.getTrainingsSetFromFile("./alleBewertet.txt");
 		
 		//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######
 		//input: Map<String, Value>

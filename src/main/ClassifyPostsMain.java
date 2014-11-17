@@ -145,7 +145,7 @@ public class ClassifyPostsMain {
 		System.out.println("###### PART OF SPEECH TAGGING + STEMMING ######");
 		
 		stemmedPostTovalue.forEach((key, value) -> 
-			bagsOfWords.put(ProcessDataThread.getBagOfWords(key), value)
+			bagsOfWords.put(getBagOfWords(key), value)
 		);
 		
 		//###### VOLLSTAENDIGE LISTE ALLER WOERTER ERZEUGEN (Steffen) ######
@@ -287,5 +287,16 @@ public class ClassifyPostsMain {
 	
 	public static void addStemmedPost(String post, int value){
 		stemmedPostTovalue.put(post, value);
+	}
+	private static HashMap<String, Integer> getBagOfWords(String stemmed_strings){
+		HashMap<String, Integer> bagOfWords = new HashMap<String, Integer>();
+		String[] splitted_string = stemmed_strings.split(" "); 
+		for(String ele : splitted_string ){
+			if(bagOfWords.containsKey(ele)){
+				Integer count = bagOfWords.get(ele);
+				bagOfWords.put(ele, count+1);
+			} else bagOfWords.put(ele, 1);
+		}
+		return bagOfWords;
 	}
 }

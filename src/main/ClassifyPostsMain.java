@@ -8,15 +8,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.Iterator;
-
 import java.util.HashSet;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import naiveBayesClassifier.NaiveBayes;
 
@@ -26,9 +28,9 @@ import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
 import net.sf.javaml.core.Instance;
 import net.sf.javaml.core.SparseInstance;
-
 import neuronalNetwork.EncogMLP;
 import neuronalNetwork.NeurophMLP;
+import normalisation.NormaliseAndFilterString;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
 import contentSource.RedditPosts;
@@ -50,15 +52,17 @@ public class ClassifyPostsMain {
 	 * @throws ClassifierException 
 	 */
 	
+	static Map<String, Integer> stemmedPostTovalue = new HashMap<String, Integer>();
+	
 	public static void main(String[] args) throws Exception {
 
 		//###### INITIALISIERUNGEN ######
 		String svm_input = "svm_input";
         BufferedWriter svm_bw = new BufferedWriter(new FileWriter("svm_input"));
+        int counter = 0;
 		//###### Text zu Bewertung ######
 		Map<String, Integer> postToValue = new HashMap<String, Integer>();
 		Map<String, Integer> correctedPostToValue = new HashMap<String, Integer>();
-		Map<String, Integer> stemmedPostTovalue = new HashMap<String, Integer>();
 		
 		//###### Wortlisten ######
 		List<String> wortliste = new ArrayList<String>();
@@ -111,12 +115,19 @@ public class ClassifyPostsMain {
 		//output: Map<String, Value> -> Getagter Text zu Bewertung
 		//output: List<String> -> Liste aller zu benutzenden Woerter
 		System.out.println("###### PART OF SPEECH TAGGING + STEMMING ######");
-		
+		//Erstellen des Thread-Pools
+	    ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
 		correctedPostToValue.forEach((key, value) -> {
-				String normalizedString = normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false);
-			if(!(normalizedString.equals("")))
-				stemmedPostTovalue.put(normalizedString, value);
+			executor.submit(new NormaliseAndFilterString(key, value, true, false));
+//				System.out.println(counter);
+//				String normalizedString = normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false);
+//			if(!(normalizedString.equals("")))
+//				stemmedPostTovalue.put(normalizedString, value);
 			});
+		executor.shutdown();
+		while(!(executor.isTerminated())){
+			Thread.sleep(2000);
+		}
 		
 		BufferedReader stammed_dictionary = new BufferedReader(new FileReader("stammed_dictionary.txt"));
 		
@@ -272,5 +283,9 @@ public class ClassifyPostsMain {
 //		
 		//###### SIMPLE BASE KAI ######
 
+	}
+	
+	public static void addStemmedPost(String post, int value){
+		stemmedPostTovalue.put(post, value);
 	}
 }

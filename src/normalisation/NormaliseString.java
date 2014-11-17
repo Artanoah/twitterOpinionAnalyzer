@@ -38,24 +38,27 @@ public class NormaliseString extends PartOfSpeechAnalysis{
             	if(stamming){
                     stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
                     stemmer.stem();
-                    main.ClassifyPostsMain.addStemmedPost(result.concat((stemmer.toString() + "-" + parent.label().value() + " ")),value);
+                    result = result.concat((stemmer.toString() + "-" + parent.label().value() + " "));
                 }
             	else{
-            		main.ClassifyPostsMain.addStemmedPost(result.concat((leaf.label().value() + "-" + parent.label().value() + " ")),value);
+            		result = result.concat((leaf.label().value() + "-" + parent.label().value() + " "));
                 }
             }
             else{
             	if(stamming){
                     stemmer.add(leaf.label().value().toCharArray(), leaf.label().value().length());
                     stemmer.stem();
-                    main.ClassifyPostsMain.addStemmedPost(result.concat((stemmer.toString() +  " ")),value);
+                    result = result.concat((stemmer.toString() +  " "));
             	}
-            	else if(!(leaf.label().value().equals(""))){
-            		main.ClassifyPostsMain.addStemmedPost(result.concat((leaf.label().value() + " ")),value);
+            	else{
+            		result = result.concat((leaf.label().value() + " "));
                 }
             }
         
-        }            
+        }
+        if(!(result.equals(""))){
+            main.ClassifyPostsMain.addStemmedPost(result, value);
+        }
     }
 	
 }

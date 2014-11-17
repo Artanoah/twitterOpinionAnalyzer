@@ -100,6 +100,7 @@ public class ClassifyPostsMain {
 		System.out.println("###### OBJEKTE AUS DER DATENBANK HOLEN ######");
 		
 		postToValue = RedditPosts.getTrainingsSetFromFile("./alleBewertet.txt");
+		System.out.println("Anzahl der Posts fuer Trainingsfile: " + postToValue.size());
 		
 		//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######
 		//input: Map<String, Value>
@@ -163,6 +164,7 @@ public class ClassifyPostsMain {
 		bagsOfWords.forEach((key, value) -> 
 			listOfFeatureVectors.add(new FeatureVector(listOfAllWords.createCompleteHash(key), value))
 		);
+		System.out.println("Anzahl der verwertbaren Featurevektoren: " + listOfFeatureVectors.size());
 		
 		//###### MLP STEFFEN ######
 		System.out.println("###### MLP LERNEN ######");

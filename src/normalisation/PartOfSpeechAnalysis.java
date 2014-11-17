@@ -21,7 +21,7 @@ public abstract class PartOfSpeechAnalysis extends Thread{
     private final static String grammar = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";
     //Options for the Lexparser
     private final static String[] options = { "-maxLength", Integer.toString(Constants.MAX_NUM_OF_WORDS)};
-    private final  LexicalizedParser parser = LexicalizedParser.loadModel(grammar, options);
+    private final  static LexicalizedParser parser = LexicalizedParser.loadModel(grammar, options);
     //Kind of Words to remain filtering a String
     protected final static List<String>stringRemainingTags = new ArrayList<String>(Constants.REMAININGTAGS);
     //Kind of Words to remain filtering a .txt-file

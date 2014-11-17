@@ -287,6 +287,8 @@ public class ClassifyPostsMain {
 
 	}
 	
+	//####### Hilfsmethoden #######
+	
 	public static void addStemmedPost(String post, int value){
 		stemmedPostTovalue.put(post, value);
 	}

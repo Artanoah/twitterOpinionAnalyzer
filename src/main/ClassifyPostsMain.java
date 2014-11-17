@@ -156,47 +156,47 @@ public class ClassifyPostsMain {
 		//###### MLP STEFFEN ######
 		System.out.println("###### MLP LERNEN ######");
 
-//		/*mlp = new NeurophMLP(listOfAllWords);
-//		mlp.addVector(listOfFeatureVectors);
-//		
-//		mlp.learn();
-//		mlp.save("mlp.nnet");*/
-//		
-//		emlp = new EncogMLP(listOfAllWords);
-//		emlp.addVector(listOfFeatureVectors);
-//		emlp.learn();
-
+		/*mlp = new NeurophMLP(listOfAllWords);
+		mlp.addVector(listOfFeatureVectors);
+		
+		mlp.learn();
+		mlp.save("mlp.nnet");*/
+		
+		emlp = new EncogMLP(listOfAllWords);
+		emlp.addVector(listOfFeatureVectors);
+		emlp.learnWithErrorBackPropagation();;
+		emlp.saveNetwork("neuronalesNetzInput.eg");
 		
 		//###### SVM FABIAN ######
         //Set<String> result = new HashSet<String>();
 		
 		//System.out.println(listOfFeatureVectors);
-        for(FeatureVector fv : listOfFeatureVectors){
-        	//System.out.println(fv);
-        	if (fv.getValue() > 0){
-        		svm_bw.write("+" + Integer.toString(fv.getValue()));
-        		
-        	}
-        	else if (fv.getValue() < 0){
-        		svm_bw.write(Integer.toString(fv.getValue()));
-        	}
-        	else {
-        		continue;
-        	};
-        	int i = 1;
-        	Map<String, Integer>fvMap = fv.getMap();
-        	Integer sLength = FeatureVector.countAppearingWordsOfVector(fvMap);
-        	for(String s : fvMap.keySet()){
-        		svm_bw.write(" ");
-        		//System.out.println("Value: " + Integer.toString(fvMap.get(s)));
-        		//System.out.println("SizeOfMap " + Integer.toString(sLength));
-        		//System.out.println("Ergebnis Division" + Float.toString((float)fvMap.get(s)/(float)sLength));
-        		svm_bw.write(i + ":" + (float)fvMap.get(s)/(float)sLength);
-        		i = i+1;
-        	}
-        	svm_bw.write("\n");
-        }
-    	svm_bw.close();
+//        for(FeatureVector fv : listOfFeatureVectors){
+//        	//System.out.println(fv);
+//        	if (fv.getValue() > 0){
+//        		svm_bw.write("+" + Integer.toString(fv.getValue()));
+//        		
+//        	}
+//        	else if (fv.getValue() < 0){
+//        		svm_bw.write(Integer.toString(fv.getValue()));
+//        	}
+//        	else {
+//        		continue;
+//        	};
+//        	int i = 1;
+//        	Map<String, Integer>fvMap = fv.getMap();
+//        	Integer sLength = FeatureVector.countAppearingWordsOfVector(fvMap);
+//        	for(String s : fvMap.keySet()){
+//        		svm_bw.write(" ");
+//        		//System.out.println("Value: " + Integer.toString(fvMap.get(s)));
+//        		//System.out.println("SizeOfMap " + Integer.toString(sLength));
+//        		//System.out.println("Ergebnis Division" + Float.toString((float)fvMap.get(s)/(float)sLength));
+//        		svm_bw.write(i + ":" + (float)fvMap.get(s)/(float)sLength);
+//        		i = i+1;
+//        	}
+//        	svm_bw.write("\n");
+//        }
+//    	svm_bw.close();
 		
 		//###### RANDOM FORRESTER BIRGER ######
 

@@ -170,6 +170,14 @@ public class EncogMLP {
 //		return mlp.getOutput();
 //	}
 	
+	/**
+	 * Loads a leaned network from the file <code>networkFile</code>.
+	 * @param networkFile <code>String</code> Networkfile to load as a network.
+	 */
+	public static void loadNetwork(String networkFile) {
+		network = (BasicNetwork) EncogDirectoryPersistence.loadObject(new File(networkFile));
+	}
+	
 	public static void saveNetwork(String file) {
 		EncogDirectoryPersistence.saveObject(new File(file), network);;
 	}

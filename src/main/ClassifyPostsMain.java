@@ -94,6 +94,9 @@ public class ClassifyPostsMain {
 		NeurophMLP nmlp = null;
 		EncogMLP emlp = null;
 		
+		//###### Nehme Startzeit ######
+		long startZeitStarten = System.currentTimeMillis();
+		
 		//###### OBJEKTE AUS DER DATENBANK HOLEN (Birger) ######
 		//input: ()
 		//output: Map<String, Value> -> Map an Text zu Bewertung
@@ -166,8 +169,14 @@ public class ClassifyPostsMain {
 		);
 		System.out.println("Anzahl der verwertbaren Featurevektoren: " + listOfFeatureVectors.size());
 		
+		//###### Nehme Endzeit ######
+		long endZeitStarten = System.currentTimeMillis();
+		System.out.println("###### System Gestartet - Startdauer " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden ######");
+		
 		//###### MLP STEFFEN ######
 		System.out.println("###### MLP LERNEN ######");
+		
+		long startZeitMLPLernen = System.currentTimeMillis();
 
 		/*mlp = new NeurophMLP(listOfAllWords);
 		mlp.addVector(listOfFeatureVectors);
@@ -177,8 +186,14 @@ public class ClassifyPostsMain {
 		
 		emlp = new EncogMLP(listOfAllWords);
 		emlp.addVector(listOfFeatureVectors);
-		emlp.learnWithErrorBackPropagation();;
-		emlp.saveNetwork("neuronalesNetzInput.eg");
+		int iterationen = emlp.learnWithErrorBackPropagation();
+		emlp.saveNetwork("neuronalesNetzInput_75Percent_backpropagation.eg");
+		
+		long endZeitMLPLernen = System.currentTimeMillis();
+		
+		System.out.println("###### MLP Angelernt ######");
+		System.out.println("Lerndauer: " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden");
+		System.out.println("Anzahl der Iterationen: " + iterationen);
 		
 		//###### SVM FABIAN ######
         //Set<String> result = new HashSet<String>();

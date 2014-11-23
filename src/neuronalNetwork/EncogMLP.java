@@ -69,7 +69,6 @@ public class EncogMLP {
 	 * @param data Input-Vector
 	 */
 	public static void addVector(FeatureVector data) {
-		System.out.println("###### MLP: Vector hinzugefuegt #####");
 		if(data.getValue() != 0d) {
 			double inputAkku[] = new double[wordList.length()];
 			double outputAkku = data.getValue();
@@ -92,7 +91,7 @@ public class EncogMLP {
 	/**
 	 * Laesst das Multi-Layer-Perceptron mit dem aktuellen Trainingsset lernen
 	 */
-	public static void learnWithResilientPropagation() {
+	public static int learnWithResilientPropagation() {
 		System.out.println("###### MLP: Starte lernen #####");
 		System.out.println("MLP: " + nInputLayer + " Input-Layer");
 		System.out.println("MLP: " + nHiddenLayer + " Hidden-Layer");
@@ -117,14 +116,14 @@ public class EncogMLP {
 			train.iteration();
 			System.out.println("MLP: Iteration: " + iteration + "\t Error: " + train.getError());
 			iteration++;
-		} while(train.getError() > Constants.ERROR_TOLLERANCE);
+		} while(train.getError() > Constants.ERROR_TOLLERANCE && iteration < Constants.MAXIMAL_ITERATIONS);
 		
 		train.finishTraining();
-		System.out.println("MLP: Training finished");
+		return iteration;
 	}
 	
 	
-	public static void learnWithErrorBackPropagation() {
+	public static int learnWithErrorBackPropagation() {
 		System.out.println("###### MLP: Starte lernen #####");
 		System.out.println("MLP: " + nInputLayer + " Input-Layer");
 		System.out.println("MLP: " + nHiddenLayer + " Hidden-Layer");
@@ -149,10 +148,10 @@ public class EncogMLP {
 			train.iteration();
 			System.out.println("MLP: Iteration: " + iteration + "\t Error: " + train.getError());
 			iteration++;
-		} while(train.getError() > Constants.ERROR_TOLLERANCE);
+		} while(train.getError() > Constants.ERROR_TOLLERANCE && iteration < Constants.MAXIMAL_ITERATIONS);
 		
 		train.finishTraining();
-		System.out.println("MLP: Training finished");
+		return iteration;
 	}
 	
 	static double[] toDoubleArray(List<Double> list) {

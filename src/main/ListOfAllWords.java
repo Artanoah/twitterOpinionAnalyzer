@@ -2,8 +2,10 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -94,6 +96,31 @@ public class ListOfAllWords {
 	 */
 	public int getWordID(String word) {
 		return listOfWords.indexOf(word);
+	}
+	
+	/**
+	 * Mutator </br>
+	 * Laed eine zuvor erstellte Wortdatei. Dabei werden alle bisher erzeugten Eintraege in diesem Objekt geloescht!
+	 * @param file <code>String</code> Datei die geladen werden soll.
+	 * @throws IOException
+	 */
+	public void loadFromFile(String file) throws IOException {
+		listOfWords = new ArrayList<String>();
+		
+		addWordFile(file);
+	}
+	
+	/**
+	 * Word-File-Methode </br>
+	 * Erstellt eine wieder ladbare Datei aus dieser <code>ListOfAllWords</code>.
+	 * @param file
+	 * @throws FileNotFoundException
+	 */
+	public void dumpToFile(String file) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(file);
+		
+		listOfWords.forEach(w -> pw.println(w));
+		pw.flush();
 	}
 	
 	//######## Interne Methoden ########

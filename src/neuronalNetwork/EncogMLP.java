@@ -12,6 +12,7 @@ import main.ListOfAllWords;
 
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLDataSet;
+import org.encog.ml.data.basic.BasicMLData;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
@@ -163,12 +164,14 @@ public class EncogMLP {
 	
 	/**
 	 * Berechne den Output mit dem aktuellen Input und gibt den erzeugten output zurueck.
+	 * @param input <code>double[]</code> Input-Array. Die Woerter muessen in der selben 
+	 * Reihenfolge wie beim Lernen sein.
+	 * 
 	 * @return Output der Berechnung
 	 */
-//	public static double[] calculate() {
-//		mlp.calculate();
-//		return mlp.getOutput();
-//	}
+	public static double[] calculate(double[] input) {
+		return network.compute(new BasicMLData(input)).getData();
+	}
 	
 	/**
 	 * Loads a leaned network from the file <code>networkFile</code>.

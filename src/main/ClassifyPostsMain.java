@@ -122,7 +122,7 @@ public class ClassifyPostsMain {
 		//Erstellen des Thread-Pools
 	    ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
 		correctedPostToValue.forEach((key, value) -> {
-			executor.submit(new NormaliseAndFilterString(key, value, true, false));
+			executor.submit(new NormaliseAndFilterString(key, value, true, false, CLASSIFY_POST_MAIN_FLAG));
 //				System.out.println(counter);
 //				String normalizedString = normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false);
 //			if(!(normalizedString.equals("")))

@@ -1,6 +1,6 @@
 package main;
 
-import static main.Constants.MAX_THREADS;
+import static main.Constants.*;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -92,7 +92,7 @@ public class Util {
 			//Erstellen des Thread-Pools
 		    ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
 			correctedPostToValue.forEach((key, value) -> {
-				executor.submit(new NormaliseAndFilterString(key, value, true, false));
+				executor.submit(new NormaliseAndFilterString(key, value, true, false, UTIL_FLAG));
 //						System.out.println(counter);
 //						String normalizedString = normalisation.PartOfSpeechAnalysis.normaliseAndFilterString(key, true, false);
 //					if(!(normalizedString.equals("")))

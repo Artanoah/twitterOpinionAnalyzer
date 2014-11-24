@@ -17,12 +17,14 @@ public class NormaliseString extends PartOfSpeechAnalysis{
 	int value;
 	Boolean stamming;
 	Boolean partOfSpeech;
+	int packageFlag;
 	
-	public NormaliseString(String str, int value, Boolean stamming, Boolean partOfSpeech){
+	public NormaliseString(String str, int value, Boolean stamming, Boolean partOfSpeech, int packageFlag){
 		this.str = str;
 		this.value = value;
 		this.stamming = stamming;
 		this.partOfSpeech = partOfSpeech;
+		this.packageFlag = packageFlag;
 	}
 	
 	
@@ -57,7 +59,12 @@ public class NormaliseString extends PartOfSpeechAnalysis{
         
         }
         if(!(result.equals(""))){
-            main.ClassifyPostsMain.addStemmedPost(result, value);
+        	if(packageFlag == 0){
+        		main.ClassifyPostsMain.addStemmedPost(result, value);
+        	}
+        	else if(packageFlag == 1){
+        		main.Util.addStemmedPost(result, value);
+        	}
         }
     }
 	

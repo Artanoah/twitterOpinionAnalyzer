@@ -14,14 +14,14 @@ import org.encog.persist.EncogDirectoryPersistence;
 public class CalculateInput {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		List<FeatureVector> featureVectors = Util.getStemmedPosts();
+		List<FeatureVector> featureVectors = Util.getStemmedPosts("./reddit_testset.txt");
 		
 		ListOfAllWords listOfAllWords = new ListOfAllWords();
 		listOfAllWords.loadFromFile("listOfAllWords.dump");
 		EncogMLP mlp = new EncogMLP(listOfAllWords);
 		mlp.loadNetwork("./learned/neuronalesNetzInput_75Percent_reseilientPropagation.eg");
 		
-		featureVectors.stream().forEach(fv -> System.out.println(fv));
+		
 	}
 
 }

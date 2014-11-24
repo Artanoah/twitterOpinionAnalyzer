@@ -25,7 +25,7 @@ import contentSource.RedditPosts;
 public class Util {
 	static Map<String, Integer> stemmedPostTovalue = new HashMap<String, Integer>();
 	
-	public static List<FeatureVector> getStemmedPosts() throws IOException, InterruptedException {
+	public static List<FeatureVector> getStemmedPosts(String fileToLearn) throws IOException, InterruptedException {
 		//###### INITIALISIERUNGEN ######
 			String svm_input = "svm_input";
 	        BufferedWriter svm_bw = new BufferedWriter(new FileWriter("svm_input"));
@@ -72,7 +72,7 @@ public class Util {
 			//output: Map<String, Value> -> Map an Text zu Bewertung
 			System.out.println("###### OBJEKTE AUS DER DATENBANK HOLEN ######");
 			
-			postToValue = RedditPosts.getTrainingsSetFromFile("./reddit_testset.txt");
+			postToValue = RedditPosts.getTrainingsSetFromFile(fileToLearn);
 			System.out.println("Anzahl der Posts fuer Trainingsfile: " + postToValue.size());
 			
 			//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######

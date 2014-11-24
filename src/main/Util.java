@@ -23,10 +23,11 @@ import spellingCorrection.SpellingCorrector;
 import contentSource.RedditPosts;
 
 public class Util {
-	static Map<String, Integer> stemmedPostTovalue = new HashMap<String, Integer>();
+	static Map<String, Integer> stemmedPostTovalue = null;
 	
 	public static List<FeatureVector> getStemmedPosts(String fileToLearn) throws IOException, InterruptedException {
 		//###### INITIALISIERUNGEN ######
+		stemmedPostTovalue = new HashMap<String, Integer>();
 			String svm_input = "svm_input";
 	        BufferedWriter svm_bw = new BufferedWriter(new FileWriter("svm_input"));
 	        int counter = 0;

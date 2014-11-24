@@ -13,7 +13,7 @@ public class Constants {
 	public static final int CLASSIFY_POST_MAIN_FLAG = 0;
 	public static final int UTIL_FLAG = 1;
 	public static final List<String> REMAININGTAGS = new ArrayList<String>(Arrays.asList("JJ", "JJR", "JJS", "NN", "NNP", "NNPS", "NNS", "RB", "RBR", "RBS", "RP", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ"));
-	public static final double ERROR_TOLLERANCE = 0.15;
-	public static final int MAXIMAL_ITERATIONS = 500;
+	public static final double ERROR_TOLLERANCE = 0.01;
+	public static final int MAXIMAL_ITERATIONS = 100;
 	public static final int AMOUNT_RANDOM_TREES = 30;
 }

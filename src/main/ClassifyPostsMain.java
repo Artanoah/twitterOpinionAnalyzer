@@ -184,7 +184,7 @@ public class ClassifyPostsMain {
 //		mlp.learn();
 //		mlp.save("mlp.nnet");
 		
-		listOfAllWords.dumpToFile("listOfAllWords.dump");
+//		listOfAllWords.dumpToFile("listOfAllWords.dump");
 		
 //		emlp = new EncogMLP(listOfAllWords);
 //		emlp.addVector(listOfFeatureVectors);

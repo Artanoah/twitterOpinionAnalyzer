@@ -14,17 +14,20 @@ import org.encog.persist.EncogDirectoryPersistence;
 public class CalculateInput {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		List<FeatureVector> featureVectors = Util.getStemmedPosts("./reddit_testset.txt");
+		List<FeatureVector> featureVectors = Util.getStemmedPosts("./reddit_testset2.txt");
 		
 		ListOfAllWords listOfAllWords = new ListOfAllWords();
 		listOfAllWords.loadFromFile("listOfAllWords.dump");
-		EncogMLP mlp = new EncogMLP(listOfAllWords);
-		mlp.loadNetwork("./learned/neuronalesNetzInput_75Percent_reseilientPropagation.eg");
+		EncogMLP resilient_mlp = new EncogMLP(listOfAllWords);
+		resilient_mlp.loadNetwork("./learned/neuronalesNetzInput_75Percent_reseilientPropagation.eg");
+		
+		EncogMLP back_mlp = new EncogMLP(listOfAllWords);
+		back_mlp.loadNetwork("./learned/neuronalesNetzInput_75Percent_backpropagation.eg");
 		
 		featureVectors.stream().forEach(fv -> {
 			System.out.println("Map: " + fv);
-			System.out.println("Ergebnis " + Math.round(mlp.calculate(fv)[0]));
+			System.out.println("Resilient Ergebnis " + Math.round(resilient_mlp.calculate(fv)));
+			System.out.println("Backpropagation Ergebnis " + Math.round(back_mlp.calculate(fv)));
 		});
 	}
-
 }

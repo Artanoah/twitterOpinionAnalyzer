@@ -21,7 +21,10 @@ public class CalculateInput {
 		EncogMLP mlp = new EncogMLP(listOfAllWords);
 		mlp.loadNetwork("./learned/neuronalesNetzInput_75Percent_reseilientPropagation.eg");
 		
-		
+		featureVectors.stream().forEach(fv -> {
+			System.out.println("Map: " + fv.getMap());
+			System.out.println("Ergebnis " + mlp.calculate(fv)[0]);
+		});
 	}
 
 }

@@ -173,6 +173,23 @@ public class EncogMLP {
 		return network.compute(new BasicMLData(input)).getData();
 	}
 	
+	public static double[] calculate(FeatureVector fv) {
+		int size = wordList.length();
+		double[] akku = new double[size];
+		
+		for(int i = 0; i < size; i++) {
+			akku[i] = 0.0;
+		}
+		
+		fv.getMap().forEach((key, value) -> {
+			if(wordList.getWordID(key) > -1) {
+				akku[wordList.getWordID(key)] = value;
+			}
+		});
+		
+		return calculate(akku);
+	}
+	
 	/**
 	 * Loads a leaned network from the file <code>networkFile</code>.
 	 * @param networkFile <code>String</code> Networkfile to load as a network.

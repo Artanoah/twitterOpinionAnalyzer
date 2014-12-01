@@ -174,10 +174,10 @@ public class ClassifyPostsMain {
 		System.out.println("###### System Gestartet - Startdauer " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden ######");
 		
 		//###### MLP STEFFEN ######
-//		System.out.println("###### MLP LERNEN ######");
-//		
-//		long startZeitMLPLernen = System.currentTimeMillis();
-//
+		System.out.println("###### MLP LERNEN ######");
+		
+		long startZeitMLPLernen = System.currentTimeMillis();
+
 //		mlp = new NeurophMLP(listOfAllWords);
 //		mlp.addVector(listOfFeatureVectors);
 //		
@@ -186,16 +186,16 @@ public class ClassifyPostsMain {
 		
 //		listOfAllWords.dumpToFile("listOfAllWords.dump");
 		
-//		emlp = new EncogMLP(listOfAllWords);
-//		emlp.addVector(listOfFeatureVectors);
-//		int iterationen = emlp.learnWithErrorBackPropagation();
-//		emlp.saveNetwork("neuronalesNetzInput_75Percent_backpropagation.eg");
-//		
-//		long endZeitMLPLernen = System.currentTimeMillis();
-//		
-//		System.out.println("###### MLP Angelernt ######");
-//		System.out.println("Lerndauer: " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden");
-//		System.out.println("Anzahl der Iterationen: " + iterationen);
+		emlp = new EncogMLP(listOfAllWords);
+		emlp.addVector(listOfFeatureVectors);
+		int iterationen = emlp.learnWithResilientPropagation();
+		emlp.saveNetwork("neuronalesNetzInput_75Percent_resilientpropagation_fixedValues.eg");
+		
+		long endZeitMLPLernen = System.currentTimeMillis();
+		
+		System.out.println("###### MLP Angelernt ######");
+		System.out.println("Lerndauer: " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden");
+		System.out.println("Anzahl der Iterationen: " + iterationen);
 		
 		//###### SVM FABIAN ######
         //Set<String> result = new HashSet<String>();

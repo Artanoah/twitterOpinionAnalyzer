@@ -33,6 +33,8 @@ public class EncogMLP {
 	static ListOfAllWords wordList;
 	static Comparator<String> stringComp = (o1, o2) -> o1.compareTo(o2);
 	
+	static int VALUE_CORRECTION = 1;
+	
 	
 	/**
 	 * Erzeugt ein Multi-Layer-Percepronen Netzwerk mit einem Lexikon list.
@@ -70,9 +72,9 @@ public class EncogMLP {
 	 * @param data Input-Vector
 	 */
 	public static void addVector(FeatureVector data) {
-		if(data.getValue() != 0d) {
+		//if(data.getValue() != 0d) {
 			double inputAkku[] = new double[wordList.length()];
-			double outputAkku = data.getValue();
+			double outputAkku = data.getValue() + VALUE_CORRECTION;
 			
 			for(String w : wordList.getList()) {
 				inputAkku[wordList.getWordID(w)] = data.getMap().get(w);
@@ -86,7 +88,7 @@ public class EncogMLP {
 	
 			INPUT.add(inputTemp);
 			OUTPUT.add(new ArrayList<Double>(Arrays.asList(outputAkku)));
-		}
+		//}
 	}
 	
 	/**
@@ -173,6 +175,23 @@ public class EncogMLP {
 		return network.compute(new BasicMLData(input)).getData();
 	}
 	
+	public static double calculate(FeatureVector fv) {
+		int size = wordList.length();
+		double[] akku = new double[size];
+		
+		for(int i = 0; i < size; i++) {
+			akku[i] = 0.0;
+		}
+		
+		fv.getMap().forEach((key, value) -> {
+			if(wordList.getWordID(key) > -1) {
+				akku[wordList.getWordID(key)] = value;
+			}
+		});
+		
+		return calculate(akku)[0] - VALUE_CORRECTION;
+	}
+	
 	/**
 	 * Loads a leaned network from the file <code>networkFile</code>.
 	 * @param networkFile <code>String</code> Networkfile to load as a network.
@@ -182,6 +201,6 @@ public class EncogMLP {
 	}
 	
 	public static void saveNetwork(String file) {
-		EncogDirectoryPersistence.saveObject(new File(file), network);;
+		EncogDirectoryPersistence.saveObject(new File(file), network);
 	}
 }

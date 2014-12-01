@@ -159,6 +159,8 @@ public class ClassifyPostsMain {
 		
 		listOfAllWords.addWords(wortliste);
 		
+		listOfAllWords.dumpToFile("listOfAllWords.dump");
+		
 		//###### VECTOR OBJEKTE ERSTELLEN (Steffen) ######
 		//input: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)
 		//output: List<FeatureVector> -> Hier sind nun auch nicht vorkommende Woerter in der Map enthalten
@@ -174,59 +176,59 @@ public class ClassifyPostsMain {
 		System.out.println("###### System Gestartet - Startdauer " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden ######");
 		
 		//###### MLP STEFFEN ######
-		System.out.println("###### MLP LERNEN ######");
-		
-		long startZeitMLPLernen = System.currentTimeMillis();
-
+//		System.out.println("###### MLP LERNEN ######");
+//		
+//		long startZeitMLPLernen = System.currentTimeMillis();
+//
 //		mlp = new NeurophMLP(listOfAllWords);
 //		mlp.addVector(listOfFeatureVectors);
 //		
 //		mlp.learn();
 //		mlp.save("mlp.nnet");
-		
+//		
 //		listOfAllWords.dumpToFile("listOfAllWords.dump");
-		
-		emlp = new EncogMLP(listOfAllWords);
-		emlp.addVector(listOfFeatureVectors);
-		int iterationen = emlp.learnWithResilientPropagation();
-		emlp.saveNetwork("neuronalesNetzInput_75Percent_resilientpropagation_fixedValues.eg");
-		
-		long endZeitMLPLernen = System.currentTimeMillis();
-		
-		System.out.println("###### MLP Angelernt ######");
-		System.out.println("Lerndauer: " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden");
-		System.out.println("Anzahl der Iterationen: " + iterationen);
-		
+//		
+//		emlp = new EncogMLP(listOfAllWords);
+//		emlp.addVector(listOfFeatureVectors);
+//		int iterationen = emlp.learnWithResilientPropagation();
+//		emlp.saveNetwork("neuronalesNetzInput_75Percent_resilientpropagation_fixedValues.eg");
+//		
+//		long endZeitMLPLernen = System.currentTimeMillis();
+//		
+//		System.out.println("###### MLP Angelernt ######");
+//		System.out.println("Lerndauer: " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden");
+//		System.out.println("Anzahl der Iterationen: " + iterationen);
+//		
 		//###### SVM FABIAN ######
         //Set<String> result = new HashSet<String>();
 		
 		//System.out.println(listOfFeatureVectors);
-//        for(FeatureVector fv : listOfFeatureVectors){
-//        	//System.out.println(fv);
-//        	if (fv.getValue() > 0){
-//        		svm_bw.write("+" + Integer.toString(fv.getValue()));
-//        		
-//        	}
-//        	else if (fv.getValue() < 0){
-//        		svm_bw.write(Integer.toString(fv.getValue()));
-//        	}
-//        	else {
-//        		continue;
-//        	};
-//        	int i = 1;
-//        	Map<String, Integer>fvMap = fv.getMap();
-//        	Integer sLength = FeatureVector.countAppearingWordsOfVector(fvMap);
-//        	for(String s : fvMap.keySet()){
-//        		svm_bw.write(" ");
-//        		//System.out.println("Value: " + Integer.toString(fvMap.get(s)));
-//        		//System.out.println("SizeOfMap " + Integer.toString(sLength));
-//        		//System.out.println("Ergebnis Division" + Float.toString((float)fvMap.get(s)/(float)sLength));
-//        		svm_bw.write(i + ":" + (float)fvMap.get(s)/(float)sLength);
-//        		i = i+1;
-//        	}
-//        	svm_bw.write("\n");
-//        }
-//    	svm_bw.close();
+        for(FeatureVector fv : listOfFeatureVectors){
+        	//System.out.println(fv);
+        	if (fv.getValue() > 0){
+        		svm_bw.write("+" + Integer.toString(fv.getValue()));
+        		
+        	}
+        	else if (fv.getValue() < 0){
+        		svm_bw.write(Integer.toString(fv.getValue()));
+        	}
+        	else {
+        		continue;
+        	};
+        	int i = 1;
+        	Map<String, Integer>fvMap = fv.getMap();
+        	Integer sLength = FeatureVector.countAppearingWordsOfVector(fvMap);
+        	for(String s : fvMap.keySet()){
+        		svm_bw.write(" ");
+        		//System.out.println("Value: " + Integer.toString(fvMap.get(s)));
+        		//System.out.println("SizeOfMap " + Integer.toString(sLength));
+        		//System.out.println("Ergebnis Division" + Float.toString((float)fvMap.get(s)/(float)sLength));
+        		svm_bw.write(i + ":" + (float)fvMap.get(s)/(float)sLength);
+        		i = i+1;
+        	}
+        	svm_bw.write("\n");
+        }
+    	svm_bw.close();
 		
 		//###### RANDOM FORRESTER BIRGER ######
 

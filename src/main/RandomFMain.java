@@ -12,7 +12,7 @@ import net.sf.javaml.core.Instance;
 import net.sf.javaml.core.SparseInstance;
 import static main.Constants.*;
 
-public class ForestMANMain {
+public class RandomFMain {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		System.out.println("###### TRAININGSSET FERTIGMACHEN ######");

@@ -96,18 +96,19 @@ public class RandomFWekaMain {
 		System.out.println("###### VergleichsSet gegentesten ######");
 		List<FeatureVector> compareSetVectors = Util.getStemmedPosts("./reddit_testset.txt");
 		for(FeatureVector vector:compareSetVectors){
-			Instance temp = new Instance(vector.getMap().size());
+			Instance temp = new Instance(trainingsSet.firstInstance());
+			temp.setDataset(trainingsSet);
 			for(String key:vector.getMap().keySet()){
-				temp.setValue((Attribute) fvWekaAttributes.elementAt(keyToIndex.get(key)), vector.getMap().get(key));
+				if(keyToIndex.get(key) != null){
+					temp.setValue((Attribute) fvWekaAttributes.elementAt(keyToIndex.get(key)), vector.getMap().get(key));
+				}
 			}
 			double[] distribution = randomForest.distributionForInstance(temp);
-			
 			System.out.println(vector + " ist zu " + distribution[0] + "% pro, " + distribution[1] + "% contra und " + distribution[2] + "% neutral");
 		}
 		
 		long startClassifyRF = System.currentTimeMillis();
 		System.out.println("RANDOM-FOREST hat bewertet, in " + (System.currentTimeMillis()-startClassifyRF) + "ms.");
-		
 	}
 
 }

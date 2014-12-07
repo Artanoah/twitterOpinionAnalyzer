@@ -10,8 +10,13 @@ import main.Constants;
 import main.FeatureVector;
 import main.ListOfAllWords;
 
+import org.encog.engine.network.activation.ActivationCompetitive;
+import org.encog.engine.network.activation.ActivationGaussian;
 import org.encog.engine.network.activation.ActivationLinear;
+import org.encog.engine.network.activation.ActivationSIN;
 import org.encog.engine.network.activation.ActivationSigmoid;
+import org.encog.engine.network.activation.ActivationSoftMax;
+import org.encog.engine.network.activation.ActivationTANH;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.ml.data.basic.BasicMLDataSet;
@@ -34,7 +39,7 @@ public class EncogMLP {
 	static ListOfAllWords wordList;
 	static Comparator<String> stringComp = (o1, o2) -> o1.compareTo(o2);
 	
-	static int VALUE_CORRECTION = 1;
+	static int VALUE_CORRECTION = 0;
 	
 	
 	/**
@@ -50,9 +55,9 @@ public class EncogMLP {
 		
 		network = new BasicNetwork();
 		network.addLayer(new BasicLayer(null, true, nInputLayer));
-		network.addLayer(new BasicLayer(new ActivationLinear(), true, nHiddenLayer));
+		network.addLayer(new BasicLayer(new ActivationSigmoid(), true, nHiddenLayer));
 		//network.addLayer(new BasicLayer(new ActivationSigmoid(), true, Math.round(nHiddenLayer / 2)));
-		network.addLayer(new BasicLayer(new ActivationLinear(), false, nOutputLayer));
+		network.addLayer(new BasicLayer(new ActivationTANH(), false, nOutputLayer));
 		
 		network.getStructure().finalizeStructure();
 		network.reset();

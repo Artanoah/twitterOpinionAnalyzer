@@ -10,6 +10,7 @@ import main.Constants;
 import main.FeatureVector;
 import main.ListOfAllWords;
 
+import org.encog.engine.network.activation.ActivationLinear;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLData;
@@ -49,9 +50,9 @@ public class EncogMLP {
 		
 		network = new BasicNetwork();
 		network.addLayer(new BasicLayer(null, true, nInputLayer));
-		network.addLayer(new BasicLayer(new ActivationSigmoid(), true, nHiddenLayer));
+		network.addLayer(new BasicLayer(new ActivationLinear(), true, nHiddenLayer));
 		//network.addLayer(new BasicLayer(new ActivationSigmoid(), true, Math.round(nHiddenLayer / 2)));
-		network.addLayer(new BasicLayer(new ActivationSigmoid(), false, nOutputLayer));
+		network.addLayer(new BasicLayer(new ActivationLinear(), false, nOutputLayer));
 		
 		network.getStructure().finalizeStructure();
 		network.reset();
@@ -125,7 +126,9 @@ public class EncogMLP {
 		return iteration;
 	}
 	
-	
+	/**
+	 * Laesst das Multi-Layer-Perceptron mit dem aktuellen Trainingsset lernen
+	 */
 	public static int learnWithErrorBackPropagation() {
 		System.out.println("###### MLP: Starte lernen #####");
 		System.out.println("MLP: " + nInputLayer + " Input-Layer");

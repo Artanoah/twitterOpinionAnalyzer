@@ -190,7 +190,7 @@ public class ClassifyPostsMain {
 		
 		emlp = new EncogMLP(listOfAllWords);
 		emlp.addVector(listOfFeatureVectors);
-		int iterationen = emlp.learnWithResilientPropagation();
+		int iterationen = emlp.learnWithErrorBackPropagation();
 		emlp.saveNetwork("neuronalesNetzInput_75Percent_resilientpropagation_moreInput.eg");
 		
 		long endZeitMLPLernen = System.currentTimeMillis();

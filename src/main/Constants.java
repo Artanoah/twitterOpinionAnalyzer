@@ -14,6 +14,6 @@ public class Constants {
 	public static final int UTIL_FLAG = 1;
 	public static final List<String> REMAININGTAGS = new ArrayList<String>(Arrays.asList("JJ", "JJR", "JJS", "RB", "RBR", "RBS", "RP", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ"));
 	public static final double ERROR_TOLLERANCE = 0.01;
-	public static final int MAXIMAL_ITERATIONS = 100;
+	public static final int MAXIMAL_ITERATIONS = 200;
 	public static final int AMOUNT_RANDOM_TREES = 30;
 }

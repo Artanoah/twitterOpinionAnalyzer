@@ -44,7 +44,7 @@ public class EncogMLP {
 		wordList = list;
 				
 		nInputLayer = list.length();
-		nHiddenLayer = (int) Math.round(nInputLayer * 0.75);
+		nHiddenLayer = (int) Math.round(nInputLayer * 1.25);
 		nOutputLayer = 1;
 		
 		network = new BasicNetwork();

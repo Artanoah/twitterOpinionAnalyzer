@@ -196,7 +196,7 @@ public class ClassifyPostsMain {
 		long endZeitMLPLernen = System.currentTimeMillis();
 		
 		System.out.println("###### MLP Angelernt ######");
-		System.out.println("Lerndauer: " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden");
+		System.out.println("Lerndauer: " + Math.round((endZeitMLPLernen - startZeitMLPLernen) / 1000) + " Sekunden");
 		System.out.println("Anzahl der Iterationen: " + iterationen);
 //		
 		//###### SVM FABIAN ######

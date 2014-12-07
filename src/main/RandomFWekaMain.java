@@ -3,22 +3,21 @@ package main;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
-import weka.classifiers.Classifier;
+import randomForest.ModifiedRandomForest;
 import weka.classifiers.Evaluation;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
-import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
-import static main.Constants.*;
+import weka.core.SparseInstance;
 
 public class RandomFWekaMain {
 
@@ -48,7 +47,7 @@ public class RandomFWekaMain {
 			possibleAttributes.add(temp);
 			keyToIndex.put(key, possibleAttributes.indexOf(temp));
 		}
-		FastVector fvClassVal = new FastVector(3);
+		Vector<String> fvClassVal = new Vector<String>(3);
 		fvClassVal.addElement("pro");
 		fvClassVal.addElement("contra");
 		fvClassVal.addElement("neutral");
@@ -56,18 +55,18 @@ public class RandomFWekaMain {
 		possibleAttributes.add(klassifizierung);
 		keyToIndex.put("ClassVal", possibleAttributes.indexOf(klassifizierung));
 		//WEKA FeatureVector erstellen
-		FastVector fvWekaAttributes = new FastVector(possibleAttributes.size());
+		ArrayList<Attribute> fvWekaAttributes = new ArrayList<Attribute>();
 		for(Attribute attribut:possibleAttributes){
-			fvWekaAttributes.addElement(attribut);
+			fvWekaAttributes.add(attribut);
 		}
 		
 		//TrainingsSet erstellen
 		Instances trainingsSet = new Instances("TrainingsSet",fvWekaAttributes,trainingsSetVectors.size());
 		trainingsSet.setClassIndex(keyToIndex.get("ClassVal"));
 		for(FeatureVector vector:trainingsSetVectors){
-			Instance temp = new Instance(vector.getMap().size()+1);
+			Instance temp = new SparseInstance(vector.getMap().size()+1);
 			for(String key:vector.getMap().keySet()){
-				temp.setValue((Attribute) fvWekaAttributes.elementAt(keyToIndex.get(key)), vector.getMap().get(key));
+				temp.setValue((Attribute) fvWekaAttributes.get(keyToIndex.get(key)), vector.getMap().get(key));
 			}
 			String valueOfVector = "";
 			switch(vector.getValue()){
@@ -75,13 +74,15 @@ public class RandomFWekaMain {
 			case -1:valueOfVector = "contra";
 			case 1:valueOfVector = "pro";
 			}
-			temp.setValue((Attribute) fvWekaAttributes.elementAt(keyToIndex.get("ClassVal")), valueOfVector);
+			temp.setValue((Attribute) fvWekaAttributes.get(keyToIndex.get("ClassVal")), valueOfVector);
 			
 			trainingsSet.add(temp);
 		}
 		
 		//Klassifizierer bauen
-		Classifier randomForest = new RandomForest();
+		ModifiedRandomForest randomForest = new ModifiedRandomForest();
+		randomForest.setNumFeatures(trainingsSet.size()/3);
+		randomForest.setNumTrees(Constants.AMOUNT_RANDOM_TREES);
 		randomForest.buildClassifier(trainingsSet);
 		System.out.println("Benoetigte Zeit zum RandomForest lernen: " + (System.currentTimeMillis()-startLearningRF) + "ms.");
 		
@@ -94,20 +95,21 @@ public class RandomFWekaMain {
 		
 		//VergleichsSet zusammenbauen
 		System.out.println("###### VergleichsSet gegentesten ######");
+		long startClassifyRF = System.currentTimeMillis();
 		List<FeatureVector> compareSetVectors = Util.getStemmedPosts("./reddit_testset.txt");
 		for(FeatureVector vector:compareSetVectors){
-			Instance temp = new Instance(trainingsSet.firstInstance());
+			Instance temp = new SparseInstance(trainingsSet.firstInstance());
 			temp.setDataset(trainingsSet);
 			for(String key:vector.getMap().keySet()){
 				if(keyToIndex.get(key) != null){
-					temp.setValue((Attribute) fvWekaAttributes.elementAt(keyToIndex.get(key)), vector.getMap().get(key));
+					temp.setValue((Attribute) fvWekaAttributes.get(keyToIndex.get(key)), vector.getMap().get(key));
 				}
 			}
 			double[] distribution = randomForest.distributionForInstance(temp);
 			System.out.println(vector + " ist zu " + distribution[0] + "% pro, " + distribution[1] + "% contra und " + distribution[2] + "% neutral");
 		}
 		
-		long startClassifyRF = System.currentTimeMillis();
+		
 		System.out.println("RANDOM-FOREST hat bewertet, in " + (System.currentTimeMillis()-startClassifyRF) + "ms.");
 	}
 

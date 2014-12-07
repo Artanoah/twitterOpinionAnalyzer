@@ -1,0 +1,5 @@
+{text:"Hooray! My state won\'t be last! I thought Florida would be last somehow...", bewertung:"1"}
+{text:"Wow, that kind of tips the 11th circuit\'s hand; they\'re one of the few that hasn\'t ruled on marriage recognition yet. Then again, at this rate, the Supreme Court will probably settle this issue for the whole country before the 11th circuit has a chance to rule definitively.", bewertung:"0"}
+{text:"As someone who\'s moving there for family reasons in a few months, this warms my heart. ", bewertung:"1"}
+{text:"Anyone know off the top of their head what the total number of equality states up to, now? ", bewertung:"0"}
+{text:"I don\'t think this is \"breaking\"? that date was on the Wiki when I checked a week or so ago.Edit: A judge denied a stay extension, great news. :D", bewertung:"-1"}

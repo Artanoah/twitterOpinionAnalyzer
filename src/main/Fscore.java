@@ -2,36 +2,36 @@ package main;
 
 public class Fscore {
 
-	private Integer truePositive = 0;
-	private Integer trueNegative = 0;
+	private int truePositive;
+	private int trueNegative;
 	
-	private Integer falsePositive = 0;
-	private Integer falseNegative = 0;
+	private int falsePositive;
+	private int falseNegative;
 	
-
+	// 	prevelance hinzufuegen
 	public void incrementFalsePositive(){
-		this.falsePositive = this.falsePositive++;
+		falsePositive = falsePositive+1;
 	}
 
 	
 	public void incrementFalseNegativ(){
-		this.falseNegative = this.falseNegative++;
+		falseNegative = falseNegative+1;
 	}
 	
 	public void incrementTrueNegativ(){
-		this.trueNegative = this.trueNegative++;
+		trueNegative = trueNegative+1;
 	}
 	
 	
 	public void incrementTruePositive(){
-		this.truePositive = this.truePositive++;
+		truePositive = truePositive+1;
 	}
 	
 	
 	
-	public Integer computePrecision(){
+	public float computePrecision(){
 		
-		Integer precision = this.truePositive/(this.truePositive+this.falsePositive);
+		float precision = truePositive/(float) (truePositive+falsePositive);
 		
 		return precision;
 		
@@ -39,18 +39,18 @@ public class Fscore {
 
 
 	
-	public static Integer computeAccuracy(Integer trueP, Integer falseP,Integer trueN,Integer falseN){
+	public float computeAccuracy(){
 		
-		Integer accuracy= (trueP+falseP)/(trueP+falseP+trueN+falseN);
+		Float accuracy= (truePositive+falsePositive)/ (float) (truePositive+falsePositive+trueNegative+falseNegative);
 		
 		return accuracy;
 		
 	}
 	
 
-	public static Integer computeRecall(Integer trueP, Integer falseN){
+	public  float computeRecall(){
 		
-		Integer recall = trueP/(trueP+falseN);
+		float recall = truePositive/ (float) (truePositive+falseNegative);
 		
 		return recall;
 		

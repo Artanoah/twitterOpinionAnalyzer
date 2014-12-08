@@ -31,16 +31,18 @@ public class CSVFile {
 		for(String[] line:allLines){
 			int classifiedValue = Integer.parseInt(line[1]);
 			String postText = "";
-			if(line.length > 4){
-				String temp = "";
-				for(int i = 3;i <= line.length-1;i++ ){
-					temp = temp + line[i];
+			if(!line[0].equals("Item")){
+				if(line.length > 4){
+					String temp = "";
+					for(int i = 3;i <= line.length-1;i++ ){
+						temp = temp + line[i];
+					}
+					postText = temp;
+				} else {
+					postText = line[3];
 				}
-				postText = temp;
-			} else {
-				postText = line[3];
+				result.put(postText, classifiedValue);
 			}
-			result.put(postText, classifiedValue);
 		}
 		
 		return result;

@@ -29,9 +29,9 @@ public class CSVFile {
 		Map<String,Integer> result = new HashMap<String,Integer>();
 		
 		for(String[] line:allLines){
-			int classifiedValue = Integer.parseInt(line[1]);
 			String postText = "";
-			if(!line[0].equals("Item")){
+			if(line[0].matches("-?[0-9]+")){
+				int classifiedValue = Integer.parseInt(line[1]);
 				if(line.length > 4){
 					String temp = "";
 					for(int i = 3;i <= line.length-1;i++ ){

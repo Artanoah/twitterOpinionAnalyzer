@@ -34,7 +34,6 @@ public class Util {
 		String[] fileToLearnParts = fileToLearn.split("/");
 		File stemmedPostFile = new File("./" + fileToLearnParts[fileToLearnParts.length-1] + ".dump");
 		List<FeatureVector> listOfFeatureVectors = new ArrayList<FeatureVector>();
-		
 		if(!stemmedPostFile.exists()){
 			//###### INITIALISIERUNGEN ######
 			stemmedPostTovalue = new HashMap<String, Integer>();

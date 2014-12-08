@@ -50,14 +50,14 @@ public class EncogMLP {
 		wordList = list;
 				
 		nInputLayer = list.length();
-		nHiddenLayer = (int) Math.round(nInputLayer * 1.25);
+		nHiddenLayer = (int) Math.round(nInputLayer * 0.75);
 		nOutputLayer = 1;
 		
 		network = new BasicNetwork();
 		network.addLayer(new BasicLayer(null, true, nInputLayer));
 		network.addLayer(new BasicLayer(new ActivationSigmoid(), true, nHiddenLayer));
 		//network.addLayer(new BasicLayer(new ActivationSigmoid(), true, Math.round(nHiddenLayer / 2)));
-		network.addLayer(new BasicLayer(new ActivationTANH(), false, nOutputLayer));
+		network.addLayer(new BasicLayer(new ActivationSigmoid(), false, nOutputLayer));
 		
 		network.getStructure().finalizeStructure();
 		network.reset();
@@ -78,7 +78,7 @@ public class EncogMLP {
 	 * @param data Input-Vector
 	 */
 	public static void addVector(FeatureVector data) {
-		//if(data.getValue() != 0d) {
+		if(data.getMap().size() != 0) {
 			double inputAkku[] = new double[wordList.length()];
 			double outputAkku = data.getValue() + VALUE_CORRECTION;
 			
@@ -94,7 +94,7 @@ public class EncogMLP {
 	
 			INPUT.add(inputTemp);
 			OUTPUT.add(new ArrayList<Double>(Arrays.asList(outputAkku)));
-		//}
+		}
 	}
 	
 	/**

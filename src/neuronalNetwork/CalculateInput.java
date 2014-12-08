@@ -14,8 +14,11 @@ import org.encog.persist.EncogDirectoryPersistence;
 public class CalculateInput {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
+		System.out.println("###### FeatureVectoren einlesen oder erzeugen ######");
 		List<FeatureVector> featureVectors = Util.getStemmedPosts("./testset.csv");
 		ListOfAllWords listOfAllWords = new ListOfAllWords();
+		
+		System.out.println("###### MLP LERNEN ######");
 		listOfAllWords.loadFromFile("listOfAllWords.dump");
 		
 		EncogMLP emlp = new EncogMLP(listOfAllWords);

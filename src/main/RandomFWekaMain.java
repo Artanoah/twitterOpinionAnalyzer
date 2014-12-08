@@ -34,9 +34,8 @@ public class RandomFWekaMain {
 			keyToIndex.put(key, possibleAttributes.indexOf(temp));
 		}
 		Vector<String> fvClassVal = new Vector<String>(3);
-		fvClassVal.addElement("pro");
-		fvClassVal.addElement("neutral");
 		fvClassVal.addElement("contra");
+		fvClassVal.addElement("pro");
 		Attribute klassifizierung = new Attribute("ClassVal", fvClassVal);
 		possibleAttributes.add(klassifizierung);
 		keyToIndex.put("ClassVal", possibleAttributes.indexOf(klassifizierung));
@@ -56,8 +55,7 @@ public class RandomFWekaMain {
 			}
 			String valueOfVector = "";
 			switch(vector.getValue()){
-			case 0:valueOfVector = "neutral";
-			case -1:valueOfVector = "contra";
+			case 0:valueOfVector = "contra";
 			case 1:valueOfVector = "pro";
 			}
 			temp.setValue((Attribute) fvWekaAttributes.get(keyToIndex.get("ClassVal")), valueOfVector);
@@ -92,7 +90,8 @@ public class RandomFWekaMain {
 				}
 			}
 			double[] distribution = randomForest.distributionForInstance(temp);
-			System.out.println(vector + " ist zu " + distribution[0] + "% pro, " + distribution[2] + "% contra und " + distribution[1] + "% neutral");
+			double result = randomForest.classifyInstance(temp);
+			System.out.println(vector + " ist zu " + distribution[1] + "% pro, " + distribution[0] + "% contra, also die Klasse " + result);
 		}
 		
 		

@@ -19,14 +19,14 @@ public class CalculateInput {
 		ListOfAllWords listOfAllWords = new ListOfAllWords();
 		listOfAllWords.loadFromFile("listOfAllWords.dump");
 		EncogMLP resilient_mlp = new EncogMLP(listOfAllWords);
-		resilient_mlp.loadNetwork("./learned/neuronalesNetzInput_75Percent_reseilientPropagation.eg");
+		//resilient_mlp.loadNetwork("./learned/neuronalesNetzInput_75Percent_reseilientPropagation.eg");
 		
 		EncogMLP back_mlp = new EncogMLP(listOfAllWords);
-		back_mlp.loadNetwork("./learned/neuronalesNetzInput_75Percent_backpropagation.eg");
+		back_mlp.loadNetwork("./learned/neuronalesNetzInput_75Percent_resilientpropagation_moreInput.eg");
 		
 		featureVectors.stream().forEach(fv -> {
 			System.out.println("Map: " + fv);
-			System.out.println("Resilient Ergebnis " + Math.round(resilient_mlp.calculate(fv)));
+			//System.out.println("Resilient Ergebnis " + Math.round(resilient_mlp.calculate(fv)));
 			System.out.println("Backpropagation Ergebnis " + Math.round(back_mlp.calculate(fv)));
 		});
 	}

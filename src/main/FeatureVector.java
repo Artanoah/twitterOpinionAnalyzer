@@ -1,11 +1,16 @@
 package main;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FeatureVector {
+public class FeatureVector implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Map<String, Integer> map = new HashMap<String, Integer>();
 	int value = 0;
 	

@@ -159,6 +159,8 @@ public class ClassifyPostsMain {
 		
 		listOfAllWords.addWords(wortliste);
 		
+		listOfAllWords.dumpToFile("listOfAllWords.dump");
+		
 		//###### VECTOR OBJEKTE ERSTELLEN (Steffen) ######
 		//input: Map<Map<String, Value>, Value> -> Liste an Bags of Words (Map<Map<Wort, Haeufigkeit>, Bewertung>)
 		//output: List<FeatureVector> -> Hier sind nun auch nicht vorkommende Woerter in der Map enthalten
@@ -184,19 +186,19 @@ public class ClassifyPostsMain {
 //		mlp.learn();
 //		mlp.save("mlp.nnet");
 		
-//		listOfAllWords.dumpToFile("listOfAllWords.dump");
+		listOfAllWords.dumpToFile("listOfAllWords.dump");
 		
 		emlp = new EncogMLP(listOfAllWords);
 		emlp.addVector(listOfFeatureVectors);
-		int iterationen = emlp.learnWithResilientPropagation();
-		emlp.saveNetwork("neuronalesNetzInput_75Percent_resilientpropagation_fixedValues.eg");
+		int iterationen = emlp.learnWithErrorBackPropagation();
+		emlp.saveNetwork("neuronalesNetzInput_75Percent_resilientpropagation_moreInput.eg");
 		
 		long endZeitMLPLernen = System.currentTimeMillis();
 		
 		System.out.println("###### MLP Angelernt ######");
-		System.out.println("Lerndauer: " + Math.round((endZeitStarten - startZeitStarten) / 1000) + " Sekunden");
+		System.out.println("Lerndauer: " + Math.round((endZeitMLPLernen - startZeitMLPLernen) / 1000) + " Sekunden");
 		System.out.println("Anzahl der Iterationen: " + iterationen);
-		
+//		
 		//###### SVM FABIAN ######
         //Set<String> result = new HashSet<String>();
 		

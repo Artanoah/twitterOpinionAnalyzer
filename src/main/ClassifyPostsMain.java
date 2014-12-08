@@ -33,6 +33,7 @@ import neuronalNetwork.NeurophMLP;
 import normalisation.NormaliseAndFilterString;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
+import contentSource.CSVFile;
 import contentSource.RedditPosts;
 import static main.Constants.*;
 
@@ -102,7 +103,9 @@ public class ClassifyPostsMain {
 		//output: Map<String, Value> -> Map an Text zu Bewertung
 		System.out.println("###### OBJEKTE AUS DER DATENBANK HOLEN ######");
 		
-		postToValue = RedditPosts.getTrainingsSetFromFile("./alleBewertet.txt");
+		CSVFile traingsFile = new CSVFile("./testset.csv");
+		postToValue = traingsFile.getPostsFromFile();
+		//postToValue = RedditPosts.getTrainingsSetFromFile("./alleBewertet.txt");
 		System.out.println("Anzahl der Posts fuer Trainingsfile: " + postToValue.size());
 		
 		//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######

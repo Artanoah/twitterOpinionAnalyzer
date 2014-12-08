@@ -1,5 +1,7 @@
 package main;
 
+import static main.Constants.AMOUNT_RANDOM_TREES;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +12,10 @@ import net.sf.javaml.core.Dataset;
 import net.sf.javaml.core.DefaultDataset;
 import net.sf.javaml.core.Instance;
 import net.sf.javaml.core.SparseInstance;
-import static main.Constants.*;
 
 public class RandomFMain {
 
-	public static void main(String[] args) throws IOException, InterruptedException {
+	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 		System.out.println("###### TRAININGSSET FERTIGMACHEN ######");
 		List<FeatureVector> trainingsSetVectors = Util.getStemmedPosts("./alleBewertet.txt");
 

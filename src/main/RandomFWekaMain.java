@@ -1,10 +1,5 @@
 package main;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +8,6 @@ import java.util.Vector;
 
 import randomForest.ModifiedRandomForest;
 import weka.classifiers.Evaluation;
-import weka.classifiers.trees.RandomForest;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -23,16 +17,8 @@ public class RandomFWekaMain {
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("###### TRAININGSSET FERTIGMACHEN ######");
-		File stemmedPostFile = new File("./stemmedPosts.dump");
-		List<FeatureVector> trainingsSetVectors  = null;
-		if(!stemmedPostFile.exists()){
-			trainingsSetVectors = Util.getStemmedPosts("./alleBewertet.txt");
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(stemmedPostFile));
-			oos.writeObject(trainingsSetVectors);
-		} else {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(stemmedPostFile));
-			trainingsSetVectors = (List<FeatureVector>) ois.readObject();
-		}
+		List<FeatureVector> trainingsSetVectors  = Util.getStemmedPosts("./alleBewertet.txt");
+
 
 		
 		System.out.println("###### RANDOM-FOREST LERNEN ######");
@@ -49,8 +35,8 @@ public class RandomFWekaMain {
 		}
 		Vector<String> fvClassVal = new Vector<String>(3);
 		fvClassVal.addElement("pro");
-		fvClassVal.addElement("contra");
 		fvClassVal.addElement("neutral");
+		fvClassVal.addElement("contra");
 		Attribute klassifizierung = new Attribute("ClassVal", fvClassVal);
 		possibleAttributes.add(klassifizierung);
 		keyToIndex.put("ClassVal", possibleAttributes.indexOf(klassifizierung));
@@ -106,7 +92,7 @@ public class RandomFWekaMain {
 				}
 			}
 			double[] distribution = randomForest.distributionForInstance(temp);
-			System.out.println(vector + " ist zu " + distribution[0] + "% pro, " + distribution[1] + "% contra und " + distribution[2] + "% neutral");
+			System.out.println(vector + " ist zu " + distribution[0] + "% pro, " + distribution[2] + "% contra und " + distribution[1] + "% neutral");
 		}
 		
 		

@@ -24,6 +24,7 @@ import neuronalNetwork.NeurophMLP;
 import normalisation.NormaliseAndFilterString;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
+import contentSource.CSVFile;
 import contentSource.RedditPosts;
 
 public class Util {
@@ -77,7 +78,9 @@ public class Util {
 			//output: Map<String, Value> -> Map an Text zu Bewertung
 			System.out.println("###### OBJEKTE AUS DER DATENBANK HOLEN ######");
 			
-			postToValue = RedditPosts.getTrainingsSetFromFile(fileToLearn);
+			CSVFile traingsFile = new CSVFile(fileToLearn);
+			postToValue = traingsFile.getPostsFromFile();
+			
 			System.out.println("Anzahl der Posts fuer Trainingsfile: " + postToValue.size());
 			
 			//###### TEXTE VON FEHLERN BEREINIGEN (Steffen) ######
@@ -152,6 +155,8 @@ public class Util {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(stemmedPostFile));
 			oos.writeObject(listOfFeatureVectors);
 			oos.close();
+			
+			listOfAllWords.dumpToFile("listOfAllWords.dump");
 		} else {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(stemmedPostFile));
 			try {

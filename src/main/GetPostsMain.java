@@ -15,6 +15,6 @@ public class GetPostsMain {
 		
 		//###### POSTS VON REDDIT ABHOLEN + POSTS IN EINE DATEI SCHREIBEN(Birger) ######
 		//RedditPosts.writeTrainingsSetToFile("./reddit.txt", "2kdpuj");2ko3do
-		RedditPosts.writeTrainingsSetToFile("./2oc6oq.txt", "2oc6oq");
+		RedditPosts.writeTrainingsSetToFile("./cz92r.txt", "cz92r");
 	}
 }

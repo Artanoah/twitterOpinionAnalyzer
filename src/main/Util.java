@@ -30,7 +30,8 @@ public class Util {
 	static Map<String, Integer> stemmedPostTovalue = null;
 	
 	public static List<FeatureVector> getStemmedPosts(String fileToLearn) throws IOException, InterruptedException {
-		File stemmedPostFile = new File("./stemmedPosts.dump");
+		String[] fileToLearnParts = fileToLearn.split("/");
+		File stemmedPostFile = new File("./" + fileToLearnParts[fileToLearnParts.length-1] + ".dump");
 		List<FeatureVector> listOfFeatureVectors = new ArrayList<FeatureVector>();
 		if(!stemmedPostFile.exists()){
 			//###### INITIALISIERUNGEN ######

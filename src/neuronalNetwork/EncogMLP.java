@@ -50,13 +50,13 @@ public class EncogMLP {
 		wordList = list;
 				
 		nInputLayer = list.length();
-		nHiddenLayer = (int) Math.round(nInputLayer * 0.75);
+		nHiddenLayer = (int) Math.round(nInputLayer * 1.25);
 		nOutputLayer = 1;
 		
 		network = new BasicNetwork();
 		network.addLayer(new BasicLayer(null, true, nInputLayer));
 		network.addLayer(new BasicLayer(new ActivationSigmoid(), true, nHiddenLayer));
-		//network.addLayer(new BasicLayer(new ActivationSigmoid(), true, Math.round(nHiddenLayer / 2)));
+		network.addLayer(new BasicLayer(new ActivationSigmoid(), true, Math.round(nHiddenLayer / 2)));
 		network.addLayer(new BasicLayer(new ActivationSigmoid(), false, nOutputLayer));
 		
 		network.getStructure().finalizeStructure();

@@ -17,7 +17,7 @@ public class RandomFWekaMain {
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("###### TRAININGSSET FERTIGMACHEN ######");
-		List<FeatureVector> trainingsSetVectors  = Util.getStemmedPosts("./alleBewertet.txt");
+		List<FeatureVector> trainingsSetVectors  = Util.getStemmedPostsAndCreateFiles("./alleBewertet.txt");
 
 
 		
@@ -80,7 +80,7 @@ public class RandomFWekaMain {
 		//VergleichsSet zusammenbauen
 		System.out.println("###### VergleichsSet gegentesten ######");
 		long startClassifyRF = System.currentTimeMillis();
-		List<FeatureVector> compareSetVectors = Util.getStemmedPosts("./reddit_testset.txt");
+		List<FeatureVector> compareSetVectors = Util.getStemmedPostsAndCreateFiles("./reddit_testset.txt");
 		for(FeatureVector vector:compareSetVectors){
 			Instance temp = new SparseInstance(trainingsSet.firstInstance());
 			temp.setDataset(trainingsSet);

@@ -17,7 +17,7 @@ public class RandomFMain {
 
 	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 		System.out.println("###### TRAININGSSET FERTIGMACHEN ######");
-		List<FeatureVector> trainingsSetVectors = Util.getStemmedPosts("./alleBewertet.txt");
+		List<FeatureVector> trainingsSetVectors = Util.getStemmedPostsAndCreateFiles("./alleBewertet.txt");
 
 		
 		System.out.println("###### RANDOM-FOREST LERNEN ######");
@@ -47,7 +47,7 @@ public class RandomFMain {
 		
 		
 		//VergleichsSet zusammenbauen
-		List<FeatureVector> compareSetVectors = Util.getStemmedPosts("./reddit_testset.txt");
+		List<FeatureVector> compareSetVectors = Util.getStemmedPostsAndCreateFiles("./reddit_testset.txt");
 		Map<FeatureVector,Instance> vectorToInstance = new HashMap<FeatureVector,Instance>();
 		Dataset compareSetInstances = new DefaultDataset();
 		for(FeatureVector vector:compareSetVectors){

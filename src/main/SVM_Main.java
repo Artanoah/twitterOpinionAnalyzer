@@ -16,7 +16,7 @@ public class SVM_Main {
 		listOfAllWords.loadFromFile("listOfAllWords.dump");
 		String svm_input = "postToTest";
 	    BufferedWriter svm_bw = new BufferedWriter(new FileWriter(svm_input));
-		List<FeatureVector> featureVectors = Util.getStemmedPosts("./reddit_testset_svm.txt");
+		List<FeatureVector> featureVectors = Util.getStemmedPostsAndCreateFiles("./reddit_testset_svm.txt");
 		final float ZERO = (float) 0.0;
 		
 	    for(FeatureVector fv : featureVectors){

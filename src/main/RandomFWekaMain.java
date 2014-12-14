@@ -54,9 +54,10 @@ public class RandomFWekaMain {
 				temp.setValue((Attribute) fvWekaAttributes.get(keyToIndex.get(key)), vector.getMap().get(key));
 			}
 			String valueOfVector = "";
-			switch(vector.getValue()){
-			case 0:valueOfVector = "contra";
-			case 1:valueOfVector = "pro";
+			if(vector.getValue() == 0){
+				valueOfVector = "contra";
+			} else if(vector.getValue() == 1){
+				valueOfVector = "pro";
 			}
 			temp.setValue((Attribute) fvWekaAttributes.get(keyToIndex.get("ClassVal")), valueOfVector);
 			
@@ -67,6 +68,7 @@ public class RandomFWekaMain {
 		ModifiedRandomForest randomForest = new ModifiedRandomForest();
 		randomForest.setNumFeatures(trainingsSet.size()/3);
 		randomForest.setNumTrees(Constants.AMOUNT_RANDOM_TREES);
+		randomForest.setNumExecutionSlots(3);
 		randomForest.buildClassifier(trainingsSet);
 		System.out.println("Benoetigte Zeit zum RandomForest lernen: " + (System.currentTimeMillis()-startLearningRF) + "ms.");
 		

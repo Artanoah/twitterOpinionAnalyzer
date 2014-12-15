@@ -66,7 +66,7 @@ public class RandomFWekaMain {
 		
 		//Klassifizierer bauen
 		ModifiedRandomForest randomForest = new ModifiedRandomForest();
-		randomForest.setNumFeatures(trainingsSet.size()/3);
+		randomForest.setNumFeatures(trainingsSet.size()/8*3);
 		randomForest.setNumTrees(Constants.AMOUNT_RANDOM_TREES);
 		randomForest.setNumExecutionSlots(3);
 		randomForest.buildClassifier(trainingsSet);
@@ -77,6 +77,27 @@ public class RandomFWekaMain {
 		Evaluation eval = new Evaluation(trainingsSet);
 		eval.evaluateModel(randomForest, trainingsSet);
 		System.out.println(eval.toSummaryString());
+		// F-Score gegen TrainingsSet auswerten
+		Fscore score = new Fscore();
+		for(Instance temp:trainingsSet){
+			int result = (int) randomForest.classifyInstance(temp);
+			if(result == 1){
+				if(((int)temp.classValue()) == 1){
+					score.incrementTruePositive();
+				} else {
+					score.incrementFalsePositive();
+				}
+			} else if(result == 0){
+				if(((int)temp.classValue()) == 0){
+					score.incrementTruePositive();
+				} else {
+					score.incrementFalseNegativ();
+				}
+			}
+		}
+		System.out.println("FScore Precision: " + score.computePrecision());
+		System.out.println("FScore Accuracy: " + score.computeAccuracy());
+		System.out.println();
 		
 		
 		//VergleichsSet zusammenbauen

@@ -104,10 +104,5 @@ public class Fscore {
 		this.truePositive = truePositiv;
 	}
 
-
-
-
-
-
 }
 

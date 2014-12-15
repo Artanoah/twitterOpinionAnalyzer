@@ -17,3 +17,10 @@ hs_err_pid*
 
 # bigFiles
 neuronalesNetzInput_75Percent_resilientpropagation_twitterInput.eg
+.idea/
+.idea/workspace.xml
+.idea/misc.xml
+.idea/*.xml
+.idea/
+*.eml
+*.iml

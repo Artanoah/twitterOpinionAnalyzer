@@ -17,7 +17,7 @@ public class RandomFWekaMain {
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("###### TRAININGSSET FERTIGMACHEN ######");
-		List<FeatureVector> trainingsSetVectors  = Util.getStemmedPostsAndCreateFiles("./alleBewertet.txt");
+		List<FeatureVector> trainingsSetVectors  = Util.getStemmedPostsAndCreateFiles("./testset.csv");
 
 
 		

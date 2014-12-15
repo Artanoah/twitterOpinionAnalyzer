@@ -16,6 +16,6 @@ public class Constants {
 	//public static final List<String> REMAININGTAGS = new ArrayList<String>(Arrays.asList("JJ", "JJR", "JJS", "RB", "RBR", "RBS", "RP", "VB", "VBD", "VBG", "VBN", "VBP", "VBZ"));
 	public static final double ERROR_TOLLERANCE = 0.25;
 	public static final int MAXIMAL_ITERATIONS = 1000;
-	public static final int AMOUNT_RANDOM_TREES = 300;
+	public static final int AMOUNT_RANDOM_TREES = 500;
 	public static final String filename = "someWords";
 }

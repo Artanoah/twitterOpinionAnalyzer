@@ -225,8 +225,12 @@ public class Util {
 		//output: Map<String, Value> -> Map an Text zu Bewertung
 		System.out.println("###### OBJEKTE AUS DER DATENBANK HOLEN ######");
 		
-		CSVFile traingsFile = new CSVFile(fileToLearn);
-		postToValue = traingsFile.getPostsFromFile();
+		if(fileToLearn.contains("csv")){
+			CSVFile traingsFile = new CSVFile(fileToLearn);
+			postToValue = traingsFile.getPostsFromFile();
+		} else {
+			postToValue = RedditPosts.getTrainingsSetFromFile(fileToLearn);
+		}
 		
 		System.out.println("Anzahl der Posts fuer Trainingsfile: " + postToValue.size());
 		

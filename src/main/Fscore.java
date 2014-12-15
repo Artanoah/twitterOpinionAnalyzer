@@ -104,5 +104,10 @@ public class Fscore {
 		this.truePositive = truePositiv;
 	}
 
+	public String toString() {
+		return "Accuracy:\t" 	+ computeAccuracy() + 
+			   "Precision:\t" 	+ computePrecision() +
+			   "Recall:\t\t" 	+ computeRecall();
+	}
 }
 

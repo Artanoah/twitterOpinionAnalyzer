@@ -1,41 +1,22 @@
 package main;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import naiveBayesClassifier.NaiveBayes;
-
-
-import net.sf.javaml.classification.tree.RandomForest;
-import net.sf.javaml.core.Dataset;
-import net.sf.javaml.core.DefaultDataset;
-import net.sf.javaml.core.Instance;
-import net.sf.javaml.core.SparseInstance;
+import contentSource.CSVFile;
 import neuronalNetwork.EncogMLP;
 import neuronalNetwork.NeurophMLP;
 import normalisation.NormaliseAndFilterString;
 import spellingCorrection.DictionaryCreator;
 import spellingCorrection.SpellingCorrector;
-import contentSource.CSVFile;
-import contentSource.RedditPosts;
-import static main.Constants.*;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static main.Constants.CLASSIFY_POST_MAIN_FLAG;
+import static main.Constants.MAX_THREADS;
 
 
 public class ClassifyPostsMain {

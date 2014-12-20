@@ -1,17 +1,17 @@
 package main;
 
-import static main.Constants.AMOUNT_RANDOM_TREES;
+import net.sf.javaml.classification.tree.RandomForest;
+import net.sf.javaml.core.Dataset;
+import net.sf.javaml.core.DefaultDataset;
+import net.sf.javaml.core.Instance;
+import net.sf.javaml.core.SparseInstance;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.javaml.classification.tree.RandomForest;
-import net.sf.javaml.core.Dataset;
-import net.sf.javaml.core.DefaultDataset;
-import net.sf.javaml.core.Instance;
-import net.sf.javaml.core.SparseInstance;
+import static main.Constants.AMOUNT_RANDOM_TREES;
 
 public class RandomFMain {
 

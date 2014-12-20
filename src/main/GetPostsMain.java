@@ -1,9 +1,9 @@
 package main;
 
-import java.io.IOException;
-
-import net.dean.jraw.http.NetworkException;
 import contentSource.RedditPosts;
+import net.dean.jraw.http.NetworkException;
+
+import java.io.IOException;
 
 public class GetPostsMain {
 	/**

@@ -1,8 +1,8 @@
 package main;
 
-import java.io.IOException;
-
 import contentSource.RedditPosts;
+
+import java.io.IOException;
 
 public class PushToDatabaseMain {
 

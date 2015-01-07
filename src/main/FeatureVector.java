@@ -6,15 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Klasse zum Halten einer <code>Map&lt;String, Integer&gt;</code> und
+ * eines dazugehoerigen Wertes. Die Map soll das Verhaeltnis von Wort
+ * zu Haeufigkeit des Wortes herstellen und der dazugehoerige Wert die
+ * Bewertung dieser Map.
+ * 
+ * @author Steffen Giersch
+ */
 public class FeatureVector implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	Map<String, Integer> map = new HashMap<String, Integer>();
 	int value = 0;
 	
 	/**
+	 * 
 	 * 
 	 * @param map
 	 * @param classifyer

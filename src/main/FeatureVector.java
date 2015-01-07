@@ -21,10 +21,11 @@ public class FeatureVector implements Serializable {
 	int value = 0;
 	
 	/**
+	 * Erstellt einen neuen FeatureVector mit der Map <code>map</code>
+	 * und der Bewertung <code>classifyer</code>.
 	 * 
-	 * 
-	 * @param map
-	 * @param classifyer
+	 * @param map <code>Map&lt;String, Integer&gt;</code> 
+	 * @param classifyer <code>int</code>
 	 */
 	public FeatureVector(Map<String, Integer> map, int classifyer) {
 		this.map = map;
@@ -67,6 +68,13 @@ public class FeatureVector implements Serializable {
     	return result;
     }
     
+    /**
+     * Zaehlt wie viele verschiedene Woerter ein mal oder oefter in der
+     * Map <code>intput</code> enthalten sind 
+     * 
+     * @param input <code>Map&lt;String, Integer&gt;</code>
+     * @return <code>int</code>
+     */
     public static Integer countAppearingWordsOfVector(Map<String, Integer> input){
 		Integer result = 0;	
 		for(String s : input.keySet()){

@@ -12,13 +12,21 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Diese Klasse soll dem {@link spellingCorrection.SpellingCorrector} als 
+ * Lexikon fuer korrekt geschriebene Woerter dienen. Zum befuellen dieses
+ * Objekts sind die Methoden {@link addTextFile} und {@link addSmileyFile}.
+ * 
+ * @author Steffen Giersch
+ */
 public class DictionaryCreator {
 	String dictionary;
 	Map<String, Integer> numberOfWords = new HashMap<String, Integer>();
 	
 	/**
 	 * Erzeugt einen DictionaryCreator.
-	 * @param dictionary Zu erzeugenes Lexikon.
+	 * 
+	 * @param dictionary <code>String</code> Zu erzeugenes Lexikon.
 	 */
 	public DictionaryCreator(String dictionary) {
 		this.dictionary = dictionary;
@@ -48,7 +56,8 @@ public class DictionaryCreator {
 	/**
 	 * Füge eine Textdatei hinzu. Diese sollte ausschließlich korrekte 
 	 * Wörter englischer Sprache enthalten.
-	 * @param text Hinzuzufügende Textdatei
+	 * 
+	 * @param text <code>File</code> Hinzuzufügende Textdatei
 	 */
 	public void addTextFile(File text) {
 		BufferedReader in;
@@ -89,6 +98,11 @@ public class DictionaryCreator {
 		}
 	}
 	
+	/**
+	 * Fuegt eine Textdatei hinzu. Diese Datei darf jegliche Smileys enthalten.
+	 * 
+	 * @param text <code>File</code> Hinzuzufügende Textdatei
+	 */
 	public void addSmileyFile(File text) {
 		BufferedReader in;
 		PrintWriter pw;

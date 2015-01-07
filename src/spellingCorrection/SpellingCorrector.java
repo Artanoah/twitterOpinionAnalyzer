@@ -20,6 +20,7 @@ public class SpellingCorrector {
 	 * Erstellt einen SpellingCorrector. Das dictionary muss zu diesem 
 	 * Zeitpunkt nicht zwangsweise existieren, aber der Pfad muss angegeben 
 	 * werden.
+	 * 
 	 * @param dictionary Zu verwendenes Lexikon
 	 */
 	public SpellingCorrector(String dictionary) {
@@ -35,8 +36,9 @@ public class SpellingCorrector {
 	 * wahrscheinlichsten korrekte Wort zurückgeliefert. Die 
 	 * Wahrscheinlichkeit berechnet sich anhand der Menge der Nutzungen 
 	 * dieses Wortes in der Englischen Sprache.
-	 * @param inputWord Zu korrigierendes Wort
-	 * @return Korrigertes Wort
+	 * 
+	 * @param inputWord <code>String</code> Zu korrigierendes Wort
+	 * @return <code>String</code> Korrigertes Wort
 	 */
 	public static String correctWord(String inputWord) {
 		String word = inputWord.toLowerCase();
@@ -73,6 +75,16 @@ public class SpellingCorrector {
 		}
 	}
 	
+	/**
+	 * Versucht die Woerter des Strings <code>inputSentence</code> mit 
+	 * der Methode {@link SpellingCorrector.correctWort} zu korrigieren.</br>
+	 * Hierbei werden URLs und Zahlen geloescht, Sonderzeichen mit
+	 * Leerzeichen isoliert und Hashtags und TwitterUsernamen ignoriert.
+	 * 
+	 * @param inputSentence <code>String</code> Zu korrigierender Tweet 
+	 * oder Satz
+	 * @return <code>String</code> Korrigierter Tweet oder Satz
+	 */
 	public static String correctTweet(String inputSentence) {
 		String akku = "";
 		String temp = new String(inputSentence);
@@ -167,6 +179,12 @@ public class SpellingCorrector {
 		return numberOfWords.containsKey(word);
 	}
 	
+	/**
+	 * Erzeugt diverse "Falschschreibweisen" des eingegebenen Wortes
+	 * 
+	 * @param word <code>String</code> Zu veraenderndes Wort
+	 * @return <code>String</code> Veraendertes Wort
+	 */
 	private static List<String> getPermutations(String word) {
 		List<String> akku = new ArrayList<String>();
 		

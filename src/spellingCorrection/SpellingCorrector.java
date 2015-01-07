@@ -11,6 +11,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Diese Klasse dient als Rechtschreibkorrektur. Sie basiert auf
+ * einem von der Klasse {@link DictionaryCreator} erstellten 
+ * Lexikon. </br>
+ * Es gibt diverse Methoden zum korrigieren von einzelnen Woertern
+ * oder auch ganzen Texten.
+ * 
+ * @author Steffen Giersch
+ */
 public class SpellingCorrector {
 	
 	private static Map<String, Integer> numberOfWords = new HashMap<String, Integer>();
@@ -21,7 +30,7 @@ public class SpellingCorrector {
 	 * Zeitpunkt nicht zwangsweise existieren, aber der Pfad muss angegeben 
 	 * werden.
 	 * 
-	 * @param dictionary Zu verwendenes Lexikon
+	 * @param dictionary Datei die das zu verwendene Lexikon enthält
 	 */
 	public SpellingCorrector(String dictionary) {
 		this.dictionary = dictionary;

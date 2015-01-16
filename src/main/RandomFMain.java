@@ -29,7 +29,7 @@ public class RandomFMain {
 			keyToIndex.put(key, index++);
 		}
 		
-		//TrainingsSet zusammenbauen
+		//TrainingsSet konstruieren
 		for(FeatureVector vector:trainingsSetVectors){
 			Instance temp = new SparseInstance(vector.getMap().size());
 			for(String key:vector.getMap().keySet()){
@@ -39,14 +39,14 @@ public class RandomFMain {
 			trainingsSet.add(temp);
 		}
 		
-		//Klassifizierer bauen
+		//Klassifizierer konstruieren
 		RandomForest forest = new RandomForest(AMOUNT_RANDOM_TREES);
 		forest.buildClassifier(trainingsSet);
 		System.out.println("Benoetigte Zeit zum RandomForest lernen: " + (System.currentTimeMillis()-startLearningRF) + "ms.");
 		
 		
 		
-		//VergleichsSet zusammenbauen
+		//VergleichsSet konstruieren
 		List<FeatureVector> compareSetVectors = Util.getStemmedPostsAndCreateFiles("./reddit_testset.txt");
 		Map<FeatureVector,Instance> vectorToInstance = new HashMap<FeatureVector,Instance>();
 		Dataset compareSetInstances = new DefaultDataset();

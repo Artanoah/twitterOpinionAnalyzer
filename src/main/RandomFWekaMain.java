@@ -60,7 +60,7 @@ public class RandomFWekaMain {
 			trainingsSet.add(temp);
 		}
 		
-		//Klassifizierer bauen
+		//Klassifizierer konstruieren
 		ModifiedRandomForest randomForest = new ModifiedRandomForest();
 		randomForest.setNumFeatures(trainingsSet.size()/8*3);
 		randomForest.setNumTrees(Constants.AMOUNT_RANDOM_TREES);
@@ -68,7 +68,7 @@ public class RandomFWekaMain {
 		randomForest.buildClassifier(trainingsSet);
 		System.out.println("Benoetigte Zeit zum RandomForest lernen: " + (System.currentTimeMillis()-startLearningRF) + "ms.");
 		
-		//Klassifizierer gegen TrainingsSet probieren
+		//Klassifizierer gegen TrainingsSet testen
 		System.out.println("###### TrainingsSet checken ######");
 		Evaluation eval = new Evaluation(trainingsSet);
 		eval.evaluateModel(randomForest, trainingsSet);
@@ -96,7 +96,7 @@ public class RandomFWekaMain {
 		System.out.println();
 		
 		
-		//VergleichsSet zusammenbauen
+		//VergleichsSet konstruieren
 		System.out.println("###### VergleichsSet gegentesten ######");
 		long startClassifyRF = System.currentTimeMillis();
 		List<FeatureVector> compareSetVectors = Util.getStemmedPostsAndCreateFiles("./reddit_testset.txt");

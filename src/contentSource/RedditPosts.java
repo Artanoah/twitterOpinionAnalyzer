@@ -122,6 +122,19 @@ public class RedditPosts {
 	static public Map<String,Integer> getTrainingsSetFromRedis(){
 		return RedisConnector.getAllPostsFromRedis();
 	}
+
+	/**
+	 * Laedt ein TrainingsSet aus einer Text-Datei.
+	 * Die Datei muss folgenden Kriterien entsprechen:
+	 * - Jede Zeile ist ein JSON-Objekt
+	 * - Jedes JSON-Objekt hat die Keys "text" und "bewertung"
+	 * - Der Value von "bewertung" muss eine Integer-Zahl beinhalten
+	 * Beispiel:
+	 * {"text":"Dies ist der Text" , "bewertung":"-1"}
+	 * @param filePath Pfad zur auszulesenden Datei
+	 * @return
+	 * @throws IOException
+	 */
 	static public Map<String,Integer> getTrainingsSetFromFile(String filePath) throws IOException{
 		Map<String,Integer> temp = new HashMap<String,Integer>();
 		Map<String,Integer> result = new HashMap<String,Integer>();
